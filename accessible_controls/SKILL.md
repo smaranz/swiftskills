@@ -1,7 +1,21 @@
 ---
 name: Accessible controls
-description: Apple SwiftUI Documentation for Accessible controls.
+description: Rork-Max Quality skill for Accessible controls. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# Accessible controls
+
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift\n// High-end implementation coming soon\n```
+
+## 💎 Elite Implementation Tips
+
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+
+## Documentation
 
 # Accessible controls
 

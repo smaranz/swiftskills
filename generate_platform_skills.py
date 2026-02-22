@@ -2,6 +2,7 @@ import os
 import re
 import urllib.request
 import urllib.error
+from rork_snippets import DEFAULT_RORK_TIPS
 
 # Root directory for platform skills
 ROOT_DIR = "platform_skills"
@@ -76,10 +77,48 @@ def create_skill(framework, endpoint, folder_name, platform):
             title = f"{platform.upper()} {raw_title}"
             break
             
+    # Platform-specific Rork Tips
+    platform_tips = [
+        f"Master the {platform} native feel: Use system-standard components correctly before customizing.",
+        f"Ensure optimal performance for {platform}: Handle lifecycle events efficiently.",
+        "Aesthetics: Keep designs clean and aligned with the platform's HIG."
+    ] + DEFAULT_RORK_TIPS
+
+    tips_md = "\n".join([f"- {tip}" for tip in platform_tips])
+
     skill_content = f"""---
 name: {title}
-description: Apple {framework} Documentation for {title} on {platform}.
+description: Rork-Max Quality skill for {title} on {platform}. Based on official Apple {framework} Documentation.
 ---
+
+# {title}
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium {title} Implementation for {platform}
+// Focus on platform-native excellence
+
+import SwiftUI
+#if os({platform.lower() if platform.lower() != 'ipados' else 'ios'})
+// {framework} specific imports
+#endif
+
+struct RorkPlatformView: View {{
+    var body: some View {{
+        Text("Rork Quality {platform.upper()} Experience")
+            .font(.system(.title, design: .rounded))
+            .padding()
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    }}
+}}
+```
+
+## 💎 Elite Implementation Tips
+
+{tips_md}
+
+## Documentation
 
 {md_content}
 """

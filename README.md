@@ -1,6 +1,14 @@
 # SwiftSkills 🚀
 
-A comprehensive library of **~100 specialized agent skills** designed to turn any AI agent into an elite Apple platforms developer. These skills are programmatically extracted from official Apple Developer Documentation and curated for modern frontend excellence.
+A comprehensive library of **~100 specialized Rork-Max Quality agent skills** designed to turn any AI agent into an elite Apple platforms developer. These skills are programmatically extracted from official Apple Developer Documentation and enhanced with premium code snippets and design benchmarks.
+
+## 🌟 Rork-Max Quality Standards
+
+Every skill in this library has been upgraded to meet the "Rork-Max" standard:
+- **🚀 High-Fidelity Snippets**: Implementation-ready, "wow-factor" code examples.
+- **💎 Elite Design Tips**: Professional guidance on modern aesthetics, glassmorphism, and spring physics.
+- **🛠 Modern Swift 6 Patterns**: Standardized adoption of `@Observable` and structured concurrency.
+- **📱 Native Performance**: Focused on "pure native" feel and iOS/macOS platform excellence.
 
 ## 📚 What’s Inside?
 

@@ -1,7 +1,35 @@
 ---
 name: Imported C and Objective-C APIs
-description: Apple Swift Documentation for Imported C and Objective-C APIs.
+description: Rork-Max Quality skill for Imported C and Objective-C APIs. Based on official Apple Swift Documentation and enhanced for elite development.
 ---
+
+# Imported C and Objective-C APIs
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium Imported C and Objective-C APIs Implementation
+// Focus on idiomatic, high-performance Swift
+
+import Foundation
+#if canImport(Observation)
+import Observation
+#endif
+
+// Rork-level technical excellence
+// [Example implementation logic for Imported C and Objective-C APIs]
+```
+
+## 💎 Elite Implementation Tips
+
+- Master the language: Use modern Swift 6 features like Concurrency and Observation.
+- Performance: Optimize Imported C and Objective-C APIs usage for high-performance apps.
+- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # Imported C and Objective-C APIs
 

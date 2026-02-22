@@ -2,10 +2,10 @@ import os
 import re
 import urllib.request
 import urllib.error
+from rork_snippets import DEFAULT_RORK_TIPS
 
 # Mapping of Apple Docs endpoints to local folder names
 # Format: endpoint: folder_name
-# Note: Some might need different frameworks in the URL path, but the script will try SwiftUI framework-relative URLs first or specific ones.
 swift_topics = {
     # Essentials
     "AdoptingSwift6": "adopting_swift_6",
@@ -56,11 +56,11 @@ def cleanup_markdown(text):
     return text
 
 def create_skill(framework, endpoint, folder_name):
-    # If the endpoint is the same as the framework, it might just be doc/framework.md
     if framework == endpoint:
         url = f"{base_url}{framework}.md"
     else:
         url = f"{base_url}{framework}/{endpoint}.md"
+        
     try:
         with urllib.request.urlopen(url) as response:
             md_content = response.read().decode("utf-8")
@@ -77,10 +77,42 @@ def create_skill(framework, endpoint, folder_name):
             title = line[2:].strip()
             break
             
+    # Swift-specific Rork Tips
+    swift_tips = [
+        f"Master the language: Use modern Swift 6 features like Concurrency and Observation.",
+        f"Performance: Optimize {title} usage for high-performance apps.",
+        "Aesthetics: Write clean, idiomatic Swift that is easy to maintain."
+    ] + DEFAULT_RORK_TIPS
+
+    tips_md = "\n".join([f"- {tip}" for tip in swift_tips])
+
     skill_content = f"""---
 name: {title}
-description: Apple {framework} Documentation for {title}.
+description: Rork-Max Quality skill for {title}. Based on official Apple {framework} Documentation and enhanced for elite development.
 ---
+
+# {title}
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium {title} Implementation
+// Focus on idiomatic, high-performance Swift
+
+import Foundation
+#if canImport(Observation)
+import Observation
+#endif
+
+// Rork-level technical excellence
+// [Example implementation logic for {title}]
+```
+
+## 💎 Elite Implementation Tips
+
+{tips_md}
+
+## Documentation
 
 {md_content}
 """
@@ -98,5 +130,4 @@ for endpoint, folder in swift_topics.items():
 # Run for other frameworks listed in Swift docs
 for endpoint, info in other_topics.items():
     framework, folder = info
-    # For these, the endpoint is often the same as the framework or just the module name
     create_skill(framework, endpoint, folder)

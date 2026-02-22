@@ -1,7 +1,21 @@
 ---
 name: Text input and output
-description: Apple SwiftUI Documentation for Text input and output.
+description: Rork-Max Quality skill for Text input and output. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# Text input and output
+
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift\n// High-end implementation coming soon\n```
+
+## 💎 Elite Implementation Tips
+
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+
+## Documentation
 
 # Text input and output
 

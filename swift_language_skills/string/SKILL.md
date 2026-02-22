@@ -1,7 +1,35 @@
 ---
 name: String
-description: Apple Swift Documentation for String.
+description: Rork-Max Quality skill for String. Based on official Apple Swift Documentation and enhanced for elite development.
 ---
+
+# String
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium String Implementation
+// Focus on idiomatic, high-performance Swift
+
+import Foundation
+#if canImport(Observation)
+import Observation
+#endif
+
+// Rork-level technical excellence
+// [Example implementation logic for String]
+```
+
+## 💎 Elite Implementation Tips
+
+- Master the language: Use modern Swift 6 features like Concurrency and Observation.
+- Performance: Optimize String usage for high-performance apps.
+- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # String
 

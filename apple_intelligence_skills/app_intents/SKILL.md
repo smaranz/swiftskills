@@ -1,7 +1,45 @@
 ---
 name: Apple Intelligence: App Intents
-description: Specialized skill for Apple Intelligence: App Intents based on official Apple Developer Documentation.
+description: Rork-Max Quality skill for Apple Intelligence: App Intents. Specialized for elite Apple Intelligence integration.
 ---
+
+# Apple Intelligence: App Intents
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium Apple Intelligence: App Intents Implementation
+// Focus on low-latency, high-delight AI interactions
+
+import SwiftUI
+import AppIntents
+
+struct RorkIntelligenceView: View {
+    var body: some View {
+        ContentUnavailableView {
+            Label("Apple Intelligence: App Intents", systemImage: "sparkles")
+        } description: {
+            Text("Implementing elite AI features with Rork Max quality.")
+        } actions: {
+            Button("Explore Intents") {
+                // Action logic
+            }
+            .buttonStyle(.borderedProminent)
+        }
+    }
+}
+```
+
+## 💎 Elite Implementation Tips
+
+- Ensure app_intents integration feels seamless by following the Human Interface Guidelines for Intelligence.
+- Always handle fallback cases gracefully where the model might be unavailable or downloading.
+- Use modern async/await patterns for all AI-triggered operations to keep the UI responsive.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # App Intents
 

@@ -1,7 +1,41 @@
 ---
 name: MACOS Accessibility for AppKit
-description: Apple AppKit Documentation for MACOS Accessibility for AppKit on macos.
+description: Rork-Max Quality skill for MACOS Accessibility for AppKit on macos. Based on official Apple AppKit Documentation.
 ---
+
+# MACOS Accessibility for AppKit
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium MACOS Accessibility for AppKit Implementation for macos
+// Focus on platform-native excellence
+
+import SwiftUI
+#if os(macos)
+// AppKit specific imports
+#endif
+
+struct RorkPlatformView: View {
+    var body: some View {
+        Text("Rork Quality MACOS Experience")
+            .font(.system(.title, design: .rounded))
+            .padding()
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    }
+}
+```
+
+## 💎 Elite Implementation Tips
+
+- Master the macos native feel: Use system-standard components correctly before customizing.
+- Ensure optimal performance for macos: Handle lifecycle events efficiently.
+- Aesthetics: Keep designs clean and aligned with the platform's HIG.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # Accessibility for AppKit
 

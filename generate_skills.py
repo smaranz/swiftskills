@@ -2,6 +2,7 @@ import os
 import re
 import urllib.request
 import urllib.error
+from rork_snippets import get_rork_quality_section
 
 topics = {
     # App structure
@@ -95,10 +96,19 @@ def create_skill(endpoint, folder_name):
             title = line[2:].strip()
             break
             
+    # Inject Rork Quality Section
+    rork_section = get_rork_quality_section(endpoint)
+    
     skill_content = f"""---
 name: {title}
-description: Apple SwiftUI Documentation for {title}.
+description: Rork-Max Quality skill for {title}. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# {title}
+
+{rork_section}
+
+## Documentation
 
 {md_content}
 """

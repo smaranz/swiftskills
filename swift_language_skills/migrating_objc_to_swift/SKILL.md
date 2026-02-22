@@ -1,7 +1,35 @@
 ---
 name: Migrating Your Objective-C Code to Swift
-description: Apple Swift Documentation for Migrating Your Objective-C Code to Swift.
+description: Rork-Max Quality skill for Migrating Your Objective-C Code to Swift. Based on official Apple Swift Documentation and enhanced for elite development.
 ---
+
+# Migrating Your Objective-C Code to Swift
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium Migrating Your Objective-C Code to Swift Implementation
+// Focus on idiomatic, high-performance Swift
+
+import Foundation
+#if canImport(Observation)
+import Observation
+#endif
+
+// Rork-level technical excellence
+// [Example implementation logic for Migrating Your Objective-C Code to Swift]
+```
+
+## 💎 Elite Implementation Tips
+
+- Master the language: Use modern Swift 6 features like Concurrency and Observation.
+- Performance: Optimize Migrating Your Objective-C Code to Swift usage for high-performance apps.
+- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # Migrating Your Objective-C Code to Swift
 

@@ -1,7 +1,48 @@
 ---
 name: View styles
-description: Apple SwiftUI Documentation for View styles.
+description: Rork-Max Quality skill for View styles. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# View styles
+
+
+## 🚀 Rork-Max Quality Snippet
+
+
+```swift
+import SwiftUI
+
+struct PremiumViewStyle: View {
+    var body: some View {
+        Text("Modern Aesthetic")
+            .padding()
+            .background {
+                Capsule()
+                    .fill(
+                        LinearGradient(
+                            colors: [.blue, .purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .overlay {
+                        Capsule()
+                            .strokeBorder(.white.opacity(0.2), lineWidth: 1)
+                    }
+            }
+            .foregroundStyle(.white)
+            .shadow(color: .blue.opacity(0.3), radius: 10, x: 0, y: 5)
+    }
+}
+```
+
+
+## 💎 Elite Implementation Tips
+
+- Always add a subtle `.strokeBorder` (0.2 to 0.5 opacity) to gradients to define edges.\n- Use `foregroundStyle` instead of `foregroundColor` for modern hierarchical styling.\n- Shadows should match the color of the element (with low opacity) for a 'glow' effect.
+
+
+## Documentation
 
 # View styles
 

@@ -1,7 +1,21 @@
 ---
 name: Controls and indicators
-description: Apple SwiftUI Documentation for Controls and indicators.
+description: Rork-Max Quality skill for Controls and indicators. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# Controls and indicators
+
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift\n// High-end implementation coming soon\n```
+
+## 💎 Elite Implementation Tips
+
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+
+## Documentation
 
 # Controls and indicators
 

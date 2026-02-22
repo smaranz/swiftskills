@@ -1,7 +1,41 @@
 ---
 name: Layout fundamentals
-description: Apple SwiftUI Documentation for Layout fundamentals.
+description: Rork-Max Quality skill for Layout fundamentals. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# Layout fundamentals
+
+
+## 🚀 Rork-Max Quality Snippet
+
+
+```swift
+import SwiftUI
+
+struct EliteLayout: View {
+    var body: some View {
+        Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 20) {
+            GridRow {
+                Color.blue.frame(height: 100).cornerRadius(12)
+                Color.purple.frame(height: 100).cornerRadius(12)
+            }
+            GridRow {
+                Color.teal.frame(height: 100).cornerRadius(12)
+                    .gridCellColumns(2)
+            }
+        }
+        .padding()
+    }
+}
+```
+
+
+## 💎 Elite Implementation Tips
+
+- Use Apple's standard 8pt/16pt/24pt spacing tokens for consistent rhythm.\n- Leverage `Grid` and `GridRow` (iOS 16+) for precise control over complex layouts.\n- Ensure all corners have a radius between 12 and 25 for a modern 'squircle' feel.
+
+
+## Documentation
 
 # Layout fundamentals
 

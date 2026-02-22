@@ -1,7 +1,62 @@
 ---
 name: Animations
-description: Apple SwiftUI Documentation for Animations.
+description: Rork-Max Quality skill for Animations. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
 ---
+
+# Animations
+
+
+## 🚀 Rork-Max Quality Snippet
+
+
+```swift
+import SwiftUI
+
+struct RorkPremiumAnimation: View {
+    @State private var isAnimating = false
+    
+    var body: some View {
+        VStack(spacing: 30) {
+            // Glassmorphic Card with Spring Animation
+            RoundedRectangle(cornerRadius: 25)
+                .fill(.ultraThinMaterial)
+                .frame(width: 300, height: 200)
+                .overlay {
+                    Text("Rork Max Quality")
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                        .foregroundStyle(.secondary)
+                }
+                .scaleEffect(isAnimating ? 1.05 : 1.0)
+                .rotation3DEffect(
+                    .degrees(isAnimating ? 5 : 0),
+                    axis: (x: 1.0, y: 1.0, z: 0.0)
+                )
+                .shadow(color: .black.opacity(0.1), radius: 20, x: 0, y: 10)
+            
+            Button {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0)) {
+                    isAnimating.toggle()
+                }
+            } label: {
+                Text("Animate")
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .padding()
+                    .frame(width: 200)
+                    .background(.blue, in: Capsule())
+            }
+        }
+    }
+}
+```
+
+
+## 💎 Elite Implementation Tips
+
+- Use `.spring(response:dampingFraction:)` for all physical movement to feel native and premium.\n- Combine `scaleEffect` with `shadow` updates to create a sense of 'lifting' off the screen.\n- Leverage `.ultraThinMaterial` for glassmorphic elements rather than solid colors.
+
+
+## Documentation
 
 # Animations
 

@@ -1,7 +1,41 @@
 ---
 name: VISIONOS Creating fully immersive experiences in your app
-description: Apple visionOS Documentation for VISIONOS Creating fully immersive experiences in your app on visionos.
+description: Rork-Max Quality skill for VISIONOS Creating fully immersive experiences in your app on visionos. Based on official Apple visionOS Documentation.
 ---
+
+# VISIONOS Creating fully immersive experiences in your app
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium VISIONOS Creating fully immersive experiences in your app Implementation for visionos
+// Focus on platform-native excellence
+
+import SwiftUI
+#if os(visionos)
+// visionOS specific imports
+#endif
+
+struct RorkPlatformView: View {
+    var body: some View {
+        Text("Rork Quality VISIONOS Experience")
+            .font(.system(.title, design: .rounded))
+            .padding()
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    }
+}
+```
+
+## 💎 Elite Implementation Tips
+
+- Master the visionos native feel: Use system-standard components correctly before customizing.
+- Ensure optimal performance for visionos: Handle lifecycle events efficiently.
+- Aesthetics: Keep designs clean and aligned with the platform's HIG.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # Creating fully immersive experiences in your app
 

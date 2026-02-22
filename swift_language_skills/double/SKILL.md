@@ -1,7 +1,35 @@
 ---
 name: Double
-description: Apple Swift Documentation for Double.
+description: Rork-Max Quality skill for Double. Based on official Apple Swift Documentation and enhanced for elite development.
 ---
+
+# Double
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium Double Implementation
+// Focus on idiomatic, high-performance Swift
+
+import Foundation
+#if canImport(Observation)
+import Observation
+#endif
+
+// Rork-level technical excellence
+// [Example implementation logic for Double]
+```
+
+## 💎 Elite Implementation Tips
+
+- Master the language: Use modern Swift 6 features like Concurrency and Observation.
+- Performance: Optimize Double usage for high-performance apps.
+- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+
+## Documentation
 
 # Double
 

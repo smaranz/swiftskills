@@ -2,6 +2,7 @@ import os
 import re
 import urllib.request
 import urllib.error
+from rork_snippets import DEFAULT_RORK_TIPS
 
 # Root directory for Apple Intelligence skills
 ROOT_DIR = "apple_intelligence_skills"
@@ -38,10 +39,52 @@ def create_ai_skill(name, url):
             title = f"Apple Intelligence: {raw_title}"
             break
             
+    # Premium AI Tips
+    ai_tips = [
+        f"Ensure {name} integration feels seamless by following the Human Interface Guidelines for Intelligence.",
+        "Always handle fallback cases gracefully where the model might be unavailable or downloading.",
+        "Use modern async/await patterns for all AI-triggered operations to keep the UI responsive."
+    ] + DEFAULT_RORK_TIPS
+
+    tips_md = "\n".join([f"- {tip}" for tip in ai_tips])
+
     skill_content = f"""---
 name: {title}
-description: Specialized skill for {title} based on official Apple Developer Documentation.
+description: Rork-Max Quality skill for {title}. Specialized for elite Apple Intelligence integration.
 ---
+
+# {title}
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+// Premium {title} Implementation
+// Focus on low-latency, high-delight AI interactions
+
+import SwiftUI
+import AppIntents
+
+struct RorkIntelligenceView: View {{
+    var body: some View {{
+        ContentUnavailableView {{
+            Label("{title}", systemImage: "sparkles")
+        }} description: {{
+            Text("Implementing elite AI features with Rork Max quality.")
+        }} actions: {{
+            Button("Explore Intents") {{
+                // Action logic
+            }}
+            .buttonStyle(.borderedProminent)
+        }}
+    }}
+}}
+```
+
+## 💎 Elite Implementation Tips
+
+{tips_md}
+
+## Documentation
 
 {md_content}
 """
