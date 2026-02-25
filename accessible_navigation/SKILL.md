@@ -1,9 +1,20 @@
 ---
 name: Accessible navigation
-description: Rork-Max Quality skill for Accessible navigation. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Accessible navigation. Actionable patterns and best practices for SwiftUI development.
 ---
 
 # Accessible navigation
+
+Enable users to navigate to specific user interface elements using rotors.
+An accessibility rotor is a shortcut that enables users
+to quickly navigate to specific elements of the user interface,
+and, optionally, to specific ranges of text within those elements.
+The system automatically provides rotors for many navigable elements,
+but you can supply additional rotors for specific purposes, or
+replace system rotors when they don’t automatically pick
+up off-screen elements, like those far down in a `LazyVStack` or a `List`.
+For design guidance, see
+in the Accessibility section of the Human Interface Guidelines.
 
 
 ## 🚀 Rork-Max Quality Snippet
@@ -12,99 +23,61 @@ description: Rork-Max Quality skill for Accessible navigation. Extracted from Ap
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
 
-## Documentation
+## When to Use
 
-# Accessible navigation
+- Ensuring VoiceOver users can navigate and interact with all app features
+- Supporting Dynamic Type, Reduce Motion, and high-contrast modes
+- Providing accessible labels, hints, and traits for custom controls
+- Implementing accessible drag-and-drop or custom gesture alternatives
 
-Enable users to navigate to specific user interface elements using rotors.
+## Best Practices
 
-## Overview
+- Add `.accessibilityLabel()` to every image, icon, and custom control
+- Use `.accessibilityAddTraits(.isButton)` for interactive non-button elements
+- Group related elements with `.accessibilityElement(children: .combine)`
+- Test with VoiceOver enabled — it reveals issues no other tool catches
+- Support Dynamic Type by never hard-coding font sizes
 
-An accessibility rotor is a shortcut that enables users
-to quickly navigate to specific elements of the user interface,
-and, optionally, to specific ranges of text within those elements.
+## Common Pitfalls
 
-![](images/com.apple.SwiftUI/accessible-navigation-hero@2x.png)
+- Decorative images without `.accessibilityHidden(true)` clutter VoiceOver
+- Custom gestures with no accessible action alternative lock out VoiceOver users
+- Using color alone to convey information (red = error) without text/shape cues
 
-The system automatically provides rotors for many navigable elements,
-but you can supply additional rotors for specific purposes, or
-replace system rotors when they don’t automatically pick
-up off-screen elements, like those far down in a [`LazyVStack`](/documentation/SwiftUI/LazyVStack) or a [`List`](/documentation/SwiftUI/List).
-
-For design guidance, see
-<doc://com.apple.documentation/design/Human-Interface-Guidelines/accessibility#Navigation>
-in the Accessibility section of the Human Interface Guidelines.
-
-## Topics
+## Key APIs
 
 ### Working with rotors
 
-[`accessibilityRotor(_:entries:)`](/documentation/SwiftUI/View/accessibilityRotor(_:entries:))
-
-Create an Accessibility Rotor with the specified user-visible label,
-and entries generated from the content closure.
-
-[`accessibilityRotor(_:entries:entryID:entryLabel:)`](/documentation/SwiftUI/View/accessibilityRotor(_:entries:entryID:entryLabel:))
-
-Create an Accessibility Rotor with the specified user-visible label
-and entries.
-
-[`accessibilityRotor(_:entries:entryLabel:)`](/documentation/SwiftUI/View/accessibilityRotor(_:entries:entryLabel:))
-
-Create an Accessibility Rotor with the specified user-visible label
-and entries.
-
-[`accessibilityRotor(_:textRanges:)`](/documentation/SwiftUI/View/accessibilityRotor(_:textRanges:))
-
-Create an Accessibility Rotor with the specified user-visible label
-and entries for each of the specified ranges. The Rotor will be attached
-to the current Accessibility element, and each entry will go the
-specified range of that element.
+| API | Purpose |
+|-----|---------|
+| `accessibilityRotor(_:entries:)` | Create an Accessibility Rotor with the specified user-visible label, |
+| `accessibilityRotor(_:entries:entryID:entryLabel:)` | Create an Accessibility Rotor with the specified user-visible label |
+| `accessibilityRotor(_:entries:entryLabel:)` | Create an Accessibility Rotor with the specified user-visible label |
+| `accessibilityRotor(_:textRanges:)` | Create an Accessibility Rotor with the specified user-visible label |
 
 ### Creating rotors
 
-[`AccessibilityRotorContent`](/documentation/SwiftUI/AccessibilityRotorContent)
-
-Content within an accessibility rotor.
-
-[`AccessibilityRotorContentBuilder`](/documentation/SwiftUI/AccessibilityRotorContentBuilder)
-
-Result builder you use to generate rotor entry content.
-
-[`AccessibilityRotorEntry`](/documentation/SwiftUI/AccessibilityRotorEntry)
-
-A struct representing an entry in an Accessibility Rotor.
+| API | Purpose |
+|-----|---------|
+| `AccessibilityRotorContent` | Content within an accessibility rotor. |
+| `AccessibilityRotorContentBuilder` | Result builder you use to generate rotor entry content. |
+| `AccessibilityRotorEntry` | A struct representing an entry in an Accessibility Rotor. |
 
 ### Replacing system rotors
 
-[`AccessibilitySystemRotor`](/documentation/SwiftUI/AccessibilitySystemRotor)
-
-Designates a Rotor that replaces one of the automatic, system-provided
-Rotors with a developer-provided Rotor.
+| API | Purpose |
+|-----|---------|
+| `AccessibilitySystemRotor` | Designates a Rotor that replaces one of the automatic, system-provided |
 
 ### Configuring rotors
 
-[`accessibilityRotorEntry(id:in:)`](/documentation/SwiftUI/View/accessibilityRotorEntry(id:in:))
-
-Defines an explicit identifier tying an Accessibility element for this
-view to an entry in an Accessibility Rotor.
-
-[`accessibilityLinkedGroup(id:in:)`](/documentation/SwiftUI/View/accessibilityLinkedGroup(id:in:))
-
-Links multiple accessibility elements so that the user can quickly
-navigate from one element to another, even when the elements are not near
-each other in the accessibility hierarchy.
-
-[`accessibilitySortPriority(_:)`](/documentation/SwiftUI/View/accessibilitySortPriority(_:))
-
-Sets the sort priority order for this view’s accessibility element,
-relative to other elements at the same level.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `accessibilityRotorEntry(id:in:)` | Defines an explicit identifier tying an Accessibility element for this |
+| `accessibilityLinkedGroup(id:in:)` | Links multiple accessibility elements so that the user can quickly |
+| `accessibilitySortPriority(_:)` | Sets the sort priority order for this view’s accessibility element, |

@@ -25,14 +25,26 @@ struct BouncyButton: View {
 
 ## 💎 Elite Implementation Tips
 
-- Timing: The 'down' animation should be twice as fast as the 'up' animation.\n- Brightness: A subtle darkening (-0.05) is better than changing opacity.\n- Haptics: Trigger a .light impact on touch-down.
+- Timing: The 'down' animation should be twice as fast as the 'up' animation.
+- Brightness: A subtle darkening (-0.05) is better than changing opacity.
+- Haptics: Trigger a .light impact on touch-down.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Adding tactile press feedback to buttons and interactive elements
+- Morphing icons or shapes between states (play → pause, plus → X)
+- Creating subtle spring responses on toggles, checkboxes, and selection changes
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Scale down to 0.92–0.95 on press; spring back with dampingFraction 0.4
+- The 'down' animation should be 2x faster than the 'up' animation
+- Use brightness adjustment (-0.05) on press instead of opacity changes
+- Trigger `.light` haptic on touch-down for confirming engagement
+
+## Common Pitfalls
+
+- Over-animating every element — micro-interactions should be barely noticed, not distracting
+- Missing the press-cancel path — if a drag leaves the button, reset without spring
+- Scale effects on buttons inside scroll views can conflict with scroll gesture detection

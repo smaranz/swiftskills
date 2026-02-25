@@ -1,9 +1,22 @@
 ---
 name: Navigation
-description: Rork-Max Quality skill for Navigation. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Navigation. Actionable patterns and best practices for SwiftUI development.
 ---
 
 # Navigation
+
+Enable people to move between different parts of your app’s view hierarchy
+within a scene.
+Use navigation containers to provide structure to your app’s user interface,
+enabling people to easily move among the parts of your app.
+For example, people can move forward and backward through a stack of views
+using a `NavigationStack`, or choose which view to display from a tab bar
+using a `TabView`.
+Configure navigation containers by adding view modifiers like
+`navigationSplitViewStyle(_:)` to the container. Use other modifiers on
+the views inside the container to affect the container’s behavior when showing
+that view. For example, you can use `navigationTitle(_:)` on a
+view to provide a toolbar title to display when showing that view.
 
 
 ## 🚀 Rork-Max Quality Snippet
@@ -12,288 +25,144 @@ description: Rork-Max Quality skill for Navigation. Extracted from Apple SwiftUI
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
 
-## Documentation
+## When to Use
 
-# Navigation
+- Building hierarchical drill-down flows (settings, detail views)
+- Implementing tab-based or sidebar navigation patterns
+- Presenting modal sheets, popovers, alerts, or confirmation dialogs
+- Creating deep-linkable navigation paths with `NavigationPath`
 
-Enable people to move between different parts of your app’s view hierarchy
-within a scene.
+## Best Practices
 
-## Overview
+- Use `NavigationStack` with a `path` binding for programmatic, deep-linkable navigation
+- Prefer `NavigationSplitView` on iPad/Mac for sidebar + detail layouts
+- Model navigation state explicitly so it can be saved, restored, and deep-linked
+- Use `.sheet()`, `.fullScreenCover()`, and `.popover()` for modal presentations
 
-Use navigation containers to provide structure to your app’s user interface,
-enabling people to easily move among the parts of your app.
+## Common Pitfalls
 
-![](images/com.apple.SwiftUI/navigation-hero@2x.png)
+- Using the deprecated `NavigationView` instead of `NavigationStack`/`NavigationSplitView`
+- Nesting `NavigationStack` inside another `NavigationStack` causing double navigation bars
+- Forgetting to make navigation destination types `Hashable` for `navigationDestination(for:)`
 
-For example, people can move forward and backward through a stack of views
-using a [`NavigationStack`](/documentation/SwiftUI/NavigationStack), or choose which view to display from a tab bar
-using a [`TabView`](/documentation/SwiftUI/TabView).
-
-Configure navigation containers by adding view modifiers like
-[`navigationSplitViewStyle(_:)`](/documentation/SwiftUI/View/navigationSplitViewStyle(_:)) to the container. Use other modifiers on
-the views inside the container to affect the container’s behavior when showing
-that view. For example, you can use [`navigationTitle(_:)`](/documentation/SwiftUI/View/navigationTitle(_:)) on a
-view to provide a toolbar title to display when showing that view.
-
-## Topics
+## Key APIs
 
 ### Essentials
 
-[Understanding the navigation stack](/documentation/SwiftUI/Understanding-the-navigation-stack)
-
-Learn about the navigation stack, links, and how to manage navigation types in your app’s structure.
+| API | Purpose |
+|-----|---------|
+| `Understanding the navigation stack` | Learn about the navigation stack, links, and how to manage navigation types in your app’s structure. |
 
 ### Presenting views in columns
 
-[Bringing robust navigation structure to your SwiftUI app](/documentation/SwiftUI/Bringing-robust-navigation-structure-to-your-swiftui-app)
-
-Use navigation links, stacks, destinations, and paths to provide a streamlined experience for all platforms, as well as behaviors such as deep linking and state restoration.
-
-[Migrating to new navigation types](/documentation/SwiftUI/Migrating-to-New-Navigation-Types)
-
-Improve navigation behavior in your app by replacing navigation views
-with navigation stacks and navigation split views.
-
-[`NavigationSplitView`](/documentation/SwiftUI/NavigationSplitView)
-
-A view that presents views in two or three columns, where selections in
-leading columns control presentations in subsequent columns.
-
-[`navigationSplitViewStyle(_:)`](/documentation/SwiftUI/View/navigationSplitViewStyle(_:))
-
-Sets the style for navigation split views within this view.
-
-[`navigationSplitViewColumnWidth(_:)`](/documentation/SwiftUI/View/navigationSplitViewColumnWidth(_:))
-
-Sets a fixed, preferred width for the column containing this view.
-
-[`navigationSplitViewColumnWidth(min:ideal:max:)`](/documentation/SwiftUI/View/navigationSplitViewColumnWidth(min:ideal:max:))
-
-Sets a flexible, preferred width for the column containing this view.
-
-[`NavigationSplitViewVisibility`](/documentation/SwiftUI/NavigationSplitViewVisibility)
-
-The visibility of the leading columns in a navigation split view.
-
-[`NavigationLink`](/documentation/SwiftUI/NavigationLink)
-
-A view that controls a navigation presentation.
+| API | Purpose |
+|-----|---------|
+| `Bringing robust navigation structure to your SwiftUI app` | Use navigation links, stacks, destinations, and paths to provide a streamlined experience for all platforms, as well as behaviors such as deep linking and state restoration. |
+| `Migrating to new navigation types` | Improve navigation behavior in your app by replacing navigation views |
+| `NavigationSplitView` | A view that presents views in two or three columns, where selections in |
+| `navigationSplitViewStyle(_:)` | Sets the style for navigation split views within this view. |
+| `navigationSplitViewColumnWidth(_:)` | Sets a fixed, preferred width for the column containing this view. |
+| `navigationSplitViewColumnWidth(min:ideal:max:)` | Sets a flexible, preferred width for the column containing this view. |
+| `NavigationSplitViewVisibility` | The visibility of the leading columns in a navigation split view. |
+| `NavigationLink` | A view that controls a navigation presentation. |
 
 ### Stacking views in one column
 
-[`NavigationStack`](/documentation/SwiftUI/NavigationStack)
-
-A view that displays a root view and enables you to present additional
-views over the root view.
-
-[`NavigationPath`](/documentation/SwiftUI/NavigationPath)
-
-A type-erased list of data representing the content of a navigation stack.
-
-[`navigationDestination(for:destination:)`](/documentation/SwiftUI/View/navigationDestination(for:destination:))
-
-Associates a destination view with a presented data type for use within
-a navigation stack.
-
-[`navigationDestination(isPresented:destination:)`](/documentation/SwiftUI/View/navigationDestination(isPresented:destination:))
-
-Associates a destination view with a binding that can be used to push
-the view onto a [`NavigationStack`](/documentation/SwiftUI/NavigationStack).
-
-[`navigationDestination(item:destination:)`](/documentation/SwiftUI/View/navigationDestination(item:destination:))
-
-Associates a destination view with a bound value for use within a
-navigation stack or navigation split view
+| API | Purpose |
+|-----|---------|
+| `NavigationStack` | A view that displays a root view and enables you to present additional |
+| `NavigationPath` | A type-erased list of data representing the content of a navigation stack. |
+| `navigationDestination(for:destination:)` | Associates a destination view with a presented data type for use within |
+| `navigationDestination(isPresented:destination:)` | Associates a destination view with a binding that can be used to push |
+| `navigationDestination(item:destination:)` | Associates a destination view with a bound value for use within a |
 
 ### Managing column collapse
 
-[`NavigationSplitViewColumn`](/documentation/SwiftUI/NavigationSplitViewColumn)
-
-A view that represents a column in a navigation split view.
+| API | Purpose |
+|-----|---------|
+| `NavigationSplitViewColumn` | A view that represents a column in a navigation split view. |
 
 ### Setting titles for navigation content
 
-[`navigationTitle(_:)`](/documentation/SwiftUI/View/navigationTitle(_:))
-
-Configures the view’s title for purposes of navigation, using a string
-binding.
-
-[`navigationSubtitle(_:)`](/documentation/SwiftUI/View/navigationSubtitle(_:))
-
-Configures the view’s subtitle for purposes of navigation.
-
-[`navigationDocument(_:)`](/documentation/SwiftUI/View/navigationDocument(_:))
-
-Configures the view’s document for purposes of navigation.
-
-[`navigationDocument(_:preview:)`](/documentation/SwiftUI/View/navigationDocument(_:preview:))
-
-Configures the view’s document for purposes of navigation.
+| API | Purpose |
+|-----|---------|
+| `navigationTitle(_:)` | Configures the view’s title for purposes of navigation, using a string |
+| `navigationSubtitle(_:)` | Configures the view’s subtitle for purposes of navigation. |
+| `navigationDocument(_:)` | Configures the view’s document for purposes of navigation. |
+| `navigationDocument(_:preview:)` | Configures the view’s document for purposes of navigation. |
 
 ### Configuring the navigation bar
 
-[`navigationBarBackButtonHidden(_:)`](/documentation/SwiftUI/View/navigationBarBackButtonHidden(_:))
-
-Hides the navigation bar back button for the view.
-
-[`navigationBarTitleDisplayMode(_:)`](/documentation/SwiftUI/View/navigationBarTitleDisplayMode(_:))
-
-Configures the title display mode for this view.
-
-[`NavigationBarItem`](/documentation/SwiftUI/NavigationBarItem)
-
-A configuration for a navigation bar that represents a view at the top of a
-navigation stack.
+| API | Purpose |
+|-----|---------|
+| `navigationBarBackButtonHidden(_:)` | Hides the navigation bar back button for the view. |
+| `navigationBarTitleDisplayMode(_:)` | Configures the title display mode for this view. |
+| `NavigationBarItem` | A configuration for a navigation bar that represents a view at the top of a |
 
 ### Configuring the sidebar
 
-[`sidebarRowSize`](/documentation/SwiftUI/EnvironmentValues/sidebarRowSize)
-
-The current size of sidebar rows.
-
-[`SidebarRowSize`](/documentation/SwiftUI/SidebarRowSize)
-
-The standard sizes of sidebar rows.
+| API | Purpose |
+|-----|---------|
+| `sidebarRowSize` | The current size of sidebar rows. |
+| `SidebarRowSize` | The standard sizes of sidebar rows. |
 
 ### Presenting views in tabs
 
-[Enhancing your app’s content with tab navigation](/documentation/SwiftUI/Enhancing-your-app-content-with-tab-navigation)
-
-Keep your app content front and center while providing quick access to navigation using the tab bar.
-
-[`TabView`](/documentation/SwiftUI/TabView)
-
-A view that switches between multiple child views using interactive user
-interface elements.
-
-[`Tab`](/documentation/SwiftUI/Tab)
-
-The content for a tab and the tab’s associated tab item in a tab view.
-
-[`TabRole`](/documentation/SwiftUI/TabRole)
-
-A value that defines the purpose of the tab.
-
-[`TabSection`](/documentation/SwiftUI/TabSection)
-
-A container that you can use to add hierarchy within a tab view.
-
-[`tabViewStyle(_:)`](/documentation/SwiftUI/View/tabViewStyle(_:))
-
-Sets the style for the tab view within the current environment.
+| API | Purpose |
+|-----|---------|
+| `Enhancing your app’s content with tab navigation` | Keep your app content front and center while providing quick access to navigation using the tab bar. |
+| `TabView` | A view that switches between multiple child views using interactive user |
+| `Tab` | The content for a tab and the tab’s associated tab item in a tab view. |
+| `TabRole` | A value that defines the purpose of the tab. |
+| `TabSection` | A container that you can use to add hierarchy within a tab view. |
+| `tabViewStyle(_:)` | Sets the style for the tab view within the current environment. |
 
 ### Configuring a tab bar
 
-[`defaultAdaptableTabBarPlacement(_:)`](/documentation/SwiftUI/View/defaultAdaptableTabBarPlacement(_:))
-
-Specifies the default placement for the tabs in a tab view using the
-adaptable sidebar style.
-
-[`tabViewSidebarHeader(content:)`](/documentation/SwiftUI/View/tabViewSidebarHeader(content:))
-
-Adds a custom header to the sidebar of a tab view.
-
-[`tabViewSidebarFooter(content:)`](/documentation/SwiftUI/View/tabViewSidebarFooter(content:))
-
-Adds a custom footer to the sidebar of a tab view.
-
-[`tabViewSidebarBottomBar(content:)`](/documentation/SwiftUI/View/tabViewSidebarBottomBar(content:))
-
-Adds a custom bottom bar to the sidebar of a tab view.
-
-[`AdaptableTabBarPlacement`](/documentation/SwiftUI/AdaptableTabBarPlacement)
-
-A placement for tabs in a tab view using the adaptable sidebar style.
-
-[`tabBarPlacement`](/documentation/SwiftUI/EnvironmentValues/tabBarPlacement)
-
-The current placement of the tab bar.
-
-[`TabBarPlacement`](/documentation/SwiftUI/TabBarPlacement)
-
-A placement for tabs in a tab view.
-
-[`isTabBarShowingSections`](/documentation/SwiftUI/EnvironmentValues/isTabBarShowingSections)
-
-A Boolean value that determines whether a tab view shows the
-expanded contents of a tab section.
-
-[`TabBarMinimizeBehavior`](/documentation/SwiftUI/TabBarMinimizeBehavior)
-
-[`TabViewBottomAccessoryPlacement`](/documentation/SwiftUI/TabViewBottomAccessoryPlacement)
-
-A placement of the bottom accessory in a tab view. You can use this to
-adjust the content of the accessory view based on the placement.
+| API | Purpose |
+|-----|---------|
+| `defaultAdaptableTabBarPlacement(_:)` | Specifies the default placement for the tabs in a tab view using the |
+| `tabViewSidebarHeader(content:)` | Adds a custom header to the sidebar of a tab view. |
+| `tabViewSidebarFooter(content:)` | Adds a custom footer to the sidebar of a tab view. |
+| `tabViewSidebarBottomBar(content:)` | Adds a custom bottom bar to the sidebar of a tab view. |
+| `AdaptableTabBarPlacement` | A placement for tabs in a tab view using the adaptable sidebar style. |
+| `tabBarPlacement` | The current placement of the tab bar. |
+| `TabBarPlacement` | A placement for tabs in a tab view. |
+| `isTabBarShowingSections` | A Boolean value that determines whether a tab view shows the |
 
 ### Configuring a tab
 
-[`sectionActions(content:)`](/documentation/SwiftUI/View/sectionActions(content:))
-
-Adds custom actions to a section.
-
-[`TabPlacement`](/documentation/SwiftUI/TabPlacement)
-
-A place that a tab can appear.
-
-[`TabContentBuilder`](/documentation/SwiftUI/TabContentBuilder)
-
-A result builder that constructs tabs for a tab view that supports
-programmatic selection. This builder requires that all tabs in the
-tab view have the same selection type.
-
-[`TabContent`](/documentation/SwiftUI/TabContent)
-
-A type that provides content for programmatically selectable tabs in a
-tab view.
-
-[`AnyTabContent`](/documentation/SwiftUI/AnyTabContent)
-
-Type erased tab content.
+| API | Purpose |
+|-----|---------|
+| `sectionActions(content:)` | Adds custom actions to a section. |
+| `TabPlacement` | A place that a tab can appear. |
+| `TabContentBuilder` | A result builder that constructs tabs for a tab view that supports |
+| `TabContent` | A type that provides content for programmatically selectable tabs in a |
+| `AnyTabContent` | Type erased tab content. |
 
 ### Enabling tab customization
 
-[`tabViewCustomization(_:)`](/documentation/SwiftUI/View/tabViewCustomization(_:))
-
-Specifies the customizations to apply to the sidebar representation
-of the tab view.
-
-[`TabViewCustomization`](/documentation/SwiftUI/TabViewCustomization)
-
-The customizations a person makes to an adaptable sidebar tab view.
-
-[`TabCustomizationBehavior`](/documentation/SwiftUI/TabCustomizationBehavior)
-
-The customization behavior of customizable tab view content.
+| API | Purpose |
+|-----|---------|
+| `tabViewCustomization(_:)` | Specifies the customizations to apply to the sidebar representation |
+| `TabViewCustomization` | The customizations a person makes to an adaptable sidebar tab view. |
+| `TabCustomizationBehavior` | The customization behavior of customizable tab view content. |
 
 ### Displaying views in multiple panes
 
-[`HSplitView`](/documentation/SwiftUI/HSplitView)
-
-A layout container that arranges its children in a horizontal line and
-allows the user to resize them using dividers placed between them.
-
-[`VSplitView`](/documentation/SwiftUI/VSplitView)
-
-A layout container that arranges its children in a vertical line and allows
-the user to resize them using dividers placed between them.
+| API | Purpose |
+|-----|---------|
+| `HSplitView` | A layout container that arranges its children in a horizontal line and |
+| `VSplitView` | A layout container that arranges its children in a vertical line and allows |
 
 ### Deprecated Types
 
-[`NavigationView`](/documentation/SwiftUI/NavigationView)
-
-A view for presenting a stack of views that represents a visible path in a
-navigation hierarchy.
-
-[`tabItem(_:)`](/documentation/SwiftUI/View/tabItem(_:))
-
-Sets the tab bar item associated with this view.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `NavigationView` | A view for presenting a stack of views that represents a visible path in a |
+| `tabItem(_:)` | Sets the tab bar item associated with this view. |

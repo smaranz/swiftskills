@@ -2,65 +2,55 @@ import os
 import re
 import urllib.request
 import urllib.error
-from rork_snippets import DEFAULT_RORK_TIPS
+from rork_snippets import (
+    get_rork_quality_section,
+    parse_apple_docs,
+    format_api_reference,
+    format_guidance_section,
+    SWIFT_CATEGORY_GUIDANCE,
+    DEFAULT_RORK_TIPS,
+    RORK_SNIPPETS,
+)
 
-# Mapping of Apple Docs endpoints to local folder names
-# Format: endpoint: folder_name
 swift_topics = {
-    # Essentials
-    "AdoptingSwift6": "adopting_swift_6",
-    
-    # Standard Library
-    "Int": "int",
-    "Double": "double",
-    "String": "string",
-    "Array": "array",
-    "Dictionary": "dictionary",
-    "swift-standard-library": "swift_standard_library",
-    
-    # Data Modeling
-    "choosing-between-structures-and-classes": "data_modeling_structs_classes",
-    "adopting-common-protocols": "adopting_common_protocols",
-    
-    # Data Flow and Control Flow
-    "maintaining-state-in-your-apps": "maintaining_state",
-    "preventing-timing-problems-when-using-closures": "preventing_timing_problems",
-    
-    # Interop (Obj-C & C)
-    "objective-c-and-c-code-customization": "c_and_objc_customization",
-    "migrating-your-objective-c-code-to-swift": "migrating_objc_to_swift",
-    "cocoa-design-patterns": "cocoa_design_patterns",
-    "handling-dynamically-typed-methods-and-objects-in-swift": "handling_dynamic_types",
-    "using-objective-c-runtime-features-in-swift": "objc_runtime_features",
-    "imported-c-and-objective-c-apis": "imported_apis",
-    "calling-objective-c-apis-asynchronously": "async_objc_apis",
-    
-    # Interop (C++)
-    "MixingLanguagesInAnXcodeProject": "mixing_languages_cpp",
-    "CallingAPIsAcrossLanguageBoundaries": "calling_apis_across_boundaries_cpp"
+    "AdoptingSwift6": ("adopting_swift_6", "essentials"),
+    "Int": ("int", "standard_library"),
+    "Double": ("double", "standard_library"),
+    "String": ("string", "standard_library"),
+    "Array": ("array", "standard_library"),
+    "Dictionary": ("dictionary", "standard_library"),
+    "swift-standard-library": ("swift_standard_library", "standard_library"),
+    "choosing-between-structures-and-classes": ("data_modeling_structs_classes", "data_modeling"),
+    "adopting-common-protocols": ("adopting_common_protocols", "data_modeling"),
+    "maintaining-state-in-your-apps": ("maintaining_state", "concurrency"),
+    "preventing-timing-problems-when-using-closures": ("preventing_timing_problems", "concurrency"),
+    "objective-c-and-c-code-customization": ("c_and_objc_customization", "interop"),
+    "migrating-your-objective-c-code-to-swift": ("migrating_objc_to_swift", "interop"),
+    "cocoa-design-patterns": ("cocoa_design_patterns", "interop"),
+    "handling-dynamically-typed-methods-and-objects-in-swift": ("handling_dynamic_types", "interop"),
+    "using-objective-c-runtime-features-in-swift": ("objc_runtime_features", "interop"),
+    "imported-c-and-objective-c-apis": ("imported_apis", "interop"),
+    "calling-objective-c-apis-asynchronously": ("async_objc_apis", "interop"),
+    "MixingLanguagesInAnXcodeProject": ("mixing_languages_cpp", "interop"),
+    "CallingAPIsAcrossLanguageBoundaries": ("calling_apis_across_boundaries_cpp", "interop"),
 }
 
-# Other frameworks
 other_topics = {
-    "Observation": ("Observation", "observation"),
-    "Distributed": ("Distributed", "distributed_actors"),
-    "RegexBuilder": ("RegexBuilder", "regex_builder"),
-    "Synchronization": ("Synchronization", "synchronization")
+    "Observation": ("Observation", "observation", "concurrency"),
+    "Distributed": ("Distributed", "distributed_actors", "concurrency"),
+    "RegexBuilder": ("RegexBuilder", "regex_builder", "standard_library"),
+    "Synchronization": ("Synchronization", "synchronization", "concurrency"),
 }
 
 base_url = "https://docs.developer.apple.com/tutorials/data/documentation/"
 
-def cleanup_markdown(text):
-    # Remove the initial JSON block
-    text = re.sub(r'<!--.*?-->', '', text, flags=re.DOTALL).strip()
-    return text
 
-def create_skill(framework, endpoint, folder_name):
+def create_skill(framework, endpoint, folder_name, category):
     if framework == endpoint:
         url = f"{base_url}{framework}.md"
     else:
         url = f"{base_url}{framework}/{endpoint}.md"
-        
+
     try:
         with urllib.request.urlopen(url) as response:
             md_content = response.read().decode("utf-8")
@@ -68,66 +58,73 @@ def create_skill(framework, endpoint, folder_name):
         print(f"Failed to fetch {url}: {e}")
         return
 
-    md_content = cleanup_markdown(md_content)
-    
-    # Extract Title
-    title = endpoint.replace('-', ' ').title()
-    for line in md_content.split('\n'):
-        if line.startswith('# '):
-            title = line[2:].strip()
-            break
-            
-    # Swift-specific Rork Tips
-    swift_tips = [
-        f"Master the language: Use modern Swift 6 features like Concurrency and Observation.",
-        f"Performance: Optimize {title} usage for high-performance apps.",
-        "Aesthetics: Write clean, idiomatic Swift that is easy to maintain."
-    ] + DEFAULT_RORK_TIPS
+    parsed = parse_apple_docs(md_content)
+    title = parsed["title"] or endpoint.replace('-', ' ').title()
+    overview = parsed["overview"]
+    api_reference = format_api_reference(parsed["topics"])
 
-    tips_md = "\n".join([f"- {tip}" for tip in swift_tips])
+    # Get topic-specific snippet or generate a relevant one
+    rork_data = RORK_SNIPPETS.get(endpoint, {})
+    if rork_data:
+        snippet = rork_data.get("snippet", "")
+        tips = rork_data.get("tips", DEFAULT_RORK_TIPS)
+    else:
+        snippet = f"""```swift
+import Foundation
+
+// {title} — idiomatic Swift implementation pattern
+// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+```"""
+        tips = [
+            f"Use modern Swift 6 patterns when working with {title}.",
+            "Prefer value types (structs/enums) unless reference semantics are needed.",
+            "Leverage Swift's type system to catch errors at compile time.",
+        ] + DEFAULT_RORK_TIPS
+
+    tips_md = "\n".join([f"- {tip}" for tip in tips])
+
+    guidance = SWIFT_CATEGORY_GUIDANCE.get(category, {})
+    when_to_use = format_guidance_section("When to Use", guidance.get("when_to_use"))
+    best_practices = format_guidance_section("Best Practices", guidance.get("best_practices"))
+    pitfalls = format_guidance_section("Common Pitfalls", guidance.get("pitfalls"))
 
     skill_content = f"""---
 name: {title}
-description: Rork-Max Quality skill for {title}. Based on official Apple {framework} Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for {title}. Actionable Swift language patterns and best practices.
 ---
 
 # {title}
 
+{overview}
+
 ## 🚀 Rork-Max Quality Snippet
 
-```swift
-// Premium {title} Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for {title}]
-```
+{snippet}
 
 ## 💎 Elite Implementation Tips
 
 {tips_md}
 
-## Documentation
+{when_to_use}
 
-{md_content}
+{best_practices}
+
+{pitfalls}
+
+{api_reference}
 """
-    
+
     full_folder_path = os.path.join("swift_language_skills", folder_name)
     os.makedirs(full_folder_path, exist_ok=True)
     with open(os.path.join(full_folder_path, "SKILL.md"), "w") as f:
         f.write(skill_content)
     print(f"Created {full_folder_path}/SKILL.md")
 
-# Run for Swift framework topics
-for endpoint, folder in swift_topics.items():
-    create_skill("Swift", endpoint, folder)
 
-# Run for other frameworks listed in Swift docs
+for endpoint, info in swift_topics.items():
+    folder, category = info
+    create_skill("Swift", endpoint, folder, category)
+
 for endpoint, info in other_topics.items():
-    framework, folder = info
-    create_skill(framework, endpoint, folder)
+    framework, folder, category = info
+    create_skill(framework, endpoint, folder, category)

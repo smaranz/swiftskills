@@ -1,48 +1,47 @@
 ---
 name: Calling APIs Across Language Boundaries
-description: Rork-Max Quality skill for Calling APIs Across Language Boundaries. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Calling APIs Across Language Boundaries. Actionable Swift language patterns and best practices.
 ---
-
-# Calling APIs Across Language Boundaries
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Calling APIs Across Language Boundaries Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Calling APIs Across Language Boundaries]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Calling APIs Across Language Boundaries usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
 
 # Calling APIs Across Language Boundaries
 
 Use a variety of C++ APIs in Swift – and vice-versa – across multiple targets and frameworks in an Xcode project.
+> Note: This sample code project is associated with WWDC 2023 sessions 10172: Mix Swift and C++ and 10268: Meet mergeable libraries.
 
-## Overview
+## 🚀 Rork-Max Quality Snippet
 
-> Note: This sample code project is associated with WWDC 2023 sessions 10172: [Mix Swift and C++](https://developer.apple.com/wwdc23/10172) and 10268: [Meet mergeable libraries](https://developer.apple.com/wwdc23/10268).
+```swift
+import Foundation
 
-### Configure the sample code project
+// Calling APIs Across Language Boundaries — idiomatic Swift implementation pattern
+// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+```
 
-Before you run the sample code project in Xcode, ensure you’re using macOS 14.0 or later.
+## 💎 Elite Implementation Tips
 
----
+- Use modern Swift 6 patterns when working with Calling APIs Across Language Boundaries.
+- Prefer value types (structs/enums) unless reference semantics are needed.
+- Leverage Swift's type system to catch errors at compile time.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+## When to Use
+
+- Calling Objective-C APIs from Swift or vice versa
+- Integrating C/C++ libraries into a Swift project
+- Migrating an existing Objective-C codebase to Swift incrementally
+
+## Best Practices
+
+- Use a bridging header for Objective-C → Swift; `@objc` attribute for Swift → Objective-C
+- Leverage `NS_SWIFT_NAME` in Objective-C headers for clean Swift API names
+- Use `async` overloads of Objective-C completion-handler APIs
+
+## Common Pitfalls
+
+- Objective-C generics don't fully map to Swift generics — watch for `Any` erasure
+- C pointers require careful memory management — use `withUnsafe*Pointer` wrappers
+- KVO from Swift requires `@objc dynamic` properties
+
+

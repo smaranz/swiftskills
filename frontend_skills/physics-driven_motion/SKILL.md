@@ -36,14 +36,26 @@ struct PhysicsMotionView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Responsiveness: Always use .spring() instead of .easeInOut for interactive elements.\n- Naturalism: Match the response to the distance traveled—shorter distances need faster responses.\n- Interaction: Interruptible animations are key—ensure state updates don't snap back instantly.
+- Responsiveness: Always use .spring() instead of .easeInOut for interactive elements.
+- Naturalism: Match the response to the distance traveled—shorter distances need faster responses.
+- Interaction: Interruptible animations are key—ensure state updates don't snap back instantly.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Animating interactive drag, swipe, or bounce interactions
+- Replacing ease-in/ease-out curves with natural spring physics
+- Creating rubber-banding, snap-back, and throw-to-dismiss gestures
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Always use `.spring(response:dampingFraction:)` instead of `.easeInOut` for interactive elements
+- Match spring response to distance — shorter movements need faster response (0.2–0.3s)
+- Use `dampingFraction` 0.5–0.7 for bouncy UI, 0.8–1.0 for settled, precise motion
+- Make animations interruptible — never block gesture updates during spring animations
+
+## Common Pitfalls
+
+- Using `.linear` or `.easeInOut` for interactive elements — they feel robotic
+- Overly bouncy springs (dampingFraction < 0.4) distract from content and annoy users
+- Not testing with `UIAccessibility.isReduceMotionEnabled` — provide crossfade fallbacks

@@ -1,9 +1,21 @@
 ---
 name: Persistent storage
-description: Rork-Max Quality skill for Persistent storage. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Persistent storage. Actionable patterns and best practices for SwiftUI development.
 ---
 
 # Persistent storage
+
+Store data for use across sessions of your app.
+The operating system provides ways to store data when your app closes,
+so that when people open your app again later, they can continue working without
+interruption. The mechanism that you use depends on factors like what and how
+much you need to store, whether you need serialized or random access to the
+data, and so on.
+You use the same kinds of storage in a SwiftUI app that you use
+in any other app. For example, you can access files on disk using the
+However, SwiftUI also provides conveniences that make it easier to use certain
+kinds of persistent storage in a declarative environment. For example, you can
+use `FetchRequest` and `FetchedResults` to interact with a Core Data model.
 
 
 ## 🚀 Rork-Max Quality Snippet
@@ -12,83 +24,49 @@ description: Rork-Max Quality skill for Persistent storage. Extracted from Apple
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
 
-## Documentation
+## When to Use
 
-# Persistent storage
+- Sharing state between views without explicit prop drilling
+- Persisting user preferences or small data sets across launches
+- Injecting dependencies (services, repositories) into the view hierarchy
+- Propagating theme, locale, or feature-flag values through the environment
 
-Store data for use across sessions of your app.
+## Best Practices
 
-## Overview
+- Use `@Observable` (Swift 6) instead of `ObservableObject` for finer-grained updates
+- Prefer `@Environment` for dependency injection over singletons
+- Use `@AppStorage` for simple UserDefaults-backed preferences
+- Model domain data as value types (structs) and wrap in `@Observable` classes for mutation tracking
 
-The operating system provides ways to store data when your app closes,
-so that when people open your app again later, they can continue working without
-interruption. The mechanism that you use depends on factors like what and how
-much you need to store, whether you need serialized or random access to the
-data, and so on.
+## Common Pitfalls
 
-![](images/com.apple.SwiftUI/persistent-storage-hero@2x.png)
+- Storing large data in `@AppStorage` — it's backed by UserDefaults, not a database
+- Creating `@Observable` objects inside `body` — they get recreated every render
+- Using `@EnvironmentObject` when `@Environment` with `@Observable` is cleaner in iOS 17+
 
-You use the same kinds of storage in a SwiftUI app that you use
-in any other app. For example, you can access files on disk using the
-<doc://com.apple.documentation/documentation/Foundation/FileManager> interface.
-However, SwiftUI also provides conveniences that make it easier to use certain
-kinds of persistent storage in a declarative environment. For example, you can
-use [`FetchRequest`](/documentation/SwiftUI/FetchRequest) and [`FetchedResults`](/documentation/SwiftUI/FetchedResults) to interact with a Core Data model.
-
-## Topics
+## Key APIs
 
 ### Saving state across app launches
 
-[Restoring your app’s state with SwiftUI](/documentation/SwiftUI/restoring-your-app-s-state-with-swiftui)
-
-Provide app continuity for users by preserving their current activities.
-
-[`defaultAppStorage(_:)`](/documentation/SwiftUI/View/defaultAppStorage(_:))
-
-The default store used by `AppStorage` contained within the view.
-
-[`AppStorage`](/documentation/SwiftUI/AppStorage)
-
-A property wrapper type that reflects a value from `UserDefaults` and
-invalidates a view on a change in value in that user default.
-
-[`SceneStorage`](/documentation/SwiftUI/SceneStorage)
-
-A property wrapper type that reads and writes to persisted, per-scene
-storage.
+| API | Purpose |
+|-----|---------|
+| `Restoring your app’s state with SwiftUI` | Provide app continuity for users by preserving their current activities. |
+| `defaultAppStorage(_:)` | The default store used by `AppStorage` contained within the view. |
+| `AppStorage` | A property wrapper type that reflects a value from `UserDefaults` and |
+| `SceneStorage` | A property wrapper type that reads and writes to persisted, per-scene |
 
 ### Accessing Core Data
 
-[Loading and displaying a large data feed](/documentation/SwiftUI/loading-and-displaying-a-large-data-feed)
-
-Consume data in the background, and lower memory use by batching imports and preventing duplicate records.
-
-[`managedObjectContext`](/documentation/SwiftUI/EnvironmentValues/managedObjectContext)
-
-[`FetchRequest`](/documentation/SwiftUI/FetchRequest)
-
-A property wrapper type that retrieves entities from a Core Data persistent
-store.
-
-[`FetchedResults`](/documentation/SwiftUI/FetchedResults)
-
-A collection of results retrieved from a Core Data store.
-
-[`SectionedFetchRequest`](/documentation/SwiftUI/SectionedFetchRequest)
-
-A property wrapper type that retrieves entities, grouped into sections,
-from a Core Data persistent store.
-
-[`SectionedFetchResults`](/documentation/SwiftUI/SectionedFetchResults)
-
-A collection of results retrieved from a Core Data persistent store,
-grouped into sections.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `Loading and displaying a large data feed` | Consume data in the background, and lower memory use by batching imports and preventing duplicate records. |
+| `managedObjectContext` | — |
+| `FetchRequest` | A property wrapper type that retrieves entities from a Core Data persistent |
+| `FetchedResults` | A collection of results retrieved from a Core Data store. |
+| `SectionedFetchRequest` | A property wrapper type that retrieves entities, grouped into sections, |
+| `SectionedFetchResults` | A collection of results retrieved from a Core Data persistent store, |

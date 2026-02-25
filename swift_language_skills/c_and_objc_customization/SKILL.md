@@ -1,62 +1,46 @@
 ---
 name: Objective-C and C Code Customization
-description: Rork-Max Quality skill for Objective-C and C Code Customization. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Objective-C and C Code Customization. Actionable Swift language patterns and best practices.
 ---
-
-# Objective-C and C Code Customization
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Objective-C and C Code Customization Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Objective-C and C Code Customization]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Objective-C and C Code Customization usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
 
 # Objective-C and C Code Customization
 
 Apply macros to your Objective-C APIs to customize how they’re imported into Swift.
 
-## Topics
+## 🚀 Rork-Max Quality Snippet
 
-### Customizing Objective-C APIs
+```swift
+import Foundation
 
-  <doc://com.apple.Swift/documentation/Swift/designating-nullability-in-objective-c-apis>
+// Objective-C and C Code Customization — idiomatic Swift implementation pattern
+// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+```
 
-  <doc://com.apple.Swift/documentation/Swift/renaming-objective-c-apis-for-swift>
+## 💎 Elite Implementation Tips
 
-  <doc://com.apple.Swift/documentation/Swift/improving-objective-c-api-declarations-for-swift>
+- Use modern Swift 6 patterns when working with Objective-C and C Code Customization.
+- Prefer value types (structs/enums) unless reference semantics are needed.
+- Leverage Swift's type system to catch errors at compile time.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
-  <doc://com.apple.Swift/documentation/Swift/grouping-related-objective-c-constants>
+## When to Use
 
-  <doc://com.apple.Swift/documentation/Swift/marking-api-availability-in-objective-c>
+- Calling Objective-C APIs from Swift or vice versa
+- Integrating C/C++ libraries into a Swift project
+- Migrating an existing Objective-C codebase to Swift incrementally
 
-  <doc://com.apple.Swift/documentation/Swift/making-objective-c-apis-unavailable-in-swift>
+## Best Practices
 
-### Customizing C APIs
+- Use a bridging header for Objective-C → Swift; `@objc` attribute for Swift → Objective-C
+- Leverage `NS_SWIFT_NAME` in Objective-C headers for clean Swift API names
+- Use `async` overloads of Objective-C completion-handler APIs
 
-  <doc://com.apple.Swift/documentation/Swift/customizing-your-c-code-for-swift>
+## Common Pitfalls
+
+- Objective-C generics don't fully map to Swift generics — watch for `Any` erasure
+- C pointers require careful memory management — use `withUnsafe*Pointer` wrappers
+- KVO from Swift requires `@objc dynamic` properties
 
 
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)

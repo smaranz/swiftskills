@@ -23,14 +23,26 @@ func triggerEliteHaptic() {
 
 ## 💎 Elite Implementation Tips
 
-- Subtlety: Use .soft and .light patterns for frequent interactions to avoid fatigue.\n- Sync: Align haptic triggers with the exact peak of a fluid animation.\n- Context: Use .rigid for physical boundaries and .selection for scrolling increments.
+- Subtlety: Use .soft and .light patterns for frequent interactions to avoid fatigue.
+- Sync: Align haptic triggers with the exact peak of a fluid animation.
+- Context: Use .rigid for physical boundaries and .selection for scrolling increments.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Confirming discrete actions (button press, toggle, delete)
+- Providing feedback during drag thresholds, snap points, or scroll boundaries
+- Creating premium tactile experiences for gaming or creative apps
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use `.soft` and `.light` patterns for frequent interactions to avoid haptic fatigue
+- Align haptic triggers with the exact peak of a visual animation
+- Use `.rigid` for physical boundary feedback and `.selection` for scrolling increments
+- Call `generator.prepare()` ahead of time to eliminate latency
+
+## Common Pitfalls
+
+- Triggering haptics on every frame during a drag — batch to threshold crossings
+- Using strong haptics for subtle UI — it feels jarring and drains battery
+- Forgetting that haptics are silent in silent mode on some devices

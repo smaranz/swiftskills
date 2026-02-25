@@ -21,14 +21,26 @@ Text("Rork Premium")
 
 ## 💎 Elite Implementation Tips
 
-- Scale: Always test with 'Extra Extra Large' Dynamic Type.\n- Hierarchy: Use .foregroundStyle(.secondary) instead of lower opacity.\n- Aesthetics: .rounded design + .bold weight creates an 'app-like' feel.
+- Scale: Always test with 'Extra Extra Large' Dynamic Type.
+- Hierarchy: Use .foregroundStyle(.secondary) instead of lower opacity.
+- Aesthetics: .rounded design + .bold weight creates an 'app-like' feel.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Building text-heavy screens (articles, settings, onboarding)
+- Creating branded typography that respects Dynamic Type scaling
+- Designing typographic hierarchy (headlines, body, captions) for readability
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use system text styles (`.title`, `.body`, `.caption`) — they scale with Dynamic Type
+- Apply negative tracking (-0.3 to -0.5) on large headlines for tighter, premium feel
+- Use `.foregroundStyle(.secondary)` for de-emphasized text instead of lower opacity
+- Test with 'Extra Extra Large' Dynamic Type to catch layout overflow
+
+## Common Pitfalls
+
+- Hard-coding font sizes — the UI breaks at accessibility text sizes
+- Using `.foregroundColor` (deprecated) instead of `.foregroundStyle`
+- Forgetting `@ScaledMetric` for spacing that should scale with Dynamic Type

@@ -20,14 +20,26 @@ TextField("Label", text: $text)
 
 ## 💎 Elite Implementation Tips
 
-- Feedback: Shake the text field on invalid input using offsets.\n- Focus: Use .ultraThinMaterial behind focused fields to highlight them.\n- Keyboard: Add 'Done' or 'Next' button to the keyboard toolbar.
+- Feedback: Shake the text field on invalid input using offsets.
+- Focus: Use .ultraThinMaterial behind focused fields to highlight them.
+- Keyboard: Add 'Done' or 'Next' button to the keyboard toolbar.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Building sign-up, login, or data-entry forms with validation
+- Creating professional text input experiences with focus management
+- Implementing inline validation with real-time error feedback
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use `@FocusState` with an enum to manage focus across fields
+- Shake the text field on invalid input using offset animation
+- Add `.ultraThinMaterial` behind focused fields to highlight active input
+- Add 'Done' or 'Next' toolbar buttons to the keyboard for field navigation
+
+## Common Pitfalls
+
+- Validating on every keystroke — debounce to 300ms or validate on focus loss
+- Not handling keyboard toolbar for field-to-field navigation
+- Error messages that push layout around — reserve space or use overlay

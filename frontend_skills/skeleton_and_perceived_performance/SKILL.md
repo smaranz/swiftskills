@@ -23,14 +23,26 @@ RoundedRectangle(cornerRadius: 12)
 
 ## 💎 Elite Implementation Tips
 
-- Animation: Linear shine animations at 1.5s duration feel 'just right'.\n- Colors: Use the system theme so skeleton matches dark/light mode.\n- Stagger: Offset row animation start times for an organic feel.
+- Animation: Linear shine animations at 1.5s duration feel 'just right'.
+- Colors: Use the system theme so skeleton matches dark/light mode.
+- Stagger: Offset row animation start times for an organic feel.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Showing placeholder UI while network data loads
+- Replacing spinners with skeleton screens that preview the content layout
+- Improving perceived performance by showing structure before data arrives
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Match skeleton shapes to actual content layout (image placeholders, text lines)
+- Use a linear gradient shimmer at 1.5s duration for 'just right' pacing
+- Apply system colors so skeletons match dark/light mode automatically
+- Stagger row animation start times by 50–100ms for an organic cascading reveal
+
+## Common Pitfalls
+
+- Skeleton that doesn't match final layout causes a jarring shift when content loads
+- Shimmer animations without Reduce Motion support — use static placeholders as fallback
+- Showing skeletons for < 200ms — flash of skeleton is worse than no skeleton

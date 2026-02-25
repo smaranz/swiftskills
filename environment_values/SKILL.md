@@ -1,9 +1,22 @@
 ---
 name: Environment values
-description: Rork-Max Quality skill for Environment values. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Environment values. Actionable patterns and best practices for SwiftUI development.
 ---
 
 # Environment values
+
+Share data throughout a view hierarchy using the environment.
+Views in SwiftUI can react to configuration information that they read from the
+environment using an `Environment` property wrapper.
+A view inherits its environment from its container view, subject to explicit
+changes from an `environment(_:_:)` view modifier, or by implicit
+changes from one of the many modifiers that operate on environment values.
+As a result, you can configure a entire hierarchy of views by modifying the
+environment of the group’s container.
+You can find many built-in environment values in the `EnvironmentValues`
+structure. You can also create a custom `EnvironmentValues` property by defining
+a new property in an extension to the environment values structure and applying
+the `Entry()` macro to the variable declaration.
 
 
 ## 🚀 Rork-Max Quality Snippet
@@ -12,88 +25,59 @@ description: Rork-Max Quality skill for Environment values. Extracted from Apple
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
 
-## Documentation
+## When to Use
 
-# Environment values
+- Sharing state between views without explicit prop drilling
+- Persisting user preferences or small data sets across launches
+- Injecting dependencies (services, repositories) into the view hierarchy
+- Propagating theme, locale, or feature-flag values through the environment
 
-Share data throughout a view hierarchy using the environment.
+## Best Practices
 
-## Overview
+- Use `@Observable` (Swift 6) instead of `ObservableObject` for finer-grained updates
+- Prefer `@Environment` for dependency injection over singletons
+- Use `@AppStorage` for simple UserDefaults-backed preferences
+- Model domain data as value types (structs) and wrap in `@Observable` classes for mutation tracking
 
-Views in SwiftUI can react to configuration information that they read from the
-environment using an [`Environment`](/documentation/SwiftUI/Environment) property wrapper.
+## Common Pitfalls
 
-![](images/com.apple.SwiftUI/environment-values-hero@2x.png)
+- Storing large data in `@AppStorage` — it's backed by UserDefaults, not a database
+- Creating `@Observable` objects inside `body` — they get recreated every render
+- Using `@EnvironmentObject` when `@Environment` with `@Observable` is cleaner in iOS 17+
 
-A view inherits its environment from its container view, subject to explicit
-changes from an [`environment(_:_:)`](/documentation/SwiftUI/View/environment(_:_:)) view modifier, or by implicit
-changes from one of the many modifiers that operate on environment values.
-As a result, you can configure a entire hierarchy of views by modifying the
-environment of the group’s container.
-
-You can find many built-in environment values in the [`EnvironmentValues`](/documentation/SwiftUI/EnvironmentValues)
-structure. You can also create a custom [`EnvironmentValues`](/documentation/SwiftUI/EnvironmentValues) property by defining
-a new property in an extension to the environment values structure and applying
-the [`Entry()`](/documentation/SwiftUI/Entry()) macro to the variable declaration.
-
-## Topics
+## Key APIs
 
 ### Accessing environment values
 
-[`Environment`](/documentation/SwiftUI/Environment)
-
-A property wrapper that reads a value from a view’s environment.
-
-[`EnvironmentValues`](/documentation/SwiftUI/EnvironmentValues)
-
-A collection of environment values propagated through a view hierarchy.
+| API | Purpose |
+|-----|---------|
+| `Environment` | A property wrapper that reads a value from a view’s environment. |
+| `EnvironmentValues` | A collection of environment values propagated through a view hierarchy. |
 
 ### Creating custom environment values
 
-[`Entry()`](/documentation/SwiftUI/Entry())
-
-Creates an environment values, transaction, container values,
-or focused values entry.
-
-[`EnvironmentKey`](/documentation/SwiftUI/EnvironmentKey)
-
-A key for accessing values in the environment.
+| API | Purpose |
+|-----|---------|
+| `Entry()` | Creates an environment values, transaction, container values, |
+| `EnvironmentKey` | A key for accessing values in the environment. |
 
 ### Modifying the environment of a view
 
-[`environment(_:)`](/documentation/SwiftUI/View/environment(_:))
-
-Places an observable object in the view’s environment.
-
-[`environment(_:_:)`](/documentation/SwiftUI/View/environment(_:_:))
-
-Sets the environment value of the specified key path to the given value.
-
-[`transformEnvironment(_:transform:)`](/documentation/SwiftUI/View/transformEnvironment(_:transform:))
-
-Transforms the environment value of the specified key path with the
-given function.
+| API | Purpose |
+|-----|---------|
+| `environment(_:)` | Places an observable object in the view’s environment. |
+| `environment(_:_:)` | Sets the environment value of the specified key path to the given value. |
+| `transformEnvironment(_:transform:)` | Transforms the environment value of the specified key path with the |
 
 ### Modifying the environment of a scene
 
-[`environment(_:)`](/documentation/SwiftUI/Scene/environment(_:))
-
-Places an observable object in the scene’s environment.
-
-[`environment(_:_:)`](/documentation/SwiftUI/Scene/environment(_:_:))
-
-Sets the environment value of the specified key path to the given value.
-
-[`transformEnvironment(_:transform:)`](/documentation/SwiftUI/Scene/transformEnvironment(_:transform:))
-
-Transforms the environment value of the specified key path with the
-given function.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `environment(_:)` | Places an observable object in the scene’s environment. |
+| `environment(_:_:)` | Sets the environment value of the specified key path to the given value. |
+| `transformEnvironment(_:transform:)` | Transforms the environment value of the specified key path with the |

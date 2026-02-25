@@ -1,91 +1,60 @@
 ---
 name: Handling Dynamically Typed Methods and Objects in Swift
-description: Rork-Max Quality skill for Handling Dynamically Typed Methods and Objects in Swift. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Handling Dynamically Typed Methods and Objects in Swift. Actionable Swift language patterns and best practices.
 ---
 
 # Handling Dynamically Typed Methods and Objects in Swift
 
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Handling Dynamically Typed Methods and Objects in Swift Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Handling Dynamically Typed Methods and Objects in Swift]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Handling Dynamically Typed Methods and Objects in Swift usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
-
-# Handling Dynamically Typed Methods and Objects in Swift
-
 Cast instances of the Objective-C `id` type to a specific Swift type.
-
-## Overview
-
 In Objective-C, the `id` type represents objects that are instances of any Objective-C
 class. The `id` type is instead imported by Swift as the `Any` type. When you pass
 a Swift instance to an Objective-C API, it’s bridged as an `id` parameter so that
 it’s usable in the API as an Objective-C object. When `id` values are imported into
 Swift as `Any`, the runtime automatically handles bridging back to either class references
 or value types.
-
 ```swift
 var x: Any = "hello" as String
-x as? String   // String with value "hello"
+x as? String // String with value "hello"
 x as? NSString // NSString with value "hello"
-
 x = "goodbye" as NSString
-x as? String   // String with value "goodbye"
+x as? String // String with value "goodbye"
 x as? NSString // NSString with value "goodbye"
 ```
 
-### Downcast Objects to Call Methods and Access Properties
-
-When you work with objects of type `Any` where you know the underlying type, it’s
-often useful to downcast those objects to the underlying type. However, because the
-`Any` type can refer to any type, a downcast to a more specific type isn’t guaranteed
-by the compiler to succeed.
-
-You can use the conditional type cast operator (`as?`), which returns an optional
-value of the type you are trying to downcast to:
+## 🚀 Rork-Max Quality Snippet
 
 ```swift
-let userDefaults = UserDefaults.standard
-let lastRefreshDate = userDefaults.object(forKey: "LastRefreshDate") // lastRefreshDate is of type Any?
-if let date = lastRefreshDate as? Date {
-    print("\(date.timeIntervalSinceReferenceDate)")
-}
+import Foundation
+
+// Handling Dynamically Typed Methods and Objects in Swift — idiomatic Swift implementation pattern
+// Use modern Swift 6 features: @Observable, async/await, structured concurrency
 ```
 
-If you’re completely certain about the type of the object, you can use the forced
-downcast operator (`as!`) instead.
+## 💎 Elite Implementation Tips
 
-```swift
-let myDate = lastRefreshDate as! Date
-let timeInterval = myDate.timeIntervalSinceReferenceDate
-```
+- Use modern Swift 6 patterns when working with Handling Dynamically Typed Methods and Objects in Swift.
+- Prefer value types (structs/enums) unless reference semantics are needed.
+- Leverage Swift's type system to catch errors at compile time.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
-However, if a forced downcast fails, a runtime error is triggered:
+## When to Use
 
-```swift
-let myDate = lastRefreshDate as! String // Error
-```
+- Calling Objective-C APIs from Swift or vice versa
+- Integrating C/C++ libraries into a Swift project
+- Migrating an existing Objective-C codebase to Swift incrementally
 
----
+## Best Practices
 
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+- Use a bridging header for Objective-C → Swift; `@objc` attribute for Swift → Objective-C
+- Leverage `NS_SWIFT_NAME` in Objective-C headers for clean Swift API names
+- Use `async` overloads of Objective-C completion-handler APIs
+
+## Common Pitfalls
+
+- Objective-C generics don't fully map to Swift generics — watch for `Any` erasure
+- C pointers require careful memory management — use `withUnsafe*Pointer` wrappers
+- KVO from Swift requires `@objc dynamic` properties
+
+

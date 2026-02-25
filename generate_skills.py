@@ -2,7 +2,15 @@ import os
 import re
 import urllib.request
 import urllib.error
-from rork_snippets import get_rork_quality_section
+from rork_snippets import (
+    get_rork_quality_section,
+    parse_apple_docs,
+    format_api_reference,
+    format_guidance_section,
+    get_category_guidance,
+    SWIFTUI_TOPIC_CATEGORIES,
+    CATEGORY_GUIDANCE,
+)
 
 topics = {
     # App structure
@@ -73,10 +81,6 @@ topics = {
 
 base_url = "https://docs.developer.apple.com/tutorials/data/documentation/SwiftUI/"
 
-def cleanup_markdown(text):
-    # Remove the initial JSON block
-    text = re.sub(r'<!--.*?-->', '', text, flags=re.DOTALL).strip()
-    return text
 
 def create_skill(endpoint, folder_name):
     url = f"{base_url}{endpoint}.md"
@@ -87,36 +91,45 @@ def create_skill(endpoint, folder_name):
         print(f"Failed to fetch {url}: {e}")
         return
 
-    md_content = cleanup_markdown(md_content)
-    
-    # Extract Title
-    title = endpoint.replace('-', ' ').title()
-    for line in md_content.split('\n'):
-        if line.startswith('# '):
-            title = line[2:].strip()
-            break
-            
-    # Inject Rork Quality Section
+    parsed = parse_apple_docs(md_content)
+    title = parsed["title"] or endpoint.replace('-', ' ').title()
+    overview = parsed["overview"]
+
     rork_section = get_rork_quality_section(endpoint)
-    
+    api_reference = format_api_reference(parsed["topics"])
+
+    guidance = get_category_guidance(
+        folder_name, CATEGORY_GUIDANCE, SWIFTUI_TOPIC_CATEGORIES
+    )
+    when_to_use = format_guidance_section("When to Use", guidance.get("when_to_use"))
+    best_practices = format_guidance_section("Best Practices", guidance.get("best_practices"))
+    pitfalls = format_guidance_section("Common Pitfalls", guidance.get("pitfalls"))
+
     skill_content = f"""---
 name: {title}
-description: Rork-Max Quality skill for {title}. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for {title}. Actionable patterns and best practices for SwiftUI development.
 ---
 
 # {title}
 
+{overview}
+
 {rork_section}
 
-## Documentation
+{when_to_use}
 
-{md_content}
+{best_practices}
+
+{pitfalls}
+
+{api_reference}
 """
-    
+
     os.makedirs(folder_name, exist_ok=True)
     with open(os.path.join(folder_name, "SKILL.md"), "w") as f:
         f.write(skill_content)
     print(f"Created {folder_name}/SKILL.md")
+
 
 for endpoint, folder in topics.items():
     create_skill(endpoint, folder)

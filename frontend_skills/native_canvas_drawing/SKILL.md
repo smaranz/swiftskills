@@ -20,14 +20,26 @@ Canvas { context, size in
 
 ## 💎 Elite Implementation Tips
 
-- Performance: Use Canvas for complex shapes that update at 120Hz.\n- Resolution: Draw paths using normalized coordinates to scale perfectly.\n- Filters: Leverage .blur and .colorMatrix in the Canvas context.
+- Performance: Use Canvas for complex shapes that update at 120Hz.
+- Resolution: Draw paths using normalized coordinates to scale perfectly.
+- Filters: Leverage .blur and .colorMatrix in the Canvas context.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Drawing complex shapes, charts, or visualizations at 120Hz
+- Rendering large numbers of graphic elements more efficiently than SwiftUI views
+- Creating custom drawing tools, annotation layers, or game rendering
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use `Canvas` for any view with > 50 graphic elements — it flattens the hierarchy
+- Draw paths using normalized coordinates to scale across screen sizes
+- Leverage `context.drawLayer` for group transforms and clipping
+- Use `context.resolveSymbol(id:)` to embed SwiftUI views inside Canvas draws
+
+## Common Pitfalls
+
+- Canvas doesn't respond to gestures on individual drawn elements — overlay hit-test views
+- Forgetting that Canvas redraws entirely on state changes — cache expensive path calculations
+- Using Canvas for simple layouts where `Path` or `Shape` would be more maintainable

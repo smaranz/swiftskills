@@ -21,14 +21,26 @@ Text("Content")
 
 ## 💎 Elite Implementation Tips
 
-- Detents: Use custom .height() detents for context-specific mini-players.\n- Background: .enabled background interaction allows multi-tasking.\n- Aesthetics: A large corner radius (32-44pt) makes sheets feel integrated.
+- Detents: Use custom .height() detents for context-specific mini-players.
+- Background: .enabled background interaction allows multi-tasking.
+- Aesthetics: A large corner radius (32-44pt) makes sheets feel integrated.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Building mini-player, map overlay, or drawer-style bottom sheets
+- Allowing interaction with content behind a partially visible sheet
+- Creating custom sheet heights for context-specific workflows
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use custom `.height()` detents for context-specific mini-players or drawers
+- Enable `.presentationBackgroundInteraction(.enabled(upThrough: .medium))` for map-style UIs
+- Set `.presentationCornerRadius(32–44)` for sheets that feel integrated with the app
+- Combine detents: `[.height(200), .medium, .large]` for three-stop sheets
+
+## Common Pitfalls
+
+- Forgetting `.presentationDragIndicator(.visible)` — users need affordance to drag
+- Background interaction enabled at `.large` detent — the sheet covers the content anyway
+- Not testing with keyboard visible — sheets resize when the keyboard appears

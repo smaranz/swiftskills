@@ -21,14 +21,26 @@ Canvas { context, size in
 
 ## 💎 Elite Implementation Tips
 
-- Optimization: Limit to 50 particles max for high-end feel.\n- Variance: Randomize size, velocity, and rotation slightly.\n- Gravity: Apply a gentle downward acceleration (y += 0.1).
+- Optimization: Limit to 50 particles max for high-end feel.
+- Variance: Randomize size, velocity, and rotation slightly.
+- Gravity: Apply a gentle downward acceleration (y += 0.1).
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Celebrating completion events (purchase, achievement, level up)
+- Adding ambient effects (snow, confetti, sparkle) to themed screens
+- Providing visual feedback for destructive or impactful actions
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Limit to 30–50 particles max for performance and visual clarity
+- Randomize size (±30%), velocity (±20%), and rotation for organic feel
+- Apply gentle gravity (y acceleration ≈ 0.1 per frame) for realistic falloff
+- Use `Canvas` for software particles or `CAEmitterLayer` for hardware-accelerated ones
+
+## Common Pitfalls
+
+- Unbounded particle count — always cap maximum and recycle particles
+- Running particle effects continuously — use them for moments, not backgrounds
+- Forgetting Reduce Motion — disable particle animations when accessibility setting is on

@@ -1,330 +1,174 @@
 ---
 name: IOS Views and controls
-description: Rork-Max Quality skill for IOS Views and controls on ios. Based on official Apple UIKit Documentation.
+description: Rork-Max Quality skill for IOS Views and controls. Platform-native patterns and best practices for ios development.
 ---
 
 # IOS Views and controls
 
+Present your content onscreen and define the interactions allowed with that content.
+
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-// Premium IOS Views and controls Implementation for ios
-// Focus on platform-native excellence
+import UIKit
 
-import SwiftUI
-#if os(ios)
-// UIKit specific imports
-#endif
+class RorkViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-struct RorkPlatformView: View {
-    var body: some View {
-        Text("Rork Quality IOS Experience")
-            .font(.system(.title, design: .rounded))
-            .padding()
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+        view.backgroundColor = .systemBackground
+
+        let label = UILabel()
+        label.text = "Views and controls"
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Master the ios native feel: Use system-standard components correctly before customizing.
-- Ensure optimal performance for ios: Handle lifecycle events efficiently.
-- Aesthetics: Keep designs clean and aligned with the platform's HIG.
+- Follow the IOS Human Interface Guidelines for native feel.
+- Use system-standard UIKit components before building custom ones.
+- Support Dynamic Type and accessibility features from the start.
 - Always check for `@Observable` (Swift 6) compatibility for optimal performance.
 - Prioritize SF Symbols with hierarchical rendering for all iconography.
 - Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
-## Documentation
+## When to Use
 
-# Views and controls
+- Building native iOS/iPadOS features using UIKit APIs
+- Implementing UIKit-specific interactions not available in SwiftUI
+- Working with view controllers, navigation controllers, and UIKit lifecycle
 
-Present your content onscreen and define the interactions allowed with that content.
+## Best Practices
 
-## Discussion
+- Use SwiftUI for new views and bridge UIKit only when necessary
+- Adopt modern UIKit APIs: `UICollectionViewCompositionalLayout`, diffable data sources
+- Handle all size classes and trait changes for iPhone and iPad adaptivity
 
-Views and controls are the visual building blocks of your app’s user interface. Use them to draw and organize your app’s content onscreen.
+## Common Pitfalls
 
-![A screenshot of a new event view in the Calendar app, that highlights a label, switch, and date picker.](images/com.apple.uikit/views-and-controls-1@2x.png)
+- Mixing UIKit autolayout and SwiftUI layout can cause constraint conflicts
+- Forgetting to test on iPad — multitasking changes your window size
+- Not adopting the UIKit scene lifecycle for multi-window support
 
-Views can host other views. Embedding one view inside another creates a containment relationship between the host view (known as the *superview*) and the embedded view (known as the *subview*). View hierarchies make it easier to manage views.
-
-You can also use views to do any of the following:
-
-- Respond to touches and other events (either directly or in coordination with gesture recognizers).
-- Draw custom content using Core Graphics or UIKit classes.
-- Support drag and drop interactions.
-- Respond to focus changes.
-- Animate the size, position, and appearance attributes of the view.
-
-[`UIView`](/documentation/UIKit/UIView) is the root class for all views and defines their common behavior. [`UIControl`](/documentation/UIKit/UIControl) defines additional behaviors that are specific to buttons, switches, and other views designed for user interactions.
-
-For additional information about how to use views and controls, see [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/components/all-components). To see examples of UIKit controls, see [UIKit Catalog: Creating and customizing views and controls](/documentation/UIKit/uikit-catalog-creating-and-customizing-views-and-controls).
-
-## Topics
+## Key APIs
 
 ### View fundamentals
 
-[`UIView`](/documentation/UIKit/UIView)
-
-An object that manages the content for a rectangular area on the screen.
-
-[UIKit Catalog: Creating and customizing views and controls](/documentation/UIKit/uikit-catalog-creating-and-customizing-views-and-controls)
-
-Customize your app’s user interface with views and controls.
+| API | Purpose |
+|-----|---------|
+| `UIView` | An object that manages the content for a rectangular area on the screen. |
+| `UIKit Catalog: Creating and customizing views and controls` | Customize your app’s user interface with views and controls. |
 
 ### Container views
 
-Organize and present large data sets using container views.
-
-  <doc://com.apple.documentation/documentation/Xcode/autosizing-views-for-localization-in-ios>
-
-[Collection views](/documentation/UIKit/collection-views)
-
-Display nested views using a configurable and highly customizable layout.
-
-[Table views](/documentation/UIKit/table-views)
-
-Display data in a single column of customizable rows.
-
-[`UIStackView`](/documentation/UIKit/UIStackView)
-
-A streamlined interface for laying out a collection of views in either a column or a row.
-
-[`UIScrollView`](/documentation/UIKit/UIScrollView)
-
-A view that allows the scrolling and zooming of its contained views.
+| API | Purpose |
+|-----|---------|
+| `Collection views` | Display nested views using a configurable and highly customizable layout. |
+| `Table views` | Display data in a single column of customizable rows. |
+| `UIStackView` | A streamlined interface for laying out a collection of views in either a column or a row. |
+| `UIScrollView` | A view that allows the scrolling and zooming of its contained views. |
 
 ### Content views
 
-[`UIActivityIndicatorView`](/documentation/UIKit/UIActivityIndicatorView)
-
-A view that shows that a task is in progress.
-
-[`UICalendarView`](/documentation/UIKit/UICalendarView)
-
-A view that displays a calendar with date-specific decorations, and provides for user selection of a single date or multiple dates.
-
-[`UIContentUnavailableView`](/documentation/UIKit/UIContentUnavailableView)
-
-A view that indicates there’s no content to display.
-
-[`UIImageView`](/documentation/UIKit/UIImageView)
-
-A view that displays a single image or a sequence of animated images in your interface.
-
-[`UIPickerView`](/documentation/UIKit/UIPickerView)
-
-A view that uses a spinning-wheel or slot-machine metaphor to show one or more sets of values.
-
-[`UIProgressView`](/documentation/UIKit/UIProgressView)
-
-A view that depicts the progress of a task over time.
+| API | Purpose |
+|-----|---------|
+| `UIActivityIndicatorView` | A view that shows that a task is in progress. |
+| `UICalendarView` | A view that displays a calendar with date-specific decorations, and provides for user selection of a single date or multiple dates. |
+| `UIContentUnavailableView` | A view that indicates there’s no content to display. |
+| `UIImageView` | A view that displays a single image or a sequence of animated images in your interface. |
+| `UIPickerView` | A view that uses a spinning-wheel or slot-machine metaphor to show one or more sets of values. |
+| `UIProgressView` | A view that depicts the progress of a task over time. |
 
 ### Controls
 
-Gather input and respond to user interactions with controls.
-
-[Responding to control-based events using target-action](/documentation/UIKit/responding-to-control-based-events-using-target-action)
-
-Handle user input by connecting buttons, sliders, and other controls to your app’s code using the target-action design pattern.
-
-[`UIControl`](/documentation/UIKit/UIControl)
-
-The base class for controls, which are visual elements that convey a specific action or intention in response to user interactions.
-
-[`UIButton`](/documentation/UIKit/UIButton)
-
-A control that executes your custom code in response to user interactions.
-
-[`UIColorWell`](/documentation/UIKit/UIColorWell)
-
-A control that displays a color picker.
-
-[`UIDatePicker`](/documentation/UIKit/UIDatePicker)
-
-A control for inputting date and time values.
-
-[`UIPageControl`](/documentation/UIKit/UIPageControl)
-
-A control that displays a horizontal series of dots, each of which corresponds to a page in the app’s document or other data-model entity.
-
-[`UISegmentedControl`](/documentation/UIKit/UISegmentedControl)
-
-A horizontal control that consists of multiple segments, each segment functioning as a discrete button.
-
-[`UISlider`](/documentation/UIKit/UISlider)
-
-A control for selecting a single value from a continuous range of values.
-
-[`UIStepper`](/documentation/UIKit/UIStepper)
-
-A control for incrementing or decrementing a value.
-
-[`UISwitch`](/documentation/UIKit/UISwitch)
-
-A control that offers a binary choice, such as on/off.
+| API | Purpose |
+|-----|---------|
+| `Responding to control-based events using target-action` | Handle user input by connecting buttons, sliders, and other controls to your app’s code using the target-action design pattern. |
+| `UIControl` | The base class for controls, which are visual elements that convey a specific action or intention in response to user interactions. |
+| `UIButton` | A control that executes your custom code in response to user interactions. |
+| `UIColorWell` | A control that displays a color picker. |
+| `UIDatePicker` | A control for inputting date and time values. |
+| `UIPageControl` | A control that displays a horizontal series of dots, each of which corresponds to a page in the app’s document or other data-model entity. |
+| `UISegmentedControl` | A horizontal control that consists of multiple segments, each segment functioning as a discrete button. |
+| `UISlider` | A control for selecting a single value from a continuous range of values. |
 
 ### Text views
 
-Display and edit text using text views.
-
-[`UILabel`](/documentation/UIKit/UILabel)
-
-A view that displays one or more lines of informational text.
-
-[`UITextField`](/documentation/UIKit/UITextField)
-
-An object that displays an editable text area in your interface.
-
-[`UITextView`](/documentation/UIKit/UITextView)
-
-A scrollable, multiline text region.
-
-[Drag and drop customization](/documentation/UIKit/drag-and-drop-customization)
-
-Extend the standard drag and drop support for text views to include custom types of content.
+| API | Purpose |
+|-----|---------|
+| `UILabel` | A view that displays one or more lines of informational text. |
+| `UITextField` | An object that displays an editable text area in your interface. |
+| `UITextView` | A scrollable, multiline text region. |
+| `Drag and drop customization` | Extend the standard drag and drop support for text views to include custom types of content. |
 
 ### Search field
 
-[`UISearchTextField`](/documentation/UIKit/UISearchTextField)
-
-A view for displaying and editing text and search tokens.
-
-[`UISearchToken`](/documentation/UIKit/UISearchToken)
-
-Search criteria in a search text field, represented by text and an optional icon.
-
-[`UISearchTextFieldDelegate`](/documentation/UIKit/UISearchTextFieldDelegate)
-
-The interface for the delegate of a search field.
+| API | Purpose |
+|-----|---------|
+| `UISearchTextField` | A view for displaying and editing text and search tokens. |
+| `UISearchToken` | Search criteria in a search text field, represented by text and an optional icon. |
+| `UISearchTextFieldDelegate` | The interface for the delegate of a search field. |
 
 ### Visual effects
 
-[`UIVisualEffect`](/documentation/UIKit/UIVisualEffect)
-
-An initializer for visual effect views and blur and vibrancy effect objects.
-
-[`UIVisualEffectView`](/documentation/UIKit/UIVisualEffectView)
-
-An object that implements some complex visual effects.
-
-[`UIVibrancyEffect`](/documentation/UIKit/UIVibrancyEffect)
-
-An object that amplifies and adjusts the color of the content layered behind a visual effect view.
-
-[`UIBlurEffect`](/documentation/UIKit/UIBlurEffect)
-
-An object that applies a blurring effect to the content layered behind a visual effect view.
+| API | Purpose |
+|-----|---------|
+| `UIVisualEffect` | An initializer for visual effect views and blur and vibrancy effect objects. |
+| `UIVisualEffectView` | An object that implements some complex visual effects. |
+| `UIVibrancyEffect` | An object that amplifies and adjusts the color of the content layered behind a visual effect view. |
+| `UIBlurEffect` | An object that applies a blurring effect to the content layered behind a visual effect view. |
 
 ### Bars
 
-Manage the items displayed on navigation bars, tab bars, search bars, and toolbars.
-
-[`UIBarItem`](/documentation/UIKit/UIBarItem)
-
-An abstract superclass for items that you can add to a bar that appears at the bottom of the screen.
-
-[`UIBarButtonItem`](/documentation/UIKit/UIBarButtonItem)
-
-A specialized button for placement on a toolbar, navigation bar, or shortcuts bar.
-
-[`UIBarButtonItemGroup`](/documentation/UIKit/UIBarButtonItemGroup)
-
-A group of one or more bar button items for placement on a navigation bar or shortcuts bar.
-
-[`UINavigationBar`](/documentation/UIKit/UINavigationBar)
-
-Navigational controls that display in a bar along the top of the screen, usually in conjunction with a navigation controller.
-
-[`UISearchBar`](/documentation/UIKit/UISearchBar)
-
-A specialized view for receiving search-related information from the user.
-
-[`UIToolbar`](/documentation/UIKit/UIToolbar)
-
-A control that displays one or more buttons along an edge of your interface.
-
-[`UITabBar`](/documentation/UIKit/UITabBar)
-
-A control that displays one or more buttons in a tab bar for selecting between different subtasks, views, or modes in an app.
-
-[`UITabBarItem`](/documentation/UIKit/UITabBarItem)
-
-An object that describes an item in a tab bar.
-
-[`UIBarPositioning`](/documentation/UIKit/UIBarPositioning)
-
-A set of methods for defining the positioning of bars in iOS apps.
-
-[`UIBarPositioningDelegate`](/documentation/UIKit/UIBarPositioningDelegate)
-
-A set of methods that support the positioning of a bar that conforms to the [`UIBarPositioning`](/documentation/UIKit/UIBarPositioning) protocol.
+| API | Purpose |
+|-----|---------|
+| `UIBarItem` | An abstract superclass for items that you can add to a bar that appears at the bottom of the screen. |
+| `UIBarButtonItem` | A specialized button for placement on a toolbar, navigation bar, or shortcuts bar. |
+| `UIBarButtonItemGroup` | A group of one or more bar button items for placement on a navigation bar or shortcuts bar. |
+| `UINavigationBar` | Navigational controls that display in a bar along the top of the screen, usually in conjunction with a navigation controller. |
+| `UISearchBar` | A specialized view for receiving search-related information from the user. |
+| `UIToolbar` | A control that displays one or more buttons along an edge of your interface. |
+| `UITabBar` | A control that displays one or more buttons in a tab bar for selecting between different subtasks, views, or modes in an app. |
+| `UITabBarItem` | An object that describes an item in a tab bar. |
 
 ### Content viewer
 
-[`UILargeContentViewerInteraction`](/documentation/UIKit/UILargeContentViewerInteraction)
-
-An interaction that enables a gesture to present the large content viewer for cases when supporting the largest dynamic type sizes isn’t appropriate.
-
-[`UILargeContentViewerInteractionDelegate`](/documentation/UIKit/UILargeContentViewerInteractionDelegate)
-
-An object that customizes the behavior of the large content viewer interactions.
-
-[`UILargeContentViewerItem`](/documentation/UIKit/UILargeContentViewerItem)
-
-Methods that provide details about how to display your custom content in the large content viewer.
+| API | Purpose |
+|-----|---------|
+| `UILargeContentViewerInteraction` | An interaction that enables a gesture to present the large content viewer for cases when supporting the largest dynamic type sizes isn’t appropriate. |
+| `UILargeContentViewerInteractionDelegate` | An object that customizes the behavior of the large content viewer interactions. |
+| `UILargeContentViewerItem` | Methods that provide details about how to display your custom content in the large content viewer. |
 
 ### Private Click Measurement (PCM)
 
-[`UIEventAttributionView`](/documentation/UIKit/UIEventAttributionView)
-
-An overlay view that verifies user interaction for Web AdAttributionKit.
-
-[`UIEventAttribution`](/documentation/UIKit/UIEventAttribution)
-
-An object that contains event attribution information for Web AdAttributionKit.
-
-  <doc://com.apple.documentation/documentation/BundleResources/Information-Property-List/NSAdvertisingAttributionReportEndpoint>
+| API | Purpose |
+|-----|---------|
+| `UIEventAttributionView` | An overlay view that verifies user interaction for Web AdAttributionKit. |
+| `UIEventAttribution` | An object that contains event attribution information for Web AdAttributionKit. |
 
 ### SwiftUI
 
-[Using SwiftUI with UIKit](/documentation/UIKit/using-swiftui-with-uikit)
-
-Learn how to incorporate SwiftUI views into a UIKit app.
+| API | Purpose |
+|-----|---------|
+| `Using SwiftUI with UIKit` | Learn how to incorporate SwiftUI views into a UIKit app. |
 
 ### Related types
 
-[`UIOffset`](/documentation/UIKit/UIOffset)
-
-A structure that specifies an amount to offset a position.
-
-[`UIAxis`](/documentation/UIKit/UIAxis)
-
-A structure that specifies the layout axes.
-
-[`UIEdgeInsets`](/documentation/UIKit/UIEdgeInsets)
-
-The inset distances for views.
-
-[`NSDirectionalEdgeInsets`](/documentation/UIKit/NSDirectionalEdgeInsets)
-
-The inset distances for views, taking the user interface layout direction into account.
-
-[`NSDirectionalRectEdge`](/documentation/UIKit/NSDirectionalRectEdge)
-
-Constants that specify an edge or a set of edges, taking the user interface layout direction into account.
-
-[`NSRectAlignment`](/documentation/UIKit/NSRectAlignment)
-
-Constants that specify alignment to an edge or a set of edges depending on the user interface layout direction.
-
-[UIKit macros](/documentation/UIKit/uikit-macros)
-
-Macros that UIKit defines.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `UIOffset` | A structure that specifies an amount to offset a position. |
+| `UIAxis` | A structure that specifies the layout axes. |
+| `UIEdgeInsets` | The inset distances for views. |
+| `NSDirectionalEdgeInsets` | The inset distances for views, taking the user interface layout direction into account. |
+| `NSDirectionalRectEdge` | Constants that specify an edge or a set of edges, taking the user interface layout direction into account. |
+| `NSRectAlignment` | Constants that specify alignment to an edge or a set of edges depending on the user interface layout direction. |
+| `UIKit macros` | Macros that UIKit defines. |

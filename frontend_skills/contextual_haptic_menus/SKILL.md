@@ -23,14 +23,26 @@ Text("Press for Menu")
 
 ## 💎 Elite Implementation Tips
 
-- Previews: custom .contextMenu previews should use .ultraThinMaterial.\n- Haptics: The system handles the press haptic—don't trigger a second one.\n- Layout: Keep menu titles short to maintain the clean iOS aesthetic.
+- Previews: custom .contextMenu previews should use .ultraThinMaterial.
+- Haptics: The system handles the press haptic—don't trigger a second one.
+- Layout: Keep menu titles short to maintain the clean iOS aesthetic.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Adding long-press context menus to list items, cards, or media
+- Providing quick actions (share, delete, favorite) without navigation
+- Showing rich previews of content before committing to navigation
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use custom `.contextMenu { } preview: { }` for rich previews with glass materials
+- Keep menu item titles short — 1-3 words maintain the clean iOS aesthetic
+- Use SF Symbols for every menu action icon
+- The system handles press haptic — don't trigger a second one
+
+## Common Pitfalls
+
+- Too many menu items overwhelm users — limit to 5-7 actions maximum
+- Heavy preview views cause the menu to appear slowly — keep previews lightweight
+- Forgetting `role: .destructive` on delete actions — it provides the red color and grouping

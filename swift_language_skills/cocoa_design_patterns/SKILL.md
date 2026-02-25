@@ -1,56 +1,46 @@
 ---
 name: Cocoa Design Patterns
-description: Rork-Max Quality skill for Cocoa Design Patterns. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Cocoa Design Patterns. Actionable Swift language patterns and best practices.
 ---
-
-# Cocoa Design Patterns
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Cocoa Design Patterns Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Cocoa Design Patterns]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Cocoa Design Patterns usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
 
 # Cocoa Design Patterns
 
 Adopt and interoperate with Cocoa design patterns in your Swift apps.
 
-## Topics
+## 🚀 Rork-Max Quality Snippet
 
-### Common Patterns
+```swift
+import Foundation
 
-  <doc://com.apple.Swift/documentation/Swift/using-key-value-observing-in-swift>
+// Cocoa Design Patterns — idiomatic Swift implementation pattern
+// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+```
 
-  <doc://com.apple.Swift/documentation/Swift/using-delegates-to-customize-object-behavior>
+## 💎 Elite Implementation Tips
 
-  <doc://com.apple.Swift/documentation/Swift/managing-a-shared-resource-using-a-singleton>
+- Use modern Swift 6 patterns when working with Cocoa Design Patterns.
+- Prefer value types (structs/enums) unless reference semantics are needed.
+- Leverage Swift's type system to catch errors at compile time.
+- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
+- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
 
-  <doc://com.apple.Swift/documentation/Swift/about-imported-cocoa-error-parameters>
+## When to Use
 
-  <doc://com.apple.Swift/documentation/Swift/handling-cocoa-errors-in-swift>
+- Calling Objective-C APIs from Swift or vice versa
+- Integrating C/C++ libraries into a Swift project
+- Migrating an existing Objective-C codebase to Swift incrementally
+
+## Best Practices
+
+- Use a bridging header for Objective-C → Swift; `@objc` attribute for Swift → Objective-C
+- Leverage `NS_SWIFT_NAME` in Objective-C headers for clean Swift API names
+- Use `async` overloads of Objective-C completion-handler APIs
+
+## Common Pitfalls
+
+- Objective-C generics don't fully map to Swift generics — watch for `Any` erasure
+- C pointers require careful memory management — use `withUnsafe*Pointer` wrappers
+- KVO from Swift requires `@objc dynamic` properties
 
 
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)

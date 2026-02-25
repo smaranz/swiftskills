@@ -22,14 +22,26 @@ Text("Spatial Style on iOS")
 
 ## 💎 Elite Implementation Tips
 
-- Z-Axis: Use .offset(z:) and .rotation3DEffect to mimic spatial depth.\n- Interaction: Implement 'hover effects' via touch-down feedback on iOS.\n- Lighting: Simulate a global light source by consistent shadow X/Y offsets.
+- Z-Axis: Use .offset(z:) and .rotation3DEffect to mimic spatial depth.
+- Interaction: Implement 'hover effects' via touch-down feedback on iOS.
+- Lighting: Simulate a global light source by consistent shadow X/Y offsets.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Adding depth cues (parallax, shadow, scale) to flat iOS interfaces
+- Designing UI that transitions between 2D (iOS) and 3D (visionOS) contexts
+- Creating hover/focus effects that simulate spatial interaction
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use `.rotation3DEffect` and `.offset(z:)` to simulate depth on iOS
+- Implement touch-down scale feedback to mimic spatial hover effects
+- Maintain consistent shadow offsets across all cards for a unified light source
+- Use `#if os(visionOS)` to provide true spatial effects when running on Vision Pro
+
+## Common Pitfalls
+
+- Excessive 3D transforms cause disorientation and motion sickness
+- Inconsistent shadow directions — pick one light source and stick with it
+- Parallax effects without Reduce Motion support violate accessibility guidelines
