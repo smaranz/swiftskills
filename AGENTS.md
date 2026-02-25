@@ -2,15 +2,23 @@
 
 ## Cursor Cloud specific instructions
 
-This is a **Python-only content generation project** (no web server, no database, no containers). All scripts use the Python 3 standard library only — no `pip install` is needed.
+This is a **static Markdown knowledge library** — no web server, database, build step, or runtime dependencies. All content lives in `SKILL.md` files organized by topic.
 
-### Running the project
+### Repository structure
 
-- **Generators** (produce `SKILL.md` files): `python3 generate_skills.py`, `python3 generate_swift_skills.py`, `python3 generate_platform_skills.py`, `python3 generate_ai_skills.py`, `python3 generate_frontend_skills.py`
-- **Verification** (validates all generated skills): `python3 verify_skills.py`
-- `generate_frontend_skills.py` works fully offline; the other four generators fetch from `docs.developer.apple.com` and require internet access.
-- There is a non-critical `SyntaxWarning` in `rork_snippets.py:450` (invalid escape sequence) that does not affect output.
+- `*/SKILL.md` — 123 agent skill files across SwiftUI, Swift language, platform, frontend, and Apple Intelligence categories
+- `README.md` — project overview and structure
+
+### Editing skills
+
+Skills are edited directly as Markdown files. Each `SKILL.md` should contain:
+- YAML frontmatter (`---` delimited) with `name` and `description`
+- `## 🚀 Rork-Max Quality Snippet` with a real Swift code example
+- `## 💎 Elite Implementation Tips` with topic-specific bullet points
+- `## When to Use` with use-case guidance
+- `## Best Practices` and/or `## Common Pitfalls`
+- `## Key APIs` reference table (for doc-sourced skills)
 
 ### Linting / testing
 
-There is no dedicated linter or test framework configured. The verification script (`verify_skills.py`) is the project's test suite — it checks every `SKILL.md` for required sections (YAML metadata, Rork snippet header, elite tips header, quality description).
+No linter or test framework is configured. Validate skills manually by checking that each `SKILL.md` has the required sections listed above.
