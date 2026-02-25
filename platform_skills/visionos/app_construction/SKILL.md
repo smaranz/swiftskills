@@ -30,29 +30,33 @@ for all scene types.
 
 ```swift
 import SwiftUI
-import RealityKit
 
-struct RorkSpatialView: View {
-    var body: some View {
-        RealityView { content in
-            let sphere = MeshResource.generateSphere(radius: 0.1)
-            let material = SimpleMaterial(color: .blue, isMetallic: true)
-            let entity = ModelEntity(mesh: sphere, materials: [material])
-            content.add(entity)
+@main
+struct VisionApp: App {
+    @State private var appModel = AppModel()
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environment(appModel)
         }
-        .navigationTitle("Creating your first visionOS app")
+        .defaultSize(width: 600, height: 400)
+        .windowStyle(.plain)
+
+        WindowGroup(id: "detail", for: Item.ID.self) { $id in
+            DetailView(itemID: id)
+        }
+        .windowStyle(.volumetric)
+        .defaultSize(width: 0.5, height: 0.5, depth: 0.5, in: .meters)
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the VISIONOS Human Interface Guidelines for native feel.
-- Use system-standard visionOS components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.windowStyle(.plain)` for flat content windows with glass background
+- Use `.windowStyle(.volumetric)` for windows containing 3D content
+- Set `.defaultSize()` in meters for volumetric windows
 
 ## When to Use
 

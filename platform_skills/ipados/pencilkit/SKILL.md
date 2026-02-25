@@ -14,29 +14,39 @@ For information about handling user interactions on Apple Pencil in your UIKit a
 
 ```swift
 import PencilKit
+import UIKit
 
-class RorkCanvasViewController: UIViewController {
+class DrawingViewController: UIViewController, PKCanvasViewDelegate {
     let canvasView = PKCanvasView()
+    let toolPicker = PKToolPicker()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        canvasView.delegate = self
         canvasView.drawingPolicy = .anyInput
         canvasView.tool = PKInkingTool(.pen, color: .systemBlue, width: 5)
         canvasView.frame = view.bounds
         canvasView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(canvasView)
+
+        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        toolPicker.addObserver(canvasView)
+        canvasView.becomeFirstResponder()
+    }
+
+    func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+        // Auto-save or process drawing
+        let drawing = canvasView.drawing
+        let image = drawing.image(from: drawing.bounds, scale: UIScreen.main.scale)
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IPADOS Human Interface Guidelines for native feel.
-- Use system-standard PencilKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `PKToolPicker` to present the system drawing tool palette
+- Set `.drawingPolicy = .anyInput` for finger + pencil, `.pencilOnly` for pencil-exclusive
+- Extract raster images with `drawing.image(from:scale:)` for export/sharing
 
 ## When to Use
 

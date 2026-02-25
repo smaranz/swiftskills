@@ -12,14 +12,17 @@ Create a new watchOS project or add a watch target to an existing iOS project.
 ```swift
 import SwiftUI
 
-struct RorkWatchView: View {
-    var body: some View {
-        NavigationStack {
-            List {
-                Text("Setting up a watchOS project")
-                    .font(.headline)
+@main
+struct WatchApp: App {
+    var body: some Scene {
+        WindowGroup {
+            NavigationStack {
+                List {
+                    NavigationLink("Workouts") { WorkoutListView() }
+                    NavigationLink("Settings") { SettingsView() }
+                }
+                .navigationTitle("My App")
             }
-            .navigationTitle("Rork")
         }
     }
 }
@@ -27,12 +30,9 @@ struct RorkWatchView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Follow the WATCHOS Human Interface Guidelines for native feel.
-- Use system-standard WatchKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- watchOS apps use SwiftUI exclusively — no storyboards or WKInterfaceController needed
+- Use `NavigationStack` with `List` for the standard watch navigation pattern
+- Keep the app focused — one primary action per screen
 
 ## When to Use
 

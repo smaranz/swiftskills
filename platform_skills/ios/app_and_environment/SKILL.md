@@ -12,34 +12,29 @@ Manage life-cycle events and your app’s UI scenes, and get information about t
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+class SceneDelegate: UIWindowSceneDelegate {
+    var window: UIWindow?
 
-        view.backgroundColor = .systemBackground
-
-        let label = UILabel()
-        label.text = "App and environment"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = scene as? UIWindowScene else { return }
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = UINavigationController(
+            rootViewController: HomeViewController()
+        )
+        window?.makeKeyAndVisible()
     }
+
+    func sceneDidBecomeActive(_ scene: UIScene) { refreshContent() }
+    func sceneWillResignActive(_ scene: UIScene) { saveState() }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Adopt the UIKit scene lifecycle (`UIWindowSceneDelegate`) for multi-window support
+- Use `UITraitCollection` to respond to appearance, size class, and accessibility changes
+- Check `ProcessInfo.processInfo.isiOSAppOnMac` for Designed for iPad on Mac adjustments
 
 ## When to Use
 

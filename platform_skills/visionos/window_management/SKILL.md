@@ -30,29 +30,31 @@ position and size.
 
 ```swift
 import SwiftUI
-import RealityKit
 
-struct RorkSpatialView: View {
+struct WindowControls: View {
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.openImmersiveSpace) private var openSpace
+    @Environment(\.dismissImmersiveSpace) private var dismissSpace
+
     var body: some View {
-        RealityView { content in
-            let sphere = MeshResource.generateSphere(radius: 0.1)
-            let material = SimpleMaterial(color: .blue, isMetallic: true)
-            let entity = ModelEntity(mesh: sphere, materials: [material])
-            content.add(entity)
+        VStack(spacing: 16) {
+            Button("Open Panel") { openWindow(id: "info-panel") }
+            Button("Enter Immersive") {
+                Task { await openSpace(id: "immersive") }
+            }
         }
-        .navigationTitle("Positioning and sizing windows")
+        .padding()
+        .glassBackgroundEffect()
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the VISIONOS Human Interface Guidelines for native feel.
-- Use system-standard visionOS components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.glassBackgroundEffect()` for windows to feel native in the shared space
+- Use `openWindow(id:)` for additional flat windows, `openImmersiveSpace` for spatial content
+- Set `.defaultWindowPlacement` to control where new windows appear relative to existing ones
 
 ## When to Use
 

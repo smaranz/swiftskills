@@ -12,34 +12,35 @@ Manage your interface using view controllers and facilitate navigation around yo
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
+class MasterDetailController: UISplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-
-        let label = UILabel()
-        label.text = "View controllers"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+        preferredDisplayMode = .oneBesideSecondary
+        let master = UINavigationController(rootViewController: ListViewController())
+        let detail = UINavigationController(rootViewController: DetailViewController())
+        viewControllers = [master, detail]
     }
+}
+
+class ListViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Items"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            systemItem: .add,
+            primaryAction: UIAction { [weak self] _ in self?.addItem() }
+        )
+    }
+
+    func addItem() { }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `UISplitViewController` for adaptive multi-column layouts on iPhone and iPad
+- Prefer `UIAction`-based bar button items over target-action for cleaner code
+- Override `viewIsAppearing(_:)` (iOS 13+) for layout work — it's called after traits are set
 
 ## When to Use
 

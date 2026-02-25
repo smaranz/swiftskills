@@ -12,29 +12,26 @@ Make your AppKit apps accessible to everyone who uses macOS.
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "Accessibility for AppKit"
-        window.center()
-        self.init(window: window)
+class AccessibleCustomView: NSView {
+    override func isAccessibilityElement() -> Bool { true }
+    override func accessibilityRole() -> NSAccessibility.Role? { .button }
+    override func accessibilityLabel() -> String? { "Custom Action" }
+    override func accessibilityHelp() -> String? { "Performs the custom action" }
+
+    override func accessibilityPerformPress() -> Bool {
+        performAction()
+        return true
     }
+
+    func performAction() { }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Override `accessibilityRole()` to tell VoiceOver what the element IS
+- Override `accessibilityPerformPress()` for custom VoiceOver action handling
+- Test with Accessibility Inspector (Xcode → Open Developer Tool → Accessibility Inspector)
 
 ## When to Use
 

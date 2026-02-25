@@ -12,29 +12,33 @@ Implement menus and cursors to facilitate interactions with your app, and use yo
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "Menus, Cursors, and the Dock"
-        window.center()
-        self.init(window: window)
+class MenuBuilder {
+    static func buildMainMenu() -> NSMenu {
+        let mainMenu = NSMenu()
+
+        let fileMenu = NSMenu(title: "File")
+        fileMenu.addItem(withTitle: "New", action: #selector(NSDocumentController.newDocument(_:)),
+                         keyEquivalent: "n")
+        fileMenu.addItem(withTitle: "Open...", action: #selector(NSDocumentController.openDocument(_:)),
+                         keyEquivalent: "o")
+        fileMenu.addItem(.separator())
+        fileMenu.addItem(withTitle: "Save", action: #selector(NSDocument.save(_:)),
+                         keyEquivalent: "s")
+
+        let fileMenuItem = NSMenuItem(title: "File", action: nil, keyEquivalent: "")
+        fileMenuItem.submenu = fileMenu
+        mainMenu.addItem(fileMenuItem)
+
+        return mainMenu
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Every major action must be available through the menu bar — macOS users expect it
+- Use standard `keyEquivalent` shortcuts: ⌘N (new), ⌘O (open), ⌘S (save), ⌘W (close)
+- Use `NSMenuItemValidation` to automatically enable/disable menu items based on context
 
 ## When to Use
 

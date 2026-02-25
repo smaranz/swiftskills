@@ -23,27 +23,36 @@ that work best for your app and the content you offer.
 import SwiftUI
 import RealityKit
 
-struct RorkSpatialView: View {
+struct SpatialGallery: View {
     var body: some View {
         RealityView { content in
-            let sphere = MeshResource.generateSphere(radius: 0.1)
-            let material = SimpleMaterial(color: .blue, isMetallic: true)
-            let entity = ModelEntity(mesh: sphere, materials: [material])
-            content.add(entity)
+            let floor = ModelEntity(
+                mesh: .generatePlane(width: 2, depth: 2),
+                materials: [SimpleMaterial(color: .gray, isMetallic: false)]
+            )
+            content.add(floor)
+
+            for i in 0..<5 {
+                let sphere = ModelEntity(
+                    mesh: .generateSphere(radius: 0.1),
+                    materials: [SimpleMaterial(color: .blue, isMetallic: true)]
+                )
+                sphere.position = [Float(i) * 0.3 - 0.6, 0.2, -0.5]
+                sphere.components.set(HoverEffectComponent())
+                sphere.components.set(InputTargetComponent())
+                sphere.generateCollisionShapes(recursive: false)
+                content.add(sphere)
+            }
         }
-        .navigationTitle("Adding 3D content to your app")
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the VISIONOS Human Interface Guidelines for native feel.
-- Use system-standard visionOS components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Add `InputTargetComponent` + collision shapes for entities to be tappable
+- Use `HoverEffectComponent` for visual feedback on gaze targeting
+- Position content 1–2 meters in front of the user at eye height for comfort
 
 ## When to Use
 

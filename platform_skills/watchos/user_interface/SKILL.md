@@ -12,27 +12,36 @@ Connect your code to storyboard elements using interface controllers, interface 
 ```swift
 import SwiftUI
 
-struct RorkWatchView: View {
+struct WatchDashboard: View {
+    @State private var heartRate: Int = 72
+
     var body: some View {
-        NavigationStack {
-            List {
-                Text("Storyboard support")
-                    .font(.headline)
+        TabView {
+            // Page 1: Status
+            VStack {
+                Image(systemName: "heart.fill")
+                    .foregroundStyle(.red)
+                    .font(.title)
+                Text("\(heartRate) BPM")
+                    .font(.system(.title2, design: .rounded, weight: .bold))
             }
-            .navigationTitle("Rork")
+
+            // Page 2: Controls
+            List {
+                Button("Start Workout", systemImage: "figure.run") { }
+                Button("Settings", systemImage: "gear") { }
+            }
         }
+        .tabViewStyle(.verticalPage)
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the WATCHOS Human Interface Guidelines for native feel.
-- Use system-standard WatchKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.tabViewStyle(.verticalPage)` for swipeable page navigation on watchOS
+- Design for glanceability — large text, minimal detail, clear icons
+- Use `DigitalCrownRotation` for continuous value adjustments
 
 ## When to Use
 

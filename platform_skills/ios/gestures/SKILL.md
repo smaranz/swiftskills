@@ -12,34 +12,55 @@ Encapsulate your app’s event-handling logic in gesture recognizers so that you
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
+class GestureViewController: UIViewController {
+    private let cardView = UIView()
+    private var initialCenter: CGPoint = .zero
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        cardView.frame = CGRect(x: 100, y: 200, width: 200, height: 120)
+        cardView.backgroundColor = .systemBlue
+        cardView.layer.cornerRadius = 16
+        view.addSubview(cardView)
 
-        view.backgroundColor = .systemBackground
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.3
+        cardView.addGestureRecognizer(pan)
+        cardView.addGestureRecognizer(longPress)
+    }
 
-        let label = UILabel()
-        label.text = "Touches, presses, and gestures"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        switch gesture.state {
+        case .began: initialCenter = cardView.center
+        case .changed: cardView.center = CGPoint(
+            x: initialCenter.x + translation.x,
+            y: initialCenter.y + translation.y
+        )
+        case .ended:
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.6,
+                           initialSpringVelocity: 0, options: []) {
+                self.cardView.center = self.initialCenter
+            }
+        default: break
+        }
+    }
 
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `UIGestureRecognizerDelegate` to coordinate multiple gestures on the same view
+- Add haptic feedback with `UIImpactFeedbackGenerator` on key gesture events
+- Always handle `.cancelled` state to restore view to its original position
 
 ## When to Use
 

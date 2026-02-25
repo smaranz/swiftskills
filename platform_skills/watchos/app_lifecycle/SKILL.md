@@ -19,16 +19,25 @@ As relevant events occur within your WatchKit app, the app object notifies its d
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import SwiftUI
+import WatchKit
 
-struct RorkWatchView: View {
-    var body: some View {
-        NavigationStack {
-            List {
-                Text("WKApplication")
-                    .font(.headline)
+class ExtensionDelegate: NSObject, WKApplicationDelegate {
+    func applicationDidFinishLaunching() {
+        scheduleBackgroundRefresh()
+    }
+
+    func applicationDidBecomeActive() { refreshComplication() }
+    func applicationWillResignActive() { saveState() }
+
+    func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
+        for task in backgroundTasks {
+            switch task {
+            case let refresh as WKApplicationRefreshBackgroundTask:
+                performUpdate()
+                refresh.setTaskCompletedWithSnapshot(true)
+            default:
+                task.setTaskCompletedWithSnapshot(false)
             }
-            .navigationTitle("Rork")
         }
     }
 }
@@ -36,12 +45,9 @@ struct RorkWatchView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Follow the WATCHOS Human Interface Guidelines for native feel.
-- Use system-standard WatchKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `WKApplicationDelegate` for lifecycle events on watchOS
+- Handle `WKRefreshBackgroundTask` to update data and complications in the background
+- Always call `setTaskCompletedWithSnapshot` to avoid being killed by the system
 
 ## When to Use
 

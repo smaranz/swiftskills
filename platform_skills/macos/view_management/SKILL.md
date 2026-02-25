@@ -12,29 +12,26 @@ Manage your user interface, including the size and position of views in a window
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
+class DocumentWindowController: NSWindowController {
+    convenience init(document: NSDocument) {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
+            contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
+            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
+            backing: .buffered, defer: false
         )
-        window.title = "View Management"
+        window.titlebarAppearsTransparent = true
         window.center()
         self.init(window: window)
+        window.contentViewController = MainSplitViewController()
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.fullSizeContentView` with `.titlebarAppearsTransparent` for modern macOS window styling
+- Set `contentViewController` instead of `contentView` for proper view controller lifecycle
+- Use `NSSplitViewController` with `NSSplitViewItem` for resizable panes
 
 ## When to Use
 

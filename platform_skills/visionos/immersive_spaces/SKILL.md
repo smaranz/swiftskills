@@ -31,27 +31,32 @@ your app’s windows instead.
 import SwiftUI
 import RealityKit
 
-struct RorkSpatialView: View {
+struct ImmersiveEnvironment: View {
+    @Environment(\.dismissImmersiveSpace) private var dismiss
+
     var body: some View {
         RealityView { content in
-            let sphere = MeshResource.generateSphere(radius: 0.1)
-            let material = SimpleMaterial(color: .blue, isMetallic: true)
-            let entity = ModelEntity(mesh: sphere, materials: [material])
-            content.add(entity)
+            guard let scene = try? await Entity(named: "MyScene", in: realityKitContentBundle) else {
+                return
+            }
+            content.add(scene)
         }
-        .navigationTitle("Creating fully immersive experiences in your app")
+        .gesture(
+            TapGesture()
+                .targetedToAnyEntity()
+                .onEnded { value in
+                    // Handle entity tap
+                }
+        )
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the VISIONOS Human Interface Guidelines for native feel.
-- Use system-standard visionOS components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@Environment(\.openImmersiveSpace)` / `dismissImmersiveSpace` for lifecycle control
+- Load complex scenes from Reality Composer Pro bundles with `Entity(named:in:)`
+- Only one `ImmersiveSpace` can be open at a time — design transitions carefully
 
 ## When to Use
 

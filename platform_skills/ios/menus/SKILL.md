@@ -12,34 +12,38 @@ Simplify interactions with your app using menu systems, contextual menus, Home S
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
+class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-
-        let label = UILabel()
-        label.text = "Menus and shortcuts"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        let button = UIButton(configuration: .filled())
+        button.configuration?.title = "Actions"
+        button.menu = UIMenu(children: [
+            UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { _ in },
+            UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in },
+            UIMenu(title: "Sort By", children: [
+                UIAction(title: "Name", state: .on) { _ in },
+                UIAction(title: "Date") { _ in },
+            ]),
+            UIAction(title: "Delete", image: UIImage(systemName: "trash"),
+                     attributes: .destructive) { _ in },
         ])
+        button.showsMenuAsPrimaryAction = true
+        // ... layout
+    }
+
+    // Context menu for a view
+    func addContextMenu(to view: UIView) {
+        let interaction = UIContextMenuInteraction(delegate: self)
+        view.addInteraction(interaction)
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `UIMenu` with `UIAction` for modern menu construction (replaces `UIAlertController` for action sheets)
+- Set `.showsMenuAsPrimaryAction = true` on buttons for tap-to-show menus
+- Use `UIContextMenuInteraction` for long-press context menus with preview
 
 ## When to Use
 

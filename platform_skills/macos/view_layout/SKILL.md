@@ -12,29 +12,32 @@ Position and size views using a stack view or Auto Layout constraints.
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "View Layout"
-        window.center()
-        self.init(window: window)
+class ToolbarLayoutController: NSViewController {
+    override func loadView() {
+        let stack = NSStackView()
+        stack.orientation = .vertical
+        stack.spacing = 12
+        stack.edgeInsets = NSEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+
+        let header = NSTextField(labelWithString: "Settings")
+        header.font = .preferredFont(forTextStyle: .title1)
+        stack.addArrangedSubview(header)
+
+        let toggle = NSSwitch()
+        toggle.state = .on
+        let row = NSStackView(views: [NSTextField(labelWithString: "Dark Mode"), toggle])
+        stack.addArrangedSubview(row)
+
+        self.view = stack
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `NSStackView` for most layouts — it handles alignment and distribution automatically
+- Use `NSGridView` for two-dimensional form-style layouts (label + control grids)
+- Leverage Auto Layout constraints for fine-tuned positioning beyond stack views
 
 ## When to Use
 

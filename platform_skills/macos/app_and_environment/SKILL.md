@@ -12,29 +12,27 @@ Learn about the objects that you use to interact with the system.
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "App and Environment"
-        window.center()
-        self.init(window: window)
+@main
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.appearance = NSAppearance(named: .aqua)
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false  // macOS apps typically stay running without windows
+    }
+
+    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+        true
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Return `false` from `applicationShouldTerminateAfterLastWindowClosed` — macOS convention
+- Use `NSApplication.shared.appearance` for app-wide appearance control
+- Support state restoration with `applicationSupportsSecureRestorableState`
 
 ## When to Use
 

@@ -12,34 +12,34 @@ Make your UIKit apps accessible to everyone who uses iOS and tvOS.
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+class AccessibleCardView: UIView {
+    let titleLabel = UILabel()
+    let subtitleLabel = UILabel()
+    let actionButton = UIButton()
 
-        view.backgroundColor = .systemBackground
-
-        let label = UILabel()
-        label.text = "Accessibility for UIKit"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        accessibilityLabel = "\(titleLabel.text ?? ""), \(subtitleLabel.text ?? "")"
+        accessibilityHint = "Double-tap to view details"
     }
+
+    override func accessibilityActivate() -> Bool {
+        showDetails()
+        return true
+    }
+
+    func showDetails() { }
+    required init?(coder: NSCoder) { fatalError() }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Set `isAccessibilityElement = true` and group child labels for composite views
+- Override `accessibilityActivate()` to provide custom VoiceOver tap actions
+- Test with Accessibility Inspector and VoiceOver — they reveal issues no other tool catches
 
 ## When to Use
 

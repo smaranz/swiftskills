@@ -12,29 +12,34 @@ Handle events related to mouse, keyboard, and trackpad input.
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "Mouse, Keyboard, and Trackpad"
-        window.center()
-        self.init(window: window)
+class TrackpadViewController: NSViewController {
+    override func loadView() {
+        let view = NSView(frame: NSRect(x: 0, y: 0, width: 400, height: 300))
+        let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let magnify = NSMagnificationGestureRecognizer(target: self, action: #selector(handleZoom))
+        view.addGestureRecognizer(pan)
+        view.addGestureRecognizer(magnify)
+        self.view = view
+    }
+
+    @objc func handlePan(_ gesture: NSPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        // Apply translation
+        gesture.setTranslation(.zero, in: view)
+    }
+
+    @objc func handleZoom(_ gesture: NSMagnificationGestureRecognizer) {
+        let scale = 1.0 + gesture.magnification
+        // Apply scale
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Support trackpad gestures (pan, magnify, rotate) for natural macOS interactions
+- Use `NSEvent.addLocalMonitorForEvents` for app-wide keyboard shortcut handling
+- Implement `NSMenuItemValidation` to enable/disable menu items based on state
 
 ## When to Use
 

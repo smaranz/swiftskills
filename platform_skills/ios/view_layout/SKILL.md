@@ -12,34 +12,38 @@ Use stack views to lay out the views of your interface automatically. Use Auto L
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
+class AdaptiveLayoutController: UIViewController {
+    private let contentView = UIView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-
-        let label = UILabel()
-        label.text = "View layout"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = .secondarySystemBackground
+        contentView.layer.cornerRadius = 16
+        view.addSubview(contentView)
 
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
+    }
+
+    override func traitCollectionDidChange(_ previous: UITraitCollection?) {
+        super.traitCollectionDidChange(previous)
+        if traitCollection.horizontalSizeClass == .compact {
+            // Adjust for narrow layout
+        }
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Always use `safeAreaLayoutGuide` and `layoutMarginsGuide` instead of hard-coded insets
+- Use `UITraitCollection` to adapt layouts for size classes, Dynamic Type, and appearance
+- Prefer `UICollectionViewCompositionalLayout` over manual Auto Layout for complex lists
 
 ## When to Use
 

@@ -12,29 +12,28 @@ Present your content onscreen and handle user input and events.
 ```swift
 import AppKit
 
-class RorkWindowController: NSWindowController {
-    convenience init() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "Views and Controls"
-        window.center()
-        self.init(window: window)
+class SidebarViewController: NSViewController {
+    private let outlineView = NSOutlineView()
+
+    override func loadView() {
+        let scrollView = NSScrollView()
+        scrollView.documentView = outlineView
+        scrollView.hasVerticalScroller = true
+        self.view = scrollView
+
+        let column = NSTableColumn(identifier: .init("main"))
+        outlineView.addTableColumn(column)
+        outlineView.headerView = nil
+        outlineView.outlineTableColumn = column
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the MACOS Human Interface Guidelines for native feel.
-- Use system-standard AppKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `NSOutlineView` for sidebar tree structures, `NSTableView` for flat data
+- Wrap views in `NSScrollView` with `hasVerticalScroller = true` for scrollable content
+- Use `NSSplitViewController` for resizable multi-pane macOS layouts
 
 ## When to Use
 

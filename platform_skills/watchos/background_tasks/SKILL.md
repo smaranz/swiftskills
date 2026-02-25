@@ -10,29 +10,24 @@ Manage background sessions and tasks.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import SwiftUI
+import WatchKit
 
-struct RorkWatchView: View {
-    var body: some View {
-        NavigationStack {
-            List {
-                Text("Background execution")
-                    .font(.headline)
-            }
-            .navigationTitle("Rork")
-        }
+func scheduleBackgroundRefresh() {
+    let fireDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes
+    WKApplication.shared().scheduleBackgroundRefresh(
+        withPreferredDate: fireDate,
+        userInfo: nil
+    ) { error in
+        if let error { print("Schedule failed: \(error)") }
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the WATCHOS Human Interface Guidelines for native feel.
-- Use system-standard WatchKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Schedule background refreshes to keep complications and data current
+- Background tasks have very limited execution time — do network calls efficiently
+- Use `URLSession` background downloads for large data transfers
 
 ## When to Use
 

@@ -12,34 +12,49 @@ Present your content onscreen and define the interactions allowed with that cont
 ```swift
 import UIKit
 
-class RorkViewController: UIViewController {
+class ProfileViewController: UIViewController {
+    private let avatarView = UIImageView()
+    private let nameLabel = UILabel()
+    private let actionButton = UIButton(configuration: .filled())
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .systemBackground
 
-        let label = UILabel()
-        label.text = "Views and controls"
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+        avatarView.image = UIImage(systemName: "person.circle.fill")
+        avatarView.tintColor = .systemBlue
+        avatarView.contentMode = .scaleAspectFit
+
+        nameLabel.text = "Rork User"
+        nameLabel.font = .preferredFont(forTextStyle: .title2)
+
+        actionButton.configuration?.title = "Edit Profile"
+        actionButton.addAction(UIAction { _ in self.editProfile() }, for: .touchUpInside)
+
+        let stack = UIStackView(arrangedSubviews: [avatarView, nameLabel, actionButton])
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stack)
 
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            avatarView.widthAnchor.constraint(equalToConstant: 80),
+            avatarView.heightAnchor.constraint(equalToConstant: 80),
         ])
     }
+
+    func editProfile() { }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Follow the IOS Human Interface Guidelines for native feel.
-- Use system-standard UIKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `UIButton.Configuration` (iOS 15+) instead of manual button styling
+- Use `UIAction`-based targets instead of `#selector` for cleaner action handling
+- Build layouts with `UIStackView` + Auto Layout for maintainable hierarchies
 
 ## When to Use
 

@@ -12,14 +12,14 @@ Receive and respond to life-cycle notifications.
 ```swift
 import SwiftUI
 
-struct RorkWatchView: View {
+struct SessionTracker: View {
+    @Environment(\.isLuminanceReduced) private var isAlwaysOn
+    @State private var elapsedTime: TimeInterval = 0
+
     var body: some View {
-        NavigationStack {
-            List {
-                Text("Life cycles")
-                    .font(.headline)
-            }
-            .navigationTitle("Rork")
+        TimelineView(.periodic(from: .now, by: isAlwaysOn ? 60 : 1)) { _ in
+            Text(Duration.seconds(elapsedTime), format: .time(pattern: .minuteSecond))
+                .font(.system(.title, design: .rounded, weight: .bold))
         }
     }
 }
@@ -27,12 +27,9 @@ struct RorkWatchView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Follow the WATCHOS Human Interface Guidelines for native feel.
-- Use system-standard WatchKit components before building custom ones.
-- Support Dynamic Type and accessibility features from the start.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Check `isLuminanceReduced` for Always On Display — reduce update frequency and dim the UI
+- Use `TimelineView` for live-updating displays (timers, countdowns, sports scores)
+- Extended runtime sessions keep the app active during workouts and navigation
 
 ## When to Use
 
