@@ -14,13 +14,31 @@ in the Accessibility section of the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct AdaptiveView: View {
+    @Environment(\.dynamicTypeSize) private var typeSize
+    @Environment(\.colorSchemeContrast) private var contrast
+
+    var body: some View {
+        VStack {
+            Text("Accessible Content")
+                .font(.title)
+            Text("Adapts to user preferences")
+                .font(.body)
+                .foregroundStyle(contrast == .increased ? .primary : .secondary)
+        }
+        .padding(typeSize.isAccessibilitySize ? 24 : 16)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Check `dynamicTypeSize.isAccessibilitySize` to adjust layouts for very large text
+- Use semantic colors (`.primary`, `.secondary`) — they adapt to contrast settings
+- Never rely on color alone to convey information — add icons or text labels
 
 
 ## When to Use

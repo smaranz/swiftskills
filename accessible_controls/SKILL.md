@@ -14,13 +14,29 @@ in the Accessibility section of the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct AccessibleToggle: View {
+    @State private var isEnabled = false
+
+    var body: some View {
+        Toggle(isOn: $isEnabled) {
+            Label("Airplane Mode", systemImage: "airplane")
+        }
+        .accessibilityValue(isEnabled ? "On" : "Off")
+        .accessibilityAction {
+            isEnabled.toggle()
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Add `.accessibilityValue()` to controls that have a current state
+- Use `.accessibilityAction()` to provide alternative interactions for custom controls
+- Ensure minimum 44×44pt touch targets for all interactive elements
 
 
 ## When to Use

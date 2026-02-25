@@ -22,13 +22,39 @@ available to you in its library.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct PillButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(title, action: action)
+            .font(.headline)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            .background(.blue, in: Capsule())
+            .foregroundStyle(.white)
+    }
+}
+
+struct PillButton_LibraryContent: LibraryContentProvider {
+    var views: [LibraryItem] {
+        LibraryItem(
+            PillButton(title: "Action", action: {}),
+            title: "Pill Button",
+            category: .control
+        )
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Implement `LibraryContentProvider` to add custom views to the Xcode Library
+- Provide meaningful `title` and `category` for discoverability
+- Add modifiers to `LibraryContentProvider` too for custom modifier snippets
 
 
 ## When to Use

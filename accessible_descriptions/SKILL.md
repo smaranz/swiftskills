@@ -15,13 +15,27 @@ in the Accessibility section of the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct DescriptiveChart: View {
+    let data: [DataPoint]
+
+    var body: some View {
+        ChartView(data: data)
+            .accessibilityLabel("Sales chart")
+            .accessibilityValue("Trending upward, highest point in March at $42,000")
+            .accessibilityHint("Double-tap for detailed breakdown")
+            .accessibilityChartDescriptor(SalesChartDescriptor(data: data))
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.accessibilityLabel()` for what the element IS, `.accessibilityValue()` for its current STATE
+- Add `.accessibilityHint()` to describe what happens on interaction
+- Use `.accessibilityChartDescriptor()` for audio graph support in charts
 
 
 ## When to Use

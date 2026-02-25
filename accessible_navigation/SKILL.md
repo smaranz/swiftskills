@@ -19,13 +19,32 @@ in the Accessibility section of the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct AccessibleNavigation: View {
+    var body: some View {
+        NavigationStack {
+            VStack {
+                headerSection
+                    .accessibilityAddTraits(.isHeader)
+                contentList
+            }
+            .accessibilityRotor("Bookmarks") {
+                ForEach(bookmarks) { bookmark in
+                    AccessibilityRotorEntry(bookmark.title, id: bookmark.id)
+                }
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Add `.accessibilityAddTraits(.isHeader)` to section headers for VoiceOver navigation
+- Use `AccessibilityRotor` to create custom VoiceOver navigation groups
+- Implement `.accessibilitySortPriority()` to control VoiceOver reading order
 
 
 ## When to Use

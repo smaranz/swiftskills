@@ -20,13 +20,35 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+import AppKit
+
+struct NSViewWrapper: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSTextField {
+        let textField = NSTextField()
+        textField.placeholderString = "AppKit TextField"
+        textField.delegate = context.coordinator
+        return textField
+    }
+
+    func updateNSView(_ nsView: NSTextField, context: Context) { }
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    class Coordinator: NSObject, NSTextFieldDelegate {
+        func controlTextDidChange(_ obj: Notification) {
+            // Handle text changes
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `NSViewRepresentable` to embed AppKit views in SwiftUI on macOS
+- Implement `Coordinator` for delegate callbacks flowing back into SwiftUI
+- Prefer native SwiftUI views when available — only bridge AppKit when necessary
 
 
 ## When to Use

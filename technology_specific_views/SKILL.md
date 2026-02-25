@@ -32,13 +32,34 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+import MapKit
+
+struct MapExample: View {
+    @State private var position: MapCameraPosition = .automatic
+
+    var body: some View {
+        Map(position: $position) {
+            Marker("Apple Park", coordinate: CLLocationCoordinate2D(
+                latitude: 37.3346, longitude: -122.0090
+            ))
+            .tint(.blue)
+        }
+        .mapControls {
+            MapCompass()
+            MapScaleView()
+        }
+        .mapStyle(.standard(elevation: .realistic))
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use the native SwiftUI `Map` view (iOS 17+) instead of `MKMapView` wrappers
+- Add `MapControls` for compass, scale, and user location buttons
+- Use `Marker`, `Annotation`, and `MapPolyline` for map content
 
 
 ## When to Use

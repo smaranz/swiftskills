@@ -36,13 +36,35 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct AccessibleCard: View {
+    let item: Item
+
+    var body: some View {
+        HStack {
+            Image(systemName: item.icon)
+                .font(.title2)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading) {
+                Text(item.title).font(.headline)
+                Text(item.subtitle).font(.caption).foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(item.title), \(item.subtitle)")
+        .accessibilityAddTraits(.isButton)
+        .accessibilityHint("Double-tap to open details")
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.accessibilityElement(children: .combine)` to group related elements for VoiceOver
+- Add `.accessibilityLabel()` to every icon-only button and decorative image
+- Always test with VoiceOver enabled — it reveals issues no other tool catches
 
 
 ## When to Use

@@ -11,13 +11,47 @@ Use Instruments to detect hangs and hitches in your app, and to analyze long vie
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+import os
+
+struct PerformantList: View {
+    let items: [Item]
+    private let logger = Logger(subsystem: "com.app", category: "perf")
+
+    var body: some View {
+        let _ = Self._printChanges()
+
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                ForEach(items) { item in
+                    RowView(item: item)
+                        .id(item.id)
+                }
+            }
+        }
+    }
+}
+
+struct RowView: View {
+    let item: Item
+
+    var body: some View {
+        HStack {
+            Text(item.name)
+            Spacer()
+        }
+        .padding()
+        .drawingGroup()
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `Self._printChanges()` in `body` to debug which properties trigger re-renders
+- Apply `.drawingGroup()` to static rows to flatten the hierarchy into Metal-backed layers
+- Profile with the SwiftUI Instruments template to find slow `body` evaluations
 
 
 ## When to Use

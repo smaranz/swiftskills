@@ -20,13 +20,30 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct WatchConnectivityView: View {
+    @State private var heartRate: Double = 72
+
+    var body: some View {
+        VStack {
+            Image(systemName: "heart.fill")
+                .foregroundStyle(.red)
+                .font(.largeTitle)
+            Text("\(Int(heartRate)) BPM")
+                .font(.system(.title, design: .rounded, weight: .bold))
+        }
+        .digitalCrownRotation($heartRate, from: 40, through: 200, by: 1)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.digitalCrownRotation()` for scroll and value adjustment on watchOS
+- Keep watch interactions under 5 seconds — design for glances, not sessions
+- Use `WCSession` to send data between iPhone and Apple Watch
 
 
 ## When to Use

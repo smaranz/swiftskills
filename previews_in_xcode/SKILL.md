@@ -28,13 +28,43 @@ associated supporting types to define and configure a preview.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ProfileCard: View {
+    let name: String
+    let role: String
+
+    var body: some View {
+        VStack {
+            Text(name).font(.headline)
+            Text(role).font(.caption).foregroundStyle(.secondary)
+        }
+        .padding()
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+#Preview("Default") {
+    ProfileCard(name: "Jane", role: "Engineer")
+}
+
+#Preview("Dark Mode") {
+    ProfileCard(name: "Jane", role: "Engineer")
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Large Text") {
+    ProfileCard(name: "Jane", role: "Engineer")
+        .dynamicTypeSize(.xxxLarge)
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Create multiple `#Preview` blocks for different states (dark mode, large text, empty, error)
+- Use `@Previewable @State` for interactive previews with mutable state
+- Test edge cases in previews: empty strings, very long text, nil optionals
 
 
 ## When to Use
