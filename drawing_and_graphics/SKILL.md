@@ -20,14 +20,45 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ChartView: View {
+    let values: [Double]
+
+    var body: some View {
+        Canvas { context, size in
+            let step = size.width / CGFloat(values.count - 1)
+            let maxVal = values.max() ?? 1
+
+            var path = Path()
+            for (i, value) in values.enumerated() {
+                let x = step * CGFloat(i)
+                let y = size.height - (value / maxVal) * size.height
+                i == 0 ? path.move(to: CGPoint(x: x, y: y))
+                       : path.addLine(to: CGPoint(x: x, y: y))
+            }
+            context.stroke(path, with: .color(.blue), lineWidth: 2)
+
+            // Gradient fill under the line
+            var fillPath = path
+            fillPath.addLine(to: CGPoint(x: size.width, y: size.height))
+            fillPath.addLine(to: CGPoint(x: 0, y: size.height))
+            fillPath.closeSubpath()
+            context.fill(fillPath, with: .linearGradient(
+                Gradient(colors: [.blue.opacity(0.3), .clear]),
+                startPoint: .zero, endPoint: CGPoint(x: 0, y: size.height)
+            ))
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Use `Canvas` for high-performance 2D drawing that renders at 120Hz
+- Apply `.drawingGroup()` to flatten complex view hierarchies into Metal-backed layers
+- Use `context.resolveSymbol(id:)` to embed SwiftUI views inside Canvas draws
 
 ## When to Use
 
