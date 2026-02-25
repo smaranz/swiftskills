@@ -20,14 +20,45 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct TextInputForm: View {
+    @State private var name = ""
+    @State private var bio = ""
+    @FocusState private var focusedField: Field?
+
+    enum Field { case name, bio }
+
+    var body: some View {
+        Form {
+            TextField("Name", text: $name)
+                .focused($focusedField, equals: .name)
+                .textContentType(.name)
+                .submitLabel(.next)
+
+            TextField("Bio", text: $bio, axis: .vertical)
+                .focused($focusedField, equals: .bio)
+                .lineLimit(3...6)
+
+            Text("Preview: **\(name)**")
+                .font(.body)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") { focusedField = nil }
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Use `TextField(_:text:axis:.vertical)` with `.lineLimit` for expandable multi-line input
+- Set `.textContentType()` for autofill support (`.emailAddress`, `.password`, etc.)
+- Add keyboard toolbar buttons with `ToolbarItemGroup(placement: .keyboard)`
 
 ## When to Use
 

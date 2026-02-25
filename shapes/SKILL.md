@@ -16,14 +16,44 @@ If you need the efficiency or flexibility of immediate mode drawing
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct StarShape: Shape {
+    let points: Int
+    let innerRatio: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let outerRadius = min(rect.width, rect.height) / 2
+        let innerRadius = outerRadius * innerRatio
+
+        for i in 0..<(points * 2) {
+            let radius = i.isMultiple(of: 2) ? outerRadius : innerRadius
+            let angle = Angle(degrees: Double(i) * 360.0 / Double(points * 2) - 90)
+            let point = CGPoint(
+                x: center.x + CGFloat(cos(angle.radians)) * radius,
+                y: center.y + CGFloat(sin(angle.radians)) * radius
+            )
+            i == 0 ? path.move(to: point) : path.addLine(to: point)
+        }
+        path.closeSubpath()
+        return path
+    }
+}
+
+// Usage
+StarShape(points: 5, innerRatio: 0.4)
+    .fill(.yellow.gradient)
+    .frame(width: 100, height: 100)
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Conform to `Shape` for reusable, animatable custom shapes
+- Use `.fill()` with `ShapeStyle` (gradients, materials) for rich rendering
+- Prefer `.continuous` corner style on `RoundedRectangle` for Apple's squircle aesthetic
 
 ## When to Use
 

@@ -26,13 +26,35 @@ the `commands(content:)` modifier.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+@main
+struct MultiSceneApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+
+        #if os(macOS)
+        Settings {
+            SettingsView()
+        }
+
+        Window("Activity Log", id: "activity-log") {
+            ActivityLogView()
+        }
+        .keyboardShortcut("L", modifiers: [.command, .shift])
+        #endif
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `WindowGroup` for your main content, `Window` for single-instance utility panels
+- React to lifecycle via `@Environment(\.scenePhase)` for save/restore logic
+- On macOS, add `Settings` scene for a native Preferences window
 
 
 ## When to Use

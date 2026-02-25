@@ -24,13 +24,37 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct SearchExample: View {
+    @State private var query = ""
+    @State private var tokens: [SearchToken] = []
+
+    var body: some View {
+        NavigationStack {
+            List(filteredItems) { item in
+                Text(item.name)
+            }
+            .searchable(text: $query, tokens: $tokens, prompt: "Search items") { token in
+                Label(token.name, systemImage: token.icon)
+            }
+            .searchSuggestions {
+                ForEach(suggestions) { suggestion in
+                    Text(suggestion.name).searchCompletion(suggestion.name)
+                }
+            }
+            .navigationTitle("Library")
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Place `.searchable()` on the `NavigationStack` content for automatic search bar placement
+- Use `.searchSuggestions` for autocomplete and `.searchScopes` for category filtering
+- Support search tokens for structured filtering (e.g., tags, categories)
 
 
 ## When to Use

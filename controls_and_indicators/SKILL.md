@@ -19,14 +19,49 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ControlsDemo: View {
+    @State private var volume = 0.5
+    @State private var isEnabled = true
+    @State private var rating = 3
+
+    var body: some View {
+        Form {
+            Toggle("Notifications", isOn: $isEnabled)
+                .tint(.green)
+
+            Slider(value: $volume, in: 0...1) {
+                Text("Volume")
+            } minimumValueLabel: {
+                Image(systemName: "speaker.fill")
+            } maximumValueLabel: {
+                Image(systemName: "speaker.wave.3.fill")
+            }
+
+            Stepper("Rating: \(rating)", value: $rating, in: 1...5)
+
+            Gauge(value: volume) {
+                Text("Level")
+            }
+            .gaugeStyle(.accessoryLinear)
+
+            Button("Save", action: save)
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+        }
+    }
+
+    func save() { }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Use `Label` to pair text with SF Symbols — it adapts across menus, lists, and toolbars
+- Apply `.controlSize(.large)` for prominent CTAs, `.small` for inline controls
+- Use `Gauge` for visual progress/level indicators with various styles
 
 ## When to Use
 

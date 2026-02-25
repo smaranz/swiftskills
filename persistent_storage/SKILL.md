@@ -20,13 +20,47 @@ use `FetchRequest` and `FetchedResults` to interact with a Core Data model.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+import SwiftData
+
+@Model
+class Bookmark {
+    var title: String
+    var url: URL
+    var dateAdded: Date
+    @Relationship(deleteRule: .cascade)
+    var tags: [Tag] = []
+
+    init(title: String, url: URL) {
+        self.title = title
+        self.url = url
+        self.dateAdded = .now
+    }
+}
+
+struct BookmarkListView: View {
+    @Query(sort: \Bookmark.dateAdded, order: .reverse)
+    private var bookmarks: [Bookmark]
+
+    @Environment(\.modelContext) private var context
+
+    var body: some View {
+        List(bookmarks) { bookmark in
+            VStack(alignment: .leading) {
+                Text(bookmark.title).font(.headline)
+                Text(bookmark.url.absoluteString).font(.caption).foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@Model` macro with SwiftData for declarative persistence (replaces Core Data boilerplate)
+- Use `@Query` in views for automatic, live-updating fetch results
+- Use `@AppStorage` for simple UserDefaults-backed preferences, SwiftData for structured data
 
 
 ## When to Use

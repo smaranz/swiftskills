@@ -20,13 +20,33 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import WidgetKit
+import SwiftUI
+
+struct SimpleWidget: Widget {
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: "daily-quote", provider: QuoteProvider()) { entry in
+            VStack(alignment: .leading) {
+                Text(entry.quote)
+                    .font(.body)
+                Text("— \(entry.author)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .containerBackground(.fill.tertiary, for: .widget)
+        }
+        .configurationDisplayName("Daily Quote")
+        .supportedFamilies([.systemSmall, .systemMedium])
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use App Groups to share data between the main app and extensions
+- Keep extensions lightweight — they have strict memory limits
+- Use `TimelineProvider` for widgets that update on a schedule
 
 
 ## When to Use

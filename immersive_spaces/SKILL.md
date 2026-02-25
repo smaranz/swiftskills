@@ -28,13 +28,37 @@ if one isn’t already open.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+import RealityKit
+
+@main
+struct SpatialApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+
+        ImmersiveSpace(id: "solar-system") {
+            RealityView { content in
+                let earth = ModelEntity(
+                    mesh: .generateSphere(radius: 0.2),
+                    materials: [SimpleMaterial(color: .blue, isMetallic: false)]
+                )
+                earth.position = [0, 1.5, -1]
+                content.add(earth)
+            }
+        }
+        .immersionStyle(selection: .constant(.mixed), in: .mixed)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@Environment(\.openImmersiveSpace)` and `dismissImmersiveSpace` for lifecycle control
+- Choose `.mixed` immersion for AR overlays, `.full` for complete environment replacement
+- Only one `ImmersiveSpace` can be open at a time on visionOS
 
 
 ## When to Use

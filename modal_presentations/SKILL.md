@@ -21,13 +21,38 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ModalExample: View {
+    @State private var showSheet = false
+    @State private var showAlert = false
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Button("Show Sheet") { showSheet = true }
+            Button("Show Alert") { showAlert = true }
+        }
+        .sheet(isPresented: $showSheet) {
+            SheetContent()
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        .alert("Confirm Action", isPresented: $showAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Delete", role: .destructive) { }
+        } message: {
+            Text("This action cannot be undone.")
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.sheet()` for non-blocking content, `.fullScreenCover()` for immersive flows
+- Add `.presentationDetents()` to sheets for half-height drawer behavior
+- Use `.alert()` and `.confirmationDialog()` for destructive action confirmation
 
 
 ## When to Use

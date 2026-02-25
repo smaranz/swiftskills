@@ -21,13 +21,33 @@ view to provide a toolbar title to display when showing that view.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct NavigationExample: View {
+    @State private var path = NavigationPath()
+
+    var body: some View {
+        NavigationStack(path: $path) {
+            List(Recipe.all) { recipe in
+                NavigationLink(value: recipe) {
+                    Label(recipe.name, systemImage: "fork.knife")
+                }
+            }
+            .navigationTitle("Recipes")
+            .navigationDestination(for: Recipe.self) { recipe in
+                RecipeDetailView(recipe: recipe)
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `NavigationStack(path:)` with `NavigationPath` for programmatic, deep-linkable navigation
+- Prefer `NavigationSplitView` on iPad/Mac for sidebar + detail column layouts
+- Never nest a `NavigationStack` inside another — it creates double navigation bars
 
 
 ## When to Use

@@ -21,13 +21,41 @@ the `Entry()` macro to the variable declaration.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+// Define a custom environment key
+struct ThemeKey: EnvironmentKey {
+    static let defaultValue: AppTheme = .system
+}
+
+extension EnvironmentValues {
+    var appTheme: AppTheme {
+        get { self[ThemeKey.self] }
+        set { self[ThemeKey.self] = newValue }
+    }
+}
+
+enum AppTheme { case system, light, dark }
+
+struct ThemedView: View {
+    @Environment(\.appTheme) private var theme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dynamicTypeSize) private var typeSize
+
+    var body: some View {
+        Text("Themed Content")
+            .font(.title)
+            .foregroundStyle(theme == .dark ? .white : .primary)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@Environment` to read system values like `\.colorScheme`, `\.scenePhase`, `\.locale`
+- Create custom `EnvironmentKey` types for app-specific dependency injection
+- Prefer environment over singletons — it flows naturally through the view hierarchy
 
 
 ## When to Use

@@ -23,13 +23,37 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+@main
+struct RorkApp: App {
+    @State private var appModel = AppModel()
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environment(appModel)
+        }
+    }
+}
+
+@Observable
+class AppModel {
+    var isOnboarded = false
+    var selectedTab: Tab = .home
+
+    enum Tab: Hashable {
+        case home, search, profile
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Keep the `@main` App struct thin — delegate logic to an `@Observable` model
+- Inject app-wide state via `.environment()` rather than singletons
+- Use `@Observable` (Swift 6) instead of `ObservableObject` for finer updates
 
 
 ## When to Use

@@ -20,13 +20,47 @@ rely on preferences to send configuration information to their container.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct SizePreferenceKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+struct DynamicHeaderView: View {
+    @State private var headerHeight: CGFloat = 0
+
+    var body: some View {
+        VStack {
+            HeaderContent()
+                .background(
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: SizePreferenceKey.self,
+                            value: proxy.size
+                        )
+                    }
+                )
+            ScrollView {
+                ContentView()
+            }
+            .padding(.top, headerHeight)
+        }
+        .onPreferenceChange(SizePreferenceKey.self) { size in
+            headerHeight = size.height
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `PreferenceKey` to pass data UP the view hierarchy (child → parent)
+- Combine with `GeometryReader` to measure child sizes for dynamic layout
+- Always implement `reduce` to handle multiple children reporting preferences
 
 
 ## When to Use

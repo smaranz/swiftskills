@@ -16,14 +16,31 @@ over a view, or request the light or dark appearance for a view.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ConfiguredView: View {
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        Label("Submit", systemImage: "paperplane.fill")
+            .font(.headline)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .foregroundStyle(.white)
+            .background(isEnabled ? .blue : .gray, in: Capsule())
+            .opacity(isEnabled ? 1.0 : 0.5)
+            .tint(.blue)
+            .redacted(reason: isEnabled ? [] : .placeholder)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Use `.disabled()`, `.redacted()`, and `.hidden()` to control view state
+- Modifier order matters: `.padding().background()` differs from `.background().padding()`
+- Use `.tint()` for accent color propagation across child views
 
 ## When to Use
 

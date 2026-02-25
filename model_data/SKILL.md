@@ -30,13 +30,51 @@ with other views in the hierarchy without passing a reference using the
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+@Observable
+class ShoppingCart {
+    var items: [CartItem] = []
+
+    var total: Decimal {
+        items.reduce(0) { $0 + $1.price * Decimal($1.quantity) }
+    }
+
+    func add(_ product: Product) {
+        if let index = items.firstIndex(where: { $0.product.id == product.id }) {
+            items[index].quantity += 1
+        } else {
+            items.append(CartItem(product: product, quantity: 1))
+        }
+    }
+}
+
+struct CartView: View {
+    @Environment(ShoppingCart.self) private var cart
+
+    var body: some View {
+        List(cart.items) { item in
+            HStack {
+                Text(item.product.name)
+                Spacer()
+                Text("×\(item.quantity)")
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            Text("Total: \(cart.total, format: .currency(code: "USD"))")
+                .font(.headline)
+                .padding()
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@Observable` (Swift 6) instead of `ObservableObject` for automatic fine-grained updates
+- Inject models via `.environment()` and read with `@Environment(Model.self)`
+- Computed properties on `@Observable` classes automatically trigger view updates
 
 
 ## When to Use

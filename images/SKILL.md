@@ -19,14 +19,41 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ImageShowcase: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            // SF Symbol with hierarchical rendering
+            Image(systemName: "cloud.sun.rain.fill")
+                .symbolRenderingMode(.hierarchical)
+                .font(.system(size: 64))
+                .foregroundStyle(.blue)
+
+            // Async remote image
+            AsyncImage(url: URL(string: "https://example.com/photo.jpg")) { phase in
+                switch phase {
+                case .success(let image):
+                    image.resizable().scaledToFill()
+                case .failure:
+                    Image(systemName: "photo").foregroundStyle(.secondary)
+                default:
+                    ProgressView()
+                }
+            }
+            .frame(width: 200, height: 200)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Use SF Symbols with `.symbolRenderingMode(.hierarchical)` for polished iconography
+- Use `AsyncImage` with phase handling for loading, success, and error states
+- Apply `.resizable()` before `.scaledToFit()` / `.scaledToFill()` — order matters
 
 ## When to Use
 

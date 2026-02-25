@@ -23,13 +23,44 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+import UniformTypeIdentifiers
+
+struct TextDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.plainText] }
+    var text: String
+
+    init(text: String = "") { self.text = text }
+
+    init(configuration: ReadConfiguration) throws {
+        guard let data = configuration.file.regularFileContents else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        text = String(data: data, encoding: .utf8) ?? ""
+    }
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: text.data(using: .utf8)!)
+    }
+}
+
+@main
+struct EditorApp: App {
+    var body: some Scene {
+        DocumentGroup(newDocument: TextDocument()) { file in
+            TextEditor(text: file.$document.text)
+                .padding()
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Conform to `FileDocument` for value-type documents, `ReferenceFileDocument` for class-based
+- Use `DocumentGroup` to get automatic open/save/rename for free
+- Declare `readableContentTypes` with `UTType` for proper file association
 
 
 ## When to Use

@@ -24,13 +24,39 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct WindowExample: View {
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+
+    var body: some View {
+        Button("Open Detail") {
+            openWindow(id: "detail-panel")
+        }
+    }
+}
+
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            WindowExample()
+        }
+        Window("Detail", id: "detail-panel") {
+            DetailPanelView()
+        }
+        .defaultSize(width: 400, height: 300)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `openWindow(id:)` and `dismissWindow(id:)` environment actions for programmatic control
+- Set `.defaultSize()` and `.defaultPosition()` for polished window placement
+- On visionOS, use `.windowStyle(.volumetric)` for 3D content windows
 
 
 ## When to Use

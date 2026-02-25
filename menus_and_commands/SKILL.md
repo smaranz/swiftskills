@@ -18,14 +18,39 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct MenuExample: View {
+    @State private var sortOrder: SortOrder = .name
+
+    var body: some View {
+        List(items) { item in
+            Text(item.name)
+                .contextMenu {
+                    Button("Copy", systemImage: "doc.on.doc") { }
+                    Button("Share", systemImage: "square.and.arrow.up") { }
+                    Divider()
+                    Button("Delete", systemImage: "trash", role: .destructive) { }
+                }
+        }
+        .toolbar {
+            Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                Picker("Sort By", selection: $sortOrder) {
+                    Text("Name").tag(SortOrder.name)
+                    Text("Date").tag(SortOrder.date)
+                }
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
+- Use `.contextMenu` with `preview:` parameter for rich long-press previews
+- Add `role: .destructive` to delete actions for automatic red styling
+- Use `Menu` in toolbars for dropdown action lists; `Picker` inside for selection
 
 ## When to Use
 

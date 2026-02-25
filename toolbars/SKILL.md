@@ -18,13 +18,42 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ToolbarExample: View {
+    @State private var isEditing = false
+
+    var body: some View {
+        NavigationStack {
+            ContentListView()
+                .navigationTitle("Items")
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(isEditing ? "Done" : "Edit") {
+                            isEditing.toggle()
+                        }
+                    }
+                    ToolbarItem(placement: .bottomBar) {
+                        HStack {
+                            Button("Filter", systemImage: "line.3.horizontal.decrease") { }
+                            Spacer()
+                            Text("24 items").font(.caption)
+                            Spacer()
+                            Button("Add", systemImage: "plus") { }
+                        }
+                    }
+                }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `ToolbarItem(placement:)` for cross-platform toolbar placement
+- Prefer `.primaryAction` for the main action, `.cancellationAction` for dismiss
+- Use `ToolbarItemGroup(placement: .keyboard)` to add buttons above the keyboard
 
 
 ## When to Use
