@@ -47,11 +47,12 @@ struct PlaygroundView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Ensure image playground integration feels seamless by following the HIG for Intelligence.
-- Handle fallback cases gracefully where the model or feature may be unavailable.
-- Use modern async/await patterns for all AI-triggered operations.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Check `@Environment(\.supportsImagePlayground)` before showing the generate button — not all devices support it
+- Use `.imagePlaygroundSheet(isPresented:concepts:)` with pre-filled concepts to guide generation toward relevant results
+- The sheet returns a file URL — load it with `UIImage(contentsOfFile:)` or `Image(nsImage:)` on macOS
+- Use `ImageCreator` for programmatic generation without UI (headless batch processing)
+- Available on iOS 18.1+, iPadOS 18.1+, and macOS 15.1+ with Apple Intelligence enabled
+- All image generation runs on-device — no data is sent to Apple servers
 
 ## When to Use
 

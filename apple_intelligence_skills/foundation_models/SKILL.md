@@ -78,11 +78,12 @@ struct SmartRecommendationView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Ensure foundation models integration feels seamless by following the HIG for Intelligence.
-- Handle fallback cases gracefully where the model or feature may be unavailable.
-- Use modern async/await patterns for all AI-triggered operations.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Check availability with `SystemLanguageModel.default.availability` before prompting — not all devices support Apple Intelligence
+- Use `@Generable` on structs to get type-safe structured output instead of parsing raw text
+- Create `Tool` conformances to let the model call your app's APIs (database lookups, calculations, etc.)
+- Use `Instructions` to set system-level behavior and `Prompt` for per-request input
+- Handle `.contentPolicyViolation` errors from guardrails gracefully with user-facing fallback messages
+- Available on iOS 26+, macOS 26+, iPadOS 26+, and visionOS 26+ devices with Apple Intelligence enabled
 
 ## When to Use
 

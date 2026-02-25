@@ -53,11 +53,12 @@ struct AppShortcuts: AppShortcutsProvider {
 
 ## 💎 Elite Implementation Tips
 
-- Ensure app intents integration feels seamless by following the HIG for Intelligence.
-- Handle fallback cases gracefully where the model or feature may be unavailable.
-- Use modern async/await patterns for all AI-triggered operations.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- Define an `AppIntent` for every major user-facing action — Siri and Shortcuts discover them automatically
+- Use `@Parameter(title:)` with clear, short labels — Siri reads these aloud during voice interactions
+- Provide `AppShortcutsProvider` with natural phrases so users can invoke intents by voice immediately
+- Conform entities to `AppEntity` for deep Spotlight indexing and Siri entity resolution
+- Test with Siri end-to-end — intents that work in Shortcuts may fail with voice due to parameter ambiguity
+- Available on iOS 16+, macOS 13+, watchOS 9+, and visionOS 1+; Apple Intelligence enhancements require iOS 26+
 
 ## When to Use
 

@@ -1,37 +1,58 @@
 ---
-name: Apple Intelligence: NSAdaptiveImageGlyph
+name: Apple Intelligence: Genmoji
 description: Rork-Max Quality skill for Apple Intelligence: NSAdaptiveImageGlyph. Patterns and best practices for Apple Intelligence integration.
 ---
 
-# Apple Intelligence: NSAdaptiveImageGlyph
+# Apple Intelligence: Genmoji
 
-A data object for an emoji-like image that can appear in attributed text.
-```
-class NSAdaptiveImageGlyph
-```
-An `NSAdaptiveImageGlyph` contains an image that automatically adapts to different sizes and resolutions. The text system creates instances of this type to represent custom emojis that people create using the system interfaces. This type manages multiple images, along with metadata describing how to adapt those images correctly to different fonts and font attributes.
-Typically, you receive new `NSAdaptiveImageGlyph` objects only from the text-input system. When someone creates a new emoji and inserts it into their text, TextKit creates an instance of this type to represent it. If your app examines or changes the attributes of attributed strings, preserve the adaptiveImageGlyph attribute when making any changes. For example, if you filter unknown attributes in a custom text-storage object, update your code to preserve this attribute. The value of the attribute is an `NSAdaptiveImageGlyph` containing the emoji data. You can save the image data with the rest of your content and use the data to recreate the type later.
+Genmoji lets users create custom emoji-like images using Apple Intelligence and insert them into text. Under the hood, each Genmoji is an `NSAdaptiveImageGlyph` — a multi-resolution image that scales with the surrounding text. Standard text views render them automatically; your job is to preserve the glyph data when processing or serializing attributed strings.
 
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
 import UIKit
 
-func renderGenmoji(in attributedString: NSAttributedString) -> UIImage? {
-    let renderer = UIGraphicsImageRenderer(size: CGSize(width: 300, height: 44))
-    return renderer.image { context in
-        attributedString.draw(in: CGRect(x: 0, y: 0, width: 300, height: 44))
+// Genmoji appear as NSAdaptiveImageGlyph in attributed strings.
+// Standard UITextView handles them automatically.
+
+class GenmojiTextViewController: UIViewController {
+    let textView = UITextView()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        textView.allowsEditingTextAttributes = true
+        textView.frame = view.bounds
+        textView.font = .preferredFont(forTextStyle: .body)
+        view.addSubview(textView)
+        // Users can insert Genmoji via the emoji keyboard — UITextView renders them natively
+    }
+
+    // When serializing text, preserve the adaptive image glyph attribute
+    func saveText() -> Data? {
+        try? textView.attributedText.data(
+            from: NSRange(location: 0, length: textView.attributedText.length),
+            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd]
+        )
+    }
+
+    // Restore text with Genmoji preserved
+    func loadText(from data: Data) {
+        textView.attributedText = try? NSAttributedString(
+            data: data,
+            options: [.documentType: NSAttributedString.DocumentType.rtfd],
+            documentAttributes: nil
+        )
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Ensure genmoji integration feels seamless by following the HIG for Intelligence.
-- Handle fallback cases gracefully where the model or feature may be unavailable.
-- Use modern async/await patterns for all AI-triggered operations.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- `UITextView` and `NSTextView` render Genmoji (NSAdaptiveImageGlyph) automatically — no extra code needed
+- When serializing attributed strings, use RTFD format to preserve adaptive image glyph data
+- Do NOT strip unknown attributes from attributed strings — you'll lose Genmoji content
+- `NSAdaptiveImageGlyph` contains multiple resolutions; the text system picks the right one for the current font size
+- Available on iOS 18+, iPadOS 18+, and macOS 15+ with the emoji keyboard
 
 ## When to Use
 

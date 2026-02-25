@@ -42,27 +42,41 @@ gets and sets the contents of the view’s text storage and supports Writing Too
 ```swift
 import UIKit
 
-class RorkTextViewController: UIViewController, UIWritingToolsCoordinatorDelegate {
-    let textView = UITextView()
+// Standard UITextView — Writing Tools work automatically, no extra code needed
+let standardTextView = UITextView()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        textView.frame = view.bounds
-        textView.font = .preferredFont(forTextStyle: .body)
-        textView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(textView)
-        // Writing Tools are enabled by default on UITextView
+// Custom text view — add UIWritingToolsCoordinator for Writing Tools support
+class CustomTextView: UIView {
+    let coordinator: UIWritingToolsCoordinator
+
+    init() {
+        let delegate = WritingToolsHandler()
+        coordinator = UIWritingToolsCoordinator(delegate: delegate)
+        super.init(frame: .zero)
+        addInteraction(coordinator)
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+}
+
+class WritingToolsHandler: NSObject, UIWritingToolsCoordinator.Delegate {
+    func writingToolsCoordinator(_ coordinator: UIWritingToolsCoordinator,
+                                  requestsTextIn range: NSRange,
+                                  completion: @escaping (NSAttributedString) -> Void) {
+        // Return the current text in the requested range
+        let text = NSAttributedString(string: "Current text content")
+        completion(text)
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Ensure writing tools integration feels seamless by following the HIG for Intelligence.
-- Handle fallback cases gracefully where the model or feature may be unavailable.
-- Use modern async/await patterns for all AI-triggered operations.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
+- `UITextView`, `NSTextView`, `TextField`, and `TextEditor` get Writing Tools automatically — no code needed
+- Only use `UIWritingToolsCoordinator` for fully custom text views that don't use system text input
+- Implement the `Delegate` to provide text content, accept rewrites, and support proofreading animations
+- Set `.preferredBehavior` to `.limited` if your view only supports plain text (no rich text rewrites)
+- Writing Tools are available on iOS 18.1+, iPadOS 18.1+, and macOS 15.1+
 
 ## When to Use
 
