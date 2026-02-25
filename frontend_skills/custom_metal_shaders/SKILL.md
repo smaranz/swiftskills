@@ -31,14 +31,26 @@ struct ShaderDelightView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Grain: A subtle noise shader (0.05 intensity) adds a premium tactile feel.\n- Performance: Shaders are GPU-accelerated—use them for full-screen background effects.\n- Dynamics: Pass the current timestamp to shaders for organic transitions.
+- Grain: A subtle noise shader (0.05 intensity) adds a premium tactile feel.
+- Performance: Shaders are GPU-accelerated—use them for full-screen background effects.
+- Dynamics: Pass the current timestamp to shaders for organic transitions.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Adding organic noise, grain, or shimmer to backgrounds
+- Creating custom blur, distortion, or glow effects beyond built-in modifiers
+- Building real-time animated effects (water ripple, heat haze, light leak)
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Keep shader intensity subtle (0.03–0.08 noise) for premium tactile texture
+- Shaders are GPU-accelerated — use them for full-screen backgrounds without fear
+- Pass `Date.now.timeIntervalSince1970` as a float uniform for organic motion
+- Use `.visualEffect { content, proxy in }` for per-view shader application (iOS 17+)
+
+## Common Pitfalls
+
+- Over-processing — heavy shaders on every view cause GPU throttling on older devices
+- Not providing a fallback for pre-iOS 17 devices where ShaderLibrary is unavailable
+- Testing only in Simulator — Metal shaders behave differently on real hardware

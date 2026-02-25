@@ -34,14 +34,26 @@ struct HeroTransition: View {
 
 ## 💎 Elite Implementation Tips
 
-- Consistency: Ensure the namespace is passed down if moving between views.\n- Smoothing: Use .geometryGroup() to resolve layout conflicts.\n- Depth: Scale the background view slightly (0.95) when the hero card expands.
+- Consistency: Ensure the namespace is passed down if moving between views.
+- Smoothing: Use .geometryGroup() to resolve layout conflicts.
+- Depth: Scale the background view slightly (0.95) when the hero card expands.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Creating hero transitions between a thumbnail and a detail view
+- Building interactive, interruptible navigation animations
+- Connecting visual elements across navigation stack destinations
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Use `matchedGeometryEffect(id:in:)` with a shared `@Namespace` for hero animations
+- Apply `.geometryGroup()` to resolve layout conflicts during transitions
+- Scale the background view to 0.95 when a hero card expands for depth
+- Use `NavigationTransition.zoom` (iOS 18+) for built-in hero transitions
+
+## Common Pitfalls
+
+- Namespace not shared correctly — the hero effect silently fails
+- Mismatched view hierarchies cause geometry effects to jump instead of interpolate
+- Over-animating — subtle transitions (0.3s spring) feel better than dramatic ones

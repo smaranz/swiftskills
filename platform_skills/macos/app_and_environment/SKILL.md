@@ -1,142 +1,104 @@
 ---
 name: MACOS App and Environment
-description: Rork-Max Quality skill for MACOS App and Environment on macos. Based on official Apple AppKit Documentation.
+description: Rork-Max Quality skill for MACOS App and Environment. Platform-native patterns and best practices for macos development.
 ---
 
 # MACOS App and Environment
 
+Learn about the objects that you use to interact with the system.
+
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-// Premium MACOS App and Environment Implementation for macos
-// Focus on platform-native excellence
+import AppKit
 
-import SwiftUI
-#if os(macos)
-// AppKit specific imports
-#endif
+@main
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.appearance = NSAppearance(named: .aqua)
+    }
 
-struct RorkPlatformView: View {
-    var body: some View {
-        Text("Rork Quality MACOS Experience")
-            .font(.system(.title, design: .rounded))
-            .padding()
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false  // macOS apps typically stay running without windows
+    }
+
+    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+        true
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Master the macos native feel: Use system-standard components correctly before customizing.
-- Ensure optimal performance for macos: Handle lifecycle events efficiently.
-- Aesthetics: Keep designs clean and aligned with the platform's HIG.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Return `false` from `applicationShouldTerminateAfterLastWindowClosed` — macOS convention
+- Use `NSApplication.shared.appearance` for app-wide appearance control
+- Support state restoration with `applicationSupportsSecureRestorableState`
 
-## Documentation
+## When to Use
 
-# App and Environment
+- Building native macOS features with AppKit
+- Implementing menu bar items, dock menus, and macOS-specific UI
+- Working with NSWindow, NSViewController, and AppKit patterns
 
-Learn about the objects that you use to interact with the system.
+## Best Practices
 
-## Topics
+- Support keyboard shortcuts and menu bar commands for every major action
+- Use NSToolbar for window-level controls; avoid floating toolbars
+- Support trackpad gestures and the Magic Mouse for natural interactions
+
+## Common Pitfalls
+
+- Ignoring the menu bar — macOS users expect all actions available via menus
+- Not testing with multiple windows open simultaneously
+- Forgetting to handle the app running without any windows (macOS apps don't quit on last window close)
+
+## Key APIs
 
 ### Life Cycle
 
-[`NSApplication`](/documentation/AppKit/NSApplication)
-
-An object that manages an app’s main event loop and resources used by all of that app’s objects.
-
-[`NSRunningApplication`](/documentation/AppKit/NSRunningApplication)
-
-An object that can manipulate and provide information for a single instance of an app.
-
-[`NSApplicationDelegate`](/documentation/AppKit/NSApplicationDelegate)
-
-A set of methods that manage your app’s life cycle and its interaction with common system services.
-
-[`NSApplicationMain`](/documentation/AppKit/NSApplicationMain)
-
-Called by the main function to create and run the application.
-
-[`NSApplicationMain(_:_:)`](/documentation/AppKit/NSApplicationMain(_:_:))
-
-Called by the main function to create and run the application.
+| API | Purpose |
+|-----|---------|
+| `NSApplication` | An object that manages an app’s main event loop and resources used by all of that app’s objects. |
+| `NSRunningApplication` | An object that can manipulate and provide information for a single instance of an app. |
+| `NSApplicationDelegate` | A set of methods that manage your app’s life cycle and its interaction with common system services. |
+| `NSApplicationMain` | Called by the main function to create and run the application. |
+| `NSApplicationMain(_:_:)` | Called by the main function to create and run the application. |
 
 ### Environment
 
-[`NSWorkspace`](/documentation/AppKit/NSWorkspace)
-
-A workspace that can launch other apps and perform a variety of file-handling services.
-
-[`NSWorkspace.OpenConfiguration`](/documentation/AppKit/NSWorkspace/OpenConfiguration)
-
-The configuration options for opening URLs or launching apps.
-
-[`NSAppKitVersion`](/documentation/AppKit/NSAppKitVersion)
-
-Constants for determining which version of AppKit is available.
-
-  <doc://com.apple.documentation/documentation/BundleResources/Information-Property-List/LSMinimumSystemVersion>
+| API | Purpose |
+|-----|---------|
+| `NSWorkspace` | A workspace that can launch other apps and perform a variety of file-handling services. |
+| `NSWorkspace.OpenConfiguration` | The configuration options for opening URLs or launching apps. |
+| `NSAppKitVersion` | Constants for determining which version of AppKit is available. |
 
 ### Handoff
 
-  <doc://com.apple.documentation/documentation/Foundation/NSUserActivity>
-
-[`NSUserActivityRestoring`](/documentation/AppKit/NSUserActivityRestoring)
-
-A protocol that marks classes to restore the state of your app to continue a user activity.
+| API | Purpose |
+|-----|---------|
+| `NSUserActivityRestoring` | A protocol that marks classes to restore the state of your app to continue a user activity. |
 
 ### App Services
 
-[`NSSharingService`](/documentation/AppKit/NSSharingService)
-
-An object that facilitates the sharing of content with social media services, or with apps like Mail or Safari.
-
-[`NSSharingServicePicker`](/documentation/AppKit/NSSharingServicePicker)
-
-A list of sharing services that the user can choose from.
-
-[`NSPreviewRepresentableActivityItem`](/documentation/AppKit/NSPreviewRepresentableActivityItem)
-
-An interface you adopt in custom objects that you want to share using the macOS share sheet.
-
-[`NSSharingServicePickerToolbarItem`](/documentation/AppKit/NSSharingServicePickerToolbarItem)
-
-A toolbar item that displays the macOS share sheet.
-
-[`NSServicesMenuRequestor`](/documentation/AppKit/NSServicesMenuRequestor)
-
-A set of methods that support interaction with items users can share through a sharing service.
-
-[`NSCloudSharingServiceDelegate`](/documentation/AppKit/NSCloudSharingServiceDelegate)
-
-A set of methods for responding to the life cycle events of the cloud-sharing service.
-
-[Services Functions](/documentation/AppKit/services-functions)
-
-Configure the contents of your app’s Services menu.
+| API | Purpose |
+|-----|---------|
+| `NSSharingService` | An object that facilitates the sharing of content with social media services, or with apps like Mail or Safari. |
+| `NSSharingServicePicker` | A list of sharing services that the user can choose from. |
+| `NSPreviewRepresentableActivityItem` | An interface you adopt in custom objects that you want to share using the macOS share sheet. |
+| `NSSharingServicePickerToolbarItem` | A toolbar item that displays the macOS share sheet. |
+| `NSServicesMenuRequestor` | A set of methods that support interaction with items users can share through a sharing service. |
+| `NSCloudSharingServiceDelegate` | A set of methods for responding to the life cycle events of the cloud-sharing service. |
+| `Services Functions` | Configure the contents of your app’s Services menu. |
 
 ### App Help
 
-[`NSHelpManager`](/documentation/AppKit/NSHelpManager)
-
-An object for displaying online help for an app.
-
-[`NSUserInterfaceItemSearching`](/documentation/AppKit/NSUserInterfaceItemSearching)
-
-A set of methods an app can implement to provide Spotlight for Help for its own custom help data.
+| API | Purpose |
+|-----|---------|
+| `NSHelpManager` | An object for displaying online help for an app. |
+| `NSUserInterfaceItemSearching` | A set of methods an app can implement to provide Spotlight for Help for its own custom help data. |
 
 ### Errors
 
-[AppKit Errors](/documentation/AppKit/appkit-errors)
-
-These constants represent errors generated by AppKit.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `AppKit Errors` | These constants represent errors generated by AppKit. |

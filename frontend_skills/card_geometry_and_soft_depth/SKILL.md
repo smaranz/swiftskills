@@ -21,14 +21,26 @@ RoundedRectangle(cornerRadius: 24, style: .continuous)
 
 ## 💎 Elite Implementation Tips
 
-- Layering: Use two shadows—one sharp and one diffuse for realism.\n- Shape: Always use .continuous corner style for smooth silhouettes.\n- Inner-Light: A 0.5pt white stroke on top simulates light-catching.
+- Layering: Use two shadows—one sharp and one diffuse for realism.
+- Shape: Always use .continuous corner style for smooth silhouettes.
+- Inner-Light: A 0.5pt white stroke on top simulates light-catching.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Designing card-based layouts (feeds, dashboards, settings)
+- Creating Apple-style rounded rectangles with continuous corner curves
+- Building elevation hierarchy with layered shadows
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Always use `.continuous` corner style for smooth squircle silhouettes
+- Layer two shadows: one sharp (radius 10, y: 5, 0.05 opacity) and one diffuse (radius 30, y: 15, 0.1 opacity)
+- Add a 0.5pt white top stroke to simulate light catching the edge
+- Use 24–32pt corner radius for cards; 12–16pt for smaller elements
+
+## Common Pitfalls
+
+- `.cornerRadius()` (deprecated) doesn't support continuous curves — use `.clipShape(RoundedRectangle(cornerRadius:style:))`
+- Pure black shadows look harsh — use the accent color with low opacity for a glow effect
+- Inconsistent corner radii across nested elements (inner radius = outer radius − padding)

@@ -1,108 +1,76 @@
 ---
 name: Swift Standard Library
-description: Rork-Max Quality skill for Swift Standard Library. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Swift Standard Library. Actionable Swift language patterns and best practices.
 ---
-
-# Swift Standard Library
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Swift Standard Library Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Swift Standard Library]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Swift Standard Library usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
 
 # Swift Standard Library
 
 Solve complex problems and write high-performance, readable code.
-
-## Overview
-
 The Swift standard library defines a base layer of functionality for writing Swift
 programs, including:
-
-- Fundamental data types such as ``doc://com.apple.Swift/documentation/Swift/Int``, ``doc://com.apple.Swift/documentation/Swift/Double``, and ``doc://com.apple.Swift/documentation/Swift/String``
-- Common data structures such as ``doc://com.apple.Swift/documentation/Swift/Array``, ``doc://com.apple.Swift/documentation/Swift/Dictionary``, and ``doc://com.apple.Swift/documentation/Swift/Set``
-- Global functions such as ``doc://com.apple.Swift/documentation/Swift/print(_:separator:terminator:)`` and ``doc://com.apple.Swift/documentation/Swift/abs(_:)``
-- Protocols, such as ``doc://com.apple.Swift/documentation/Swift/Collection`` and ``doc://com.apple.Swift/documentation/Swift/Equatable``, that describe
-  common abstractions.
-- Protocols, such as ``doc://com.apple.Swift/documentation/Swift/CustomDebugStringConvertible`` and ``doc://com.apple.Swift/documentation/Swift/CustomReflectable``,
-  that you use to customize operations that are available to all types.
-- Protocols, such as ``doc://com.apple.Swift/documentation/Swift/OptionSet``, that you use to provide implementations
-  that would otherwise require boilerplate code.
-
+- Fundamental data types such as `Int`, `Double`, and `String`
+- Common data structures such as `Array`, `Dictionary`, and `Set`
+- Global functions such as `print(_:separator:terminator:)` and `abs(_:)`
+- Protocols, such as `Collection` and `Equatable`, that describe
+common abstractions.
+- Protocols, such as `CustomDebugStringConvertible` and `CustomReflectable`,
+that you use to customize operations that are available to all types.
+- Protocols, such as `OptionSet`, that you use to provide implementations
+that would otherwise require boilerplate code.
 > Note: Experiment with Swift standard library types and learn high-level concepts
 > using visualizations and practical examples. Learn how the Swift standard library
 > uses protocols and generics to express powerful constraints. Download the playground
 > below to get started.
-> 
-> [Swift Standard Library.playground](https://developer.apple.com/sample-code/swift/downloads/standard-library.zip)
+>
+> Swift Standard Library.playground
 
-## Topics
+## 🚀 Rork-Max Quality Snippet
 
-### Values and Collections
+```swift
+import Foundation
 
-  <doc://com.apple.Swift/documentation/Swift/numbers-and-basic-values>
+// Result type for error handling
+func fetchUser(id: Int) -> Result<User, NetworkError> {
+    guard id > 0 else { return .failure(.invalidID) }
+    return .success(User(id: id, name: "Rork"))
+}
 
-  <doc://com.apple.Swift/documentation/Swift/strings-and-text>
+// Codable for JSON parsing
+struct User: Codable, Identifiable {
+    let id: Int
+    let name: String
+}
 
-  <doc://com.apple.Swift/documentation/Swift/collections>
+let json = #"{"id": 1, "name": "Rork"}"#.data(using: .utf8)!
+let user = try JSONDecoder().decode(User.self, from: json)
 
-  <doc://com.apple.Swift/documentation/Swift/time-and-duration>
+// Optional chaining and nil coalescing
+let displayName = user.name.isEmpty ? "Anonymous" : user.name
+```
 
-### Tools for Your Types
+## 💎 Elite Implementation Tips
 
-  <doc://com.apple.Swift/documentation/Swift/basic-behaviors>
+- Leverage `Codable` for JSON/Plist parsing — avoid manual dictionary access
+- Use `Result<Success, Failure>` for synchronous operations that can fail
+- Prefer `guard let` for early exits, `if let` for conditional binding
 
-  <doc://com.apple.Swift/documentation/Swift/encoding-decoding-and-serialization>
+## When to Use
 
-  <doc://com.apple.Swift/documentation/Swift/initialization-with-literals>
+- Working with fundamental types: strings, numbers, collections
+- Choosing between value types (structs/enums) and reference types (classes)
+- Implementing protocols like `Codable`, `Hashable`, `Equatable`, `Comparable`
 
-### Programming Tasks
+## Best Practices
 
-  <doc://com.apple.Swift/documentation/Swift/input-and-output>
+- Use `Int` unless you have a specific reason for sized integers
+- Prefer `[Element]` array literal syntax over `Array<Element>`
+- Use `guard let` for early exits and `if let` for optional binding
+- Leverage `Codable` for JSON parsing instead of manual dictionary access
 
-  <doc://com.apple.Swift/documentation/Swift/debugging-and-reflection>
+## Common Pitfalls
 
-  <doc://com.apple.Swift/documentation/Swift/macros>
-
-  <doc://com.apple.Swift/documentation/Swift/concurrency>
-
-  <doc://com.apple.Swift/documentation/Swift/key-path-expressions>
-
-  <doc://com.apple.Swift/documentation/Swift/manual-memory-management>
-
-  <doc://com.apple.Swift/documentation/Swift/type-casting-and-existential-types>
-
-  <doc://com.apple.Swift/documentation/Swift/c-interoperability>
-
-  <doc://com.apple.Swift/documentation/Swift/operator-declarations>
-
-### Deprecated
-
-  <doc://com.apple.Swift/documentation/Swift/deprecated>
+- Floating-point equality checks — use `isApproximatelyEqual(to:)` or tolerances
+- Force-unwrapping optionals (`!`) without safety checks
+- String index arithmetic — Swift strings are not random-access, use `String.Index`
 
 
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)

@@ -1,231 +1,70 @@
 ---
 name: Preventing Timing Problems When Using Closures
-description: Rork-Max Quality skill for Preventing Timing Problems When Using Closures. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Preventing Timing Problems When Using Closures. Actionable Swift language patterns and best practices.
 ---
 
 # Preventing Timing Problems When Using Closures
 
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Preventing Timing Problems When Using Closures Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Preventing Timing Problems When Using Closures]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Preventing Timing Problems When Using Closures usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
-
-# Preventing Timing Problems When Using Closures
-
 Understand how different API calls to your closures can affect your app.
-
-## Overview
-
 Many of the APIs you use in Swift take a closure—or a function passed as an instance—as
 a parameter. Because closures can contain code that interacts with multiple parts
 of an app, it’s important to understand the different ways closures can be called
 by the APIs you pass them to. Closures you pass to APIs can be called synchronously
 (immediately) or asynchronously (sometime later). They may be called once, many times,
 or never.
-
 > Important: Making false assumptions about when a closure is called can lead to
 > data inconsistency and app crashes.
 
-### Understand the Results of Synchronous and Asynchronous Calls
-
-When you pass a closure to an API, consider *when* that closure will be called relative
-to the other code in your app. In synchronous APIs, the result of calling the closure
-will be available immediately after you pass the closure. In asynchronous APIs, the
-result won’t be available until sometime later; this difference affects how you write
-code both *in* your closure as well as the code *following* your closure.
-
-The example below defines two functions, `now(_:)` and `later(_:)`. You can call
-both functions the same way: with a trailing closure and no other arguments. Both
-`now(_:)` and `later(_:)` accept a closure and call it, but `later(_:)` waits a couple
-seconds before calling its closure.
+## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Dispatch
-let queue = DispatchQueue(label: "com.example.queue")
+// Capture semantics in closures
+class DataLoader {
+    var items: [String] = []
 
-func now(_ closure: () -> Void) {
-    closure()
-}
-
-func later(_ closure: @escaping () -> Void) {
-    queue.asyncAfter(deadline: .now() + 2) {
-        closure()
-    }
-}
-```
-
-The `now(_:)` and `later(_:)` functions represent the two most common categories
-of APIs you’ll encounter in methods from app frameworks that take closures: synchronous
-APIs like `now(_:)`, and asynchronous APIs like `later(_:)`.
-
-Because calling a closure can change the local and global state of your app, the
-code you write on the lines after passing a closure needs to be written with a careful
-consideration of *when* that closure is called. Even something as simple as printing
-a sequence of letters can be affected by the timing of a closure call:
-
-```swift
-later {
-    print("A") // Eventually prints "A"
-}
-print("B") // Immediately prints "B"
-
-now {
-    print("C") // Immediately prints "C"
-}
-print("D") // Immedately prints "D"
-
-// Prevent the program from exiting immediately if you're running this code in Terminal.
-let semaphore = DispatchSemaphore(value: 0).wait(timeout: .now() + 10)
-```
-
-Running the code in the example above usually prints the letters in the order `B`
-→ `C` → `D` → `A`. Even though the line that prints `A` is first in the code, it’s
-ordered later in the output. The ordering difference happens due to the way the `now(_:)`
-and `later(_:)` functions are defined. You need to know how each function calls its
-closure if you write code that relies on a specific execution order.
-
-> Note: The order in which `A` is printed relative to the other letters isn’t guaranteed.
-> Under typical system conditions, it’s usually printed last, but you shouldn’t write
-> code that relies on the order of an asychronous call relative to synchronous code
-> without performing more careful synchronization between threads.
-
-You’ll need to consider this kind of time-based execution problem frequently when
-using APIs that take closures. In many cases, only one sequence of calls is correct
-for your app, so it’s important to think through what the state of your app will
-be, given the APIs you’re using. Use API names and parameter names along with documentation
-to determine whether an API is synchronous or asynchronous.
-
-A common timing mistake is expecting the results of an asynchronous call to be available
-within the calling synchronous code. For example, the `later(_:)` method above is
-comparable to the <doc://com.apple.documentation/documentation/Foundation/URLSession>
-class’s <doc://com.apple.documentation/documentation/Foundation/URLSession/dataTask(with:completionHandler:)-52wk8>
-method, which is also asynchronous. A timing scenario you should avoid is calling
-the <doc://com.apple.documentation/documentation/Foundation/URLSession/dataTask(with:completionHandler:)-52wk8>
-method within your app’s <doc://com.apple.documentation/documentation/UIKit/UIViewController/viewDidLoad()>
-method and attempting to use the results outside of the closure you pass as the completion
-handler.
-
-### Don’t Write Code That Makes a One-Time Change in a Closure That’s Called Multiple Times
-
-If you’re going to pass a closure to an API that might call it multiple times, omit
-code that’s intended to make a one-time change to external state.
-
-The example below creates a <doc://com.apple.documentation/documentation/Foundation/FileHandle>
-and an array of data lines to write to the file that the handle refers to:
-
-```swift
-import Foundation
-
-let file = FileHandle(forWritingAtPath: "/dev/null")!
-let lines = ["x,y", "1,1", "2,4", "3,9", "4,16"]
-```
-
-To write each line to the file, pass a closure to the [`forEach(_:)`](/documentation/Swift/Array/forEach(_:))
-method:
-
-```swift
-lines.forEach { line in
-    file.write("\(line)\n".data(using: .utf8)!)
-}
-```
-
-When you’re finished using a <doc://com.apple.documentation/documentation/Foundation/FileHandle>,
-close it using <doc://com.apple.documentation/documentation/Foundation/FileHandle/closeFile()>.
-The correct placement of the call to <doc://com.apple.documentation/documentation/Foundation/FileHandle/closeFile()>
-is outside of the closure:
-
-```swift
-lines.forEach { line in
-    file.write("\(line)\n".data(using: .utf8)!)
-}
-
-file.closeFile()
-```
-
-If you misunderstand the requirements of <doc://com.apple.documentation/documentation/Foundation/FileHandle/closeFile()>,
-you might place the call inside the closure. Doing so crashes your app:
-
-```swift
-lines.forEach { line in
-    file.write("\(line)\n".data(using: .utf8)!)
-    file.closeFile() // Error
-}
-```
-
-### Don’t Put Critical Code in a Closure That Might Not Be Called
-
-If there’s a chance that a closure you pass to an API won’t be called, don’t put
-code that’s critical to continuing your app in the closure.
-
-The example below defines a `Lottery` enumeration that randomly picks a winning number
-and calls a completion handler if the right number is guessed:
-
-```swift
-enum Lottery {
-    static var lotteryWinHandler: (() -> Void)?
-
-    @discardableResult static func pickWinner(guess: Int) -> Bool {
-        print("Running the lottery.")
-        if guess == Int.random(in: 0 ..< 100_000_000), let winHandler = lotteryWinHandler {
-            winHandler()
-            return true
+    func loadAsync() {
+        // Capture `self` weakly to avoid retain cycles
+        Task { [weak self] in
+            let data = await fetchFromNetwork()
+            self?.items = data  // Safe — self may be nil
         }
+    }
 
-        return false
+    // Value-type capture for safety
+    func processItems() {
+        let currentItems = items  // Capture the value, not the reference
+        DispatchQueue.global().async {
+            for item in currentItems {
+                process(item)
+            }
+        }
     }
 }
 ```
 
-Writing code that depends on the completion handler being called is dangerous. There’s
-no guarantee that the random guess will be correct, so important actions like paying
-bills—scheduled for after you win the lottery—might never happen.
+## 💎 Elite Implementation Tips
 
-```swift
-func payBills() {
-    amountOwed = 0
-}
+- Use `[weak self]` in escaping closures to prevent retain cycles
+- Capture value types before the closure to avoid race conditions on mutable state
+- Prefer `async/await` over completion handlers to eliminate callback timing issues
 
-var amountOwed = 25
-let myLuckyNumber = 42
+## When to Use
 
-Lottery.lotteryWinHandler = {
-    print("Congratulations!")
-    payBills()
-}
+- Performing network requests, file I/O, or database queries off the main thread
+- Managing shared mutable state safely with actors
+- Running multiple independent tasks in parallel with `TaskGroup`
 
-// You get 10 chances at winning.
-for _ in 1...10 {
-    Lottery.pickWinner(guess: myLuckyNumber)
-}
+## Best Practices
 
-if amountOwed > 0 {
-    fatalError("You need to pay your bills before proceeding.")
-}
+- Use `async/await` instead of completion handlers
+- Mark UI-updating code as `@MainActor` to ensure it runs on the main thread
+- Use `Task { }` to bridge from synchronous to asynchronous contexts
+- Prefer structured concurrency (`async let`, `TaskGroup`) over unstructured `Task`
 
-// Code placed below this line runs only if the lottery was won.
-```
+## Common Pitfalls
 
----
+- Blocking the main actor with synchronous work disguised as async
+- Creating unbounded numbers of `Task` instances without cancellation
+- Capturing `self` strongly in long-lived tasks causing memory leaks
 
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+

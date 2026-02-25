@@ -25,14 +25,26 @@ struct AudioReactiveView: View {
 
 ## 💎 Elite Implementation Tips
 
-- Feedback: Visual pulses should be 1-5ms ahead of haptics for synchrony.\n- Sensors: Use CoreMotion to tilt the background gradient slightly.\n- Accessibility: Always provide a way to disable motion-reactive UI.
+- Feedback: Visual pulses should be 1-5ms ahead of haptics for synchrony.
+- Sensors: Use CoreMotion to tilt the background gradient slightly.
+- Accessibility: Always provide a way to disable motion-reactive UI.
 
 
-## Core Principles
+## When to Use
 
-1. **Native Polish**: Always prioritize system-standard feel (springs, materials, haptics) before custom art.
-2. **Visual Depth**: Use Z-axis hierarchy (shadows, blurs) to guide user focus.
-3. **Responsiveness**: Every touch and state change MUST have an immediate, physical response.
+- Building music players or audio apps with visualizer elements
+- Creating motion-reactive backgrounds (gyroscope parallax)
+- Designing ambient, living UI that responds to environmental input
 
----
-*Created with ❤️ by Antigravity for Rork-Quality Apps.*
+## Best Practices
+
+- Visual pulses should lead haptics by 1–5ms for perceived synchrony
+- Use `CoreMotion` to tilt background gradients based on device orientation
+- Cap visual amplitude at 20% scale to avoid overwhelming the content
+- Always provide a static fallback for Reduce Motion users
+
+## Common Pitfalls
+
+- Continuous sensor polling drains battery — throttle to 30Hz for UI updates
+- Audio analysis on the main thread causes dropped frames
+- Motion-reactive UI without opt-out is an accessibility failure

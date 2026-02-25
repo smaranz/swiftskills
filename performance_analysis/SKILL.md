@@ -1,46 +1,75 @@
 ---
 name: Performance analysis
-description: Rork-Max Quality skill for Performance analysis. Extracted from Apple SwiftUI Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Performance analysis. Actionable patterns and best practices for SwiftUI development.
 ---
-
-# Performance analysis
-
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift\n// High-end implementation coming soon\n```
-
-## 💎 Elite Implementation Tips
-
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.\n- Prioritize SF Symbols with hierarchical rendering for all iconography.\n- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-
-## Documentation
 
 # Performance analysis
 
 Measure and improve your app’s responsiveness.
-
-## Overview
-
 Use Instruments to detect hangs and hitches in your app, and to analyze long view body updates and frequently occurring SwiftUI updates that can contribute to hangs and hitches.
 
-## Topics
 
-### Essentials
+## 🚀 Rork-Max Quality Snippet
 
-  <doc://com.apple.documentation/documentation/Xcode/understanding-user-interface-responsiveness>
+```swift
+import SwiftUI
+import os
 
-  <doc://com.apple.documentation/documentation/Xcode/understanding-hangs-in-your-app>
+struct PerformantList: View {
+    let items: [Item]
+    private let logger = Logger(subsystem: "com.app", category: "perf")
 
-  <doc://com.apple.documentation/documentation/Xcode/understanding-hitches-in-your-app>
+    var body: some View {
+        let _ = Self._printChanges()
 
-### Analyzing SwiftUI performance
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                ForEach(items) { item in
+                    RowView(item: item)
+                        .id(item.id)
+                }
+            }
+        }
+    }
+}
 
-  <doc://com.apple.documentation/documentation/Xcode/understanding-and-improving-swiftui-performance>
+struct RowView: View {
+    let item: Item
+
+    var body: some View {
+        HStack {
+            Text(item.name)
+            Spacer()
+        }
+        .padding()
+        .drawingGroup()
+    }
+}
+```
+
+## 💎 Elite Implementation Tips
+
+- Use `Self._printChanges()` in `body` to debug which properties trigger re-renders
+- Apply `.drawingGroup()` to static rows to flatten the hierarchy into Metal-backed layers
+- Profile with the SwiftUI Instruments template to find slow `body` evaluations
 
 
+## When to Use
 
----
+- Previewing views in Xcode with different configurations (dark mode, device sizes)
+- Adding custom views and modifiers to the Xcode Library for drag-and-drop
+- Profiling view rendering performance with Instruments
 
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+## Best Practices
+
+- Create multiple `#Preview` blocks for different states (empty, loading, error, populated)
+- Use `@Previewable @State` for interactive previews with mutable state
+- Profile with the SwiftUI Instruments template to find slow `body` evaluations
+
+## Common Pitfalls
+
+- Preview-only code leaking into production builds — use `#if DEBUG` guards
+- Previews failing silently because of missing environment values or data
+- Ignoring Instruments' 'View body evaluated' count — high counts signal unnecessary re-renders
+
+

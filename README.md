@@ -1,61 +1,56 @@
-# SwiftSkills 🚀
+# SwiftSkills
 
-A comprehensive library of **~100 specialized Rork-Max Quality agent skills** designed to turn any AI agent into an elite Apple platforms developer. These skills are programmatically extracted from official Apple Developer Documentation and enhanced with premium code snippets and design benchmarks.
+A comprehensive library of **~100 specialized agent skills** for elite Apple platforms development. Each skill provides actionable patterns, real code snippets, best practices, and common pitfalls — structured for AI agent consumption.
 
-## 🌟 Rork-Max Quality Standards
+## What's Inside
 
-Every skill in this library has been upgraded to meet the "Rork-Max" standard:
-- **🚀 High-Fidelity Snippets**: Implementation-ready, "wow-factor" code examples.
-- **💎 Elite Design Tips**: Professional guidance on modern aesthetics, glassmorphism, and spring physics.
-- **🛠 Modern Swift 6 Patterns**: Standardized adoption of `@Observable` and structured concurrency.
-- **📱 Native Performance**: Focused on "pure native" feel and iOS/macOS platform excellence.
+### Elite Frontend Design (20 Skills)
+High-end design blueprints for building premium interfaces.
+- **Modern Aesthetics**: Glassmorphism, Dark Mode, Fluid Typography
+- **Layout Mastery**: Card Geometry, Spatial Design, Dynamic Themes
+- **Interactions**: Scroll Parallax, Micro-interactions, Physics-Driven Motion
 
-## 📚 What’s Inside?
+### SwiftUI (49 Skills)
+Granular skills for every SwiftUI topic.
+- **Core View**: View Fundamentals, Configuration, Styles, Animations
+- **Layout**: Stacks, Grids, Lists, Tables, Scroll Views
+- **Logic**: Data Modeling, Environment, Event Handling, Gestures
 
-### 🎨 Elite Frontend Design (20 Skills)
-High-end design blueprints for building "wow" factor interfaces.
-- **Modern Aesthetics**: Glassmorphism, Dark Mode, Fluid Typography.
-- **Layout Mastery**: CSS Grid, Flexbox, Spacing & Grids.
-- **Interactions**: Scroll Animations, Micro-interactions, 3D Transforms.
+### Swift Language (24 Skills)
+Deep-dive skills into Swift language features.
+- **Modern Swift**: Adopting Swift 6, Observation, Concurrency
+- **Standard Library**: Collections, RegexBuilder, Synchronization
+- **Interop**: Objective-C/C++ Interoperability, Mixing Languages
 
-### 📱 SwiftUI (45 Skills)
-Granular skills for every individual topic in the SwiftUI framework.
-- **Core View**: View Fundamentals, Configuration, Styles, Animations.
-- **Layout**: Stacks, Grids, Lists, Tables, Scroll Views.
-- **Logic**: Data Modeling, Environment, Event Handling, Gestures.
-
-### 🦀 Swift Language (21 Skills)
-Deep-dive skills into the overarching Swift language features.
-- **Modern Swift**: Adopting Swift 6, Observation, Concurrency.
-- **Standard Library**: Collections, RegexBuilder, Synchronization.
-- **Interop**: Objective-C/C++ Interoperability, C-APIs, Mixing Languages.
-
-### 🌐 Platform-Specific Skills (25 Skills)
+### Platform-Specific Skills (25 Skills)
 Specialized knowledge for individual Apple ecosystems.
-- **iOS & iPadOS**: Pure UIKit construction, Multitasking, PencilKit.
-- **macOS**: AppKit patterns, Menu/Dock integration, Accessibility.
-- **watchOS**: Glanceable interactions, Runtime management, Project setup.
-- **visionOS**: Spatial computing, RealityKit, Immersive Experiences, Window Management.
+- **iOS & iPadOS**: UIKit, Multitasking, PencilKit
+- **macOS**: AppKit, Menu/Dock integration, Accessibility
+- **watchOS**: Glanceable interactions, Runtime management
+- **visionOS**: Spatial computing, RealityKit, Immersive Experiences
 
-## 🛠 How to Use
+### Apple Intelligence (5 Skills)
+- Foundation Models, App Intents, Image Playground, Writing Tools, Genmoji
 
-These files are structured as **Agent Skills**. If you are using an AI agent (like Antigravity), you can point it to these directories to give it "expert knowledge" in any of these domains.
+## Skill Structure
 
-Each folder contains a `SKILL.md` with:
-- **YAML Metadata**: Name and description for agent discovery.
-- **Direct Documentation**: Exact markdown from Apple’s newest APIs.
-- **Implementation Guides**: Best practices for writing clean, performant, and premium code.
+Each `SKILL.md` contains:
+- **YAML Metadata**: Name and description for agent discovery
+- **Code Snippet**: Implementation-ready Swift code example
+- **Implementation Tips**: Professional guidance on patterns and aesthetics
+- **When to Use**: Guidance on when this skill applies
+- **Best Practices**: Actionable, opinionated recommendations
+- **Common Pitfalls**: What to avoid
+- **Key APIs**: Organized reference table (for doc-sourced skills)
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 swiftskills/
-├── platform_skills/        # iOS, macOS, watchOS, visionOS
-├── swift_language_skills/  # Core Swift & Concurrency
-├── frontend_skills/        # Elite Design Patterns
-├── [SwiftUI-Topics]/      # Individual SwiftUI modules
+├── [swiftui-topics]/       # 49 individual SwiftUI skill modules
+├── swift_language_skills/  # 24 Swift language skills
+├── frontend_skills/        # 20 elite design pattern skills
+├── platform_skills/        # 25 iOS, macOS, watchOS, visionOS skills
+├── apple_intelligence_skills/ # 5 Apple Intelligence skills
 └── README.md
 ```
-
----
-*Created with ❤️ by Antigravity for Apple Developers.*

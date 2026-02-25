@@ -1,110 +1,93 @@
 ---
 name: MACOS Mouse, Keyboard, and Trackpad
-description: Rork-Max Quality skill for MACOS Mouse, Keyboard, and Trackpad on macos. Based on official Apple AppKit Documentation.
+description: Rork-Max Quality skill for MACOS Mouse, Keyboard, and Trackpad. Platform-native patterns and best practices for macos development.
 ---
 
 # MACOS Mouse, Keyboard, and Trackpad
 
+Handle events related to mouse, keyboard, and trackpad input.
+
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-// Premium MACOS Mouse, Keyboard, and Trackpad Implementation for macos
-// Focus on platform-native excellence
+import AppKit
 
-import SwiftUI
-#if os(macos)
-// AppKit specific imports
-#endif
+class TrackpadViewController: NSViewController {
+    override func loadView() {
+        let view = NSView(frame: NSRect(x: 0, y: 0, width: 400, height: 300))
+        let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let magnify = NSMagnificationGestureRecognizer(target: self, action: #selector(handleZoom))
+        view.addGestureRecognizer(pan)
+        view.addGestureRecognizer(magnify)
+        self.view = view
+    }
 
-struct RorkPlatformView: View {
-    var body: some View {
-        Text("Rork Quality MACOS Experience")
-            .font(.system(.title, design: .rounded))
-            .padding()
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    @objc func handlePan(_ gesture: NSPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        // Apply translation
+        gesture.setTranslation(.zero, in: view)
+    }
+
+    @objc func handleZoom(_ gesture: NSMagnificationGestureRecognizer) {
+        let scale = 1.0 + gesture.magnification
+        // Apply scale
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Master the macos native feel: Use system-standard components correctly before customizing.
-- Ensure optimal performance for macos: Handle lifecycle events efficiently.
-- Aesthetics: Keep designs clean and aligned with the platform's HIG.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Support trackpad gestures (pan, magnify, rotate) for natural macOS interactions
+- Use `NSEvent.addLocalMonitorForEvents` for app-wide keyboard shortcut handling
+- Implement `NSMenuItemValidation` to enable/disable menu items based on state
 
-## Documentation
+## When to Use
 
-# Mouse, Keyboard, and Trackpad
+- Building native macOS features with AppKit
+- Implementing menu bar items, dock menus, and macOS-specific UI
+- Working with NSWindow, NSViewController, and AppKit patterns
 
-Handle events related to mouse, keyboard, and trackpad input.
+## Best Practices
 
-## Discussion
+- Support keyboard shortcuts and menu bar commands for every major action
+- Use NSToolbar for window-level controls; avoid floating toolbars
+- Support trackpad gestures and the Magic Mouse for natural interactions
 
-The [`NSResponder`](/documentation/AppKit/NSResponder) class defines the responder chain, an ordered list of objects that respond to user events. When the user clicks the mouse button, taps on the trackpad, or presses a key, an event is generated and passed up the responder chain in search of an object that can respond to it. Any object that handles events must inherit from the [`NSResponder`](/documentation/AppKit/NSResponder) class. The core AppKit classes, [`NSApplication`](/documentation/AppKit/NSApplication), [`NSWindow`](/documentation/AppKit/NSWindow), and [`NSView`](/documentation/AppKit/NSView), inherit from [`NSResponder`](/documentation/AppKit/NSResponder).
+## Common Pitfalls
 
-An [`NSApplication`](/documentation/AppKit/NSApplication) object maintains a list of [`NSWindow`](/documentation/AppKit/NSWindow) objects—one for each window belonging to the app—and each [`NSWindow`](/documentation/AppKit/NSWindow) object maintains a hierarchy of [`NSView`](/documentation/AppKit/NSView) objects. This view hierarchy is used for both drawing the user interface and for handling events.
+- Ignoring the menu bar — macOS users expect all actions available via menus
+- Not testing with multiple windows open simultaneously
+- Forgetting to handle the app running without any windows (macOS apps don't quit on last window close)
 
-An [`NSWindow`](/documentation/AppKit/NSWindow) object handles window-level events and distributes other events to its views. An [`NSWindow`](/documentation/AppKit/NSWindow) object also has a delegate allowing you to customize its behavior.
-
-## Topics
+## Key APIs
 
 ### Responder Objects
 
-[`NSResponder`](/documentation/AppKit/NSResponder)
-
-An abstract class that forms the basis of event and command processing in AppKit.
+| API | Purpose |
+|-----|---------|
+| `NSResponder` | An abstract class that forms the basis of event and command processing in AppKit. |
 
 ### Mouse, Keyboard, and Touch Events
 
-[`NSEvent`](/documentation/AppKit/NSEvent)
-
-An object that contains information about an input action, such as a mouse click or a key press.
-
-[`NSTouch`](/documentation/AppKit/NSTouch)
-
-A snapshot of a particular touch at an instant in time.
+| API | Purpose |
+|-----|---------|
+| `NSEvent` | An object that contains information about an input action, such as a mouse click or a key press. |
+| `NSTouch` | A snapshot of a particular touch at an instant in time. |
 
 ### Trackpad
 
-[`NSPressureConfiguration`](/documentation/AppKit/NSPressureConfiguration)
-
-An encapsulation of the behavior and progression of a Force Touch trackpad as it responds to specific events.
-
-[`NSHapticFeedbackManager`](/documentation/AppKit/NSHapticFeedbackManager)
-
-An object that provides access to the haptic feedback management attributes on a system with a Force Touch trackpad.
+| API | Purpose |
+|-----|---------|
+| `NSPressureConfiguration` | An encapsulation of the behavior and progression of a Force Touch trackpad as it responds to specific events. |
+| `NSHapticFeedbackManager` | An object that provides access to the haptic feedback management attributes on a system with a Force Touch trackpad. |
 
 ### Constants
 
-[`NSEvent.EventTypeMask`](/documentation/AppKit/NSEvent/EventTypeMask)
-
-Constants that you use to filter out specific event types from the stream of incoming events.
-
-[`NSEvent.ButtonMask`](/documentation/AppKit/NSEvent/ButtonMask-swift.struct)
-
-Constants you use to identify the activated tablet buttons in an event.
-
-[`NSEvent.ModifierFlags`](/documentation/AppKit/NSEvent/ModifierFlags-swift.struct)
-
-Flags that represent key states in an event object.
-
-[`NSEvent.Phase`](/documentation/AppKit/NSEvent/Phase-swift.struct)
-
-Constants that represent the possible phases during an event phase.
-
-[`NSEvent.SwipeTrackingOptions`](/documentation/AppKit/NSEvent/SwipeTrackingOptions)
-
-Constants that specify swipe-tracking options.
-
-[`init(type:)`](/documentation/AppKit/NSEvent/EventTypeMask/init(type:))
-
-Returns the event mask for the specified type.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `NSEvent.EventTypeMask` | Constants that you use to filter out specific event types from the stream of incoming events. |
+| `NSEvent.ButtonMask` | Constants you use to identify the activated tablet buttons in an event. |
+| `NSEvent.ModifierFlags` | Flags that represent key states in an event object. |
+| `NSEvent.Phase` | Constants that represent the possible phases during an event phase. |
+| `NSEvent.SwipeTrackingOptions` | Constants that specify swipe-tracking options. |
+| `init(type:)` | Returns the event mask for the specified type. |

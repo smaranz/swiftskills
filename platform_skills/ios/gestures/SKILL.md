@@ -1,190 +1,139 @@
 ---
 name: IOS Touches, presses, and gestures
-description: Rork-Max Quality skill for IOS Touches, presses, and gestures on ios. Based on official Apple UIKit Documentation.
+description: Rork-Max Quality skill for IOS Touches, presses, and gestures. Platform-native patterns and best practices for ios development.
 ---
 
 # IOS Touches, presses, and gestures
 
+Encapsulate your app’s event-handling logic in gesture recognizers so that you can reuse that code throughout your app.
+
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-// Premium IOS Touches, presses, and gestures Implementation for ios
-// Focus on platform-native excellence
+import UIKit
 
-import SwiftUI
-#if os(ios)
-// UIKit specific imports
-#endif
+class GestureViewController: UIViewController {
+    private let cardView = UIView()
+    private var initialCenter: CGPoint = .zero
 
-struct RorkPlatformView: View {
-    var body: some View {
-        Text("Rork Quality IOS Experience")
-            .font(.system(.title, design: .rounded))
-            .padding()
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        cardView.frame = CGRect(x: 100, y: 200, width: 200, height: 120)
+        cardView.backgroundColor = .systemBlue
+        cardView.layer.cornerRadius = 16
+        view.addSubview(cardView)
+
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.3
+        cardView.addGestureRecognizer(pan)
+        cardView.addGestureRecognizer(longPress)
+    }
+
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        switch gesture.state {
+        case .began: initialCenter = cardView.center
+        case .changed: cardView.center = CGPoint(
+            x: initialCenter.x + translation.x,
+            y: initialCenter.y + translation.y
+        )
+        case .ended:
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.6,
+                           initialSpringVelocity: 0, options: []) {
+                self.cardView.center = self.initialCenter
+            }
+        default: break
+        }
+    }
+
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Master the ios native feel: Use system-standard components correctly before customizing.
-- Ensure optimal performance for ios: Handle lifecycle events efficiently.
-- Aesthetics: Keep designs clean and aligned with the platform's HIG.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `UIGestureRecognizerDelegate` to coordinate multiple gestures on the same view
+- Add haptic feedback with `UIImpactFeedbackGenerator` on key gesture events
+- Always handle `.cancelled` state to restore view to its original position
 
-## Documentation
+## When to Use
 
-# Touches, presses, and gestures
+- Building native iOS/iPadOS features using UIKit APIs
+- Implementing UIKit-specific interactions not available in SwiftUI
+- Working with view controllers, navigation controllers, and UIKit lifecycle
 
-Encapsulate your app’s event-handling logic in gesture recognizers so that you can reuse that code throughout your app.
+## Best Practices
 
-## Discussion
+- Use SwiftUI for new views and bridge UIKit only when necessary
+- Adopt modern UIKit APIs: `UICollectionViewCompositionalLayout`, diffable data sources
+- Handle all size classes and trait changes for iPhone and iPad adaptivity
 
-If you build your apps using standard UIKit views and controls, UIKit automatically handles touch events (including Multitouch events) for you. However, if you use custom views to display your content, you must handle all touch events that occur in your views. There are two ways to handle touch events yourself.
+## Common Pitfalls
 
-- Use gesture recognizers to track the touches; see <doc://com.apple.uikit/documentation/UIKit/handling-uikit-gestures>.
-- Track the touches directly in your ``doc://com.apple.uikit/documentation/UIKit/UIView`` subclass; see <doc://com.apple.uikit/documentation/UIKit/handling-touches-in-your-view>.
+- Mixing UIKit autolayout and SwiftUI layout can cause constraint conflicts
+- Forgetting to test on iPad — multitasking changes your window size
+- Not adopting the UIKit scene lifecycle for multi-window support
 
-## Topics
+## Key APIs
 
 ### Essentials
 
-[Using responders and the responder chain to handle events](/documentation/UIKit/using-responders-and-the-responder-chain-to-handle-events)
-
-Learn how to handle events that propagate through your app.
-
-[`UIResponder`](/documentation/UIKit/UIResponder)
-
-An abstract interface for responding to and handling events.
-
-[`UIEvent`](/documentation/UIKit/UIEvent)
-
-An object that describes a single user interaction with your app.
+| API | Purpose |
+|-----|---------|
+| `Using responders and the responder chain to handle events` | Learn how to handle events that propagate through your app. |
+| `UIResponder` | An abstract interface for responding to and handling events. |
+| `UIEvent` | An object that describes a single user interaction with your app. |
 
 ### Touches
 
-[Handling touches in your view](/documentation/UIKit/handling-touches-in-your-view)
-
-Use touch events directly on a view subclass if touch handling is intricately linked to the view’s content.
-
-[Handling input from Apple Pencil](/documentation/UIKit/handling-input-from-apple-pencil)
-
-Learn how to detect and respond to touches from Apple Pencil.
-
-[Tracking the force of 3D Touch events](/documentation/UIKit/tracking-the-force-of-3d-touch-events)
-
-Manipulate your content based on the force of touches.
-
-[Illustrating the force, altitude, and azimuth properties of touch input](/documentation/UIKit/illustrating-the-force-altitude-and-azimuth-properties-of-touch-input)
-
-Capture Apple Pencil and touch input in views.
-
-[Leveraging touch input for drawing apps](/documentation/UIKit/leveraging-touch-input-for-drawing-apps)
-
-Capture touches as a series of strokes and render them efficiently on a drawing canvas.
-
-[`UITouch`](/documentation/UIKit/UITouch)
-
-An object representing the location, size, movement, and force of a touch occurring on the screen.
+| API | Purpose |
+|-----|---------|
+| `Handling touches in your view` | Use touch events directly on a view subclass if touch handling is intricately linked to the view’s content. |
+| `Handling input from Apple Pencil` | Learn how to detect and respond to touches from Apple Pencil. |
+| `Tracking the force of 3D Touch events` | Manipulate your content based on the force of touches. |
+| `Illustrating the force, altitude, and azimuth properties of touch input` | Capture Apple Pencil and touch input in views. |
+| `Leveraging touch input for drawing apps` | Capture touches as a series of strokes and render them efficiently on a drawing canvas. |
+| `UITouch` | An object representing the location, size, movement, and force of a touch occurring on the screen. |
 
 ### Button presses
 
-[`UIPress`](/documentation/UIKit/UIPress)
-
-An object that represents the presence or movement of a button press on the screen for a particular event.
-
-[`UIPressesEvent`](/documentation/UIKit/UIPressesEvent)
-
-An event that describes the state of a set of physical buttons that are available to the device, such as those on an associated remote or game controller.
+| API | Purpose |
+|-----|---------|
+| `UIPress` | An object that represents the presence or movement of a button press on the screen for a particular event. |
+| `UIPressesEvent` | An event that describes the state of a set of physical buttons that are available to the device, such as those on an associated remote or game controller. |
 
 ### Standard gestures
 
-[Handling UIKit gestures](/documentation/UIKit/handling-uikit-gestures)
-
-Use gesture recognizers to simplify touch handling and create a consistent user experience.
-
-[Coordinating multiple gesture recognizers](/documentation/UIKit/coordinating-multiple-gesture-recognizers)
-
-Discover how to use multiple gesture recognizers on the same view.
-
-[Adopting hover support for Apple Pencil](/documentation/UIKit/adopting-hover-support-for-apple-pencil)
-
-Enhance user feedback for your iPadOS app with a hover preview for
-Apple Pencil input.
-
-[Supporting gesture interaction in your apps](/documentation/UIKit/supporting-gesture-interaction-in-your-apps)
-
-Enrich your app’s user experience by supporting standard and custom gesture interaction.
-
-[`UIHoverGestureRecognizer`](/documentation/UIKit/UIHoverGestureRecognizer)
-
-A continuous gesture recognizer that interprets pointer movement over a view.
-
-[`UILongPressGestureRecognizer`](/documentation/UIKit/UILongPressGestureRecognizer)
-
-A continuous gesture recognizer that interprets long-press gestures.
-
-[`UIPanGestureRecognizer`](/documentation/UIKit/UIPanGestureRecognizer)
-
-A continuous gesture recognizer that interprets panning gestures.
-
-[`UIPinchGestureRecognizer`](/documentation/UIKit/UIPinchGestureRecognizer)
-
-A continuous gesture recognizer that interprets pinching gestures involving two touches.
-
-[`UIRotationGestureRecognizer`](/documentation/UIKit/UIRotationGestureRecognizer)
-
-A continuous gesture recognizer that interprets rotation gestures involving two touches.
-
-[`UIScreenEdgePanGestureRecognizer`](/documentation/UIKit/UIScreenEdgePanGestureRecognizer)
-
-A continuous gesture recognizer that interprets panning gestures that start near an edge of the screen.
-
-[`UISwipeGestureRecognizer`](/documentation/UIKit/UISwipeGestureRecognizer)
-
-A discrete gesture recognizer that interprets swiping gestures in one or more directions.
-
-[`UITapGestureRecognizer`](/documentation/UIKit/UITapGestureRecognizer)
-
-A discrete gesture recognizer that interprets single or multiple taps.
+| API | Purpose |
+|-----|---------|
+| `Handling UIKit gestures` | Use gesture recognizers to simplify touch handling and create a consistent user experience. |
+| `Coordinating multiple gesture recognizers` | Discover how to use multiple gesture recognizers on the same view. |
+| `Adopting hover support for Apple Pencil` | Enhance user feedback for your iPadOS app with a hover preview for |
+| `Supporting gesture interaction in your apps` | Enrich your app’s user experience by supporting standard and custom gesture interaction. |
+| `UIHoverGestureRecognizer` | A continuous gesture recognizer that interprets pointer movement over a view. |
+| `UILongPressGestureRecognizer` | A continuous gesture recognizer that interprets long-press gestures. |
+| `UIPanGestureRecognizer` | A continuous gesture recognizer that interprets panning gestures. |
+| `UIPinchGestureRecognizer` | A continuous gesture recognizer that interprets pinching gestures involving two touches. |
 
 ### Custom gestures
 
-[Implementing a custom gesture recognizer](/documentation/UIKit/implementing-a-custom-gesture-recognizer)
-
-Discover when and how to build your own gesture recognizers.
-
-[`UIGestureRecognizer`](/documentation/UIKit/UIGestureRecognizer)
-
-The base class for concrete gesture recognizers.
-
-[`UIGestureRecognizerDelegate`](/documentation/UIKit/UIGestureRecognizerDelegate)
-
-A set of methods implemented by the delegate of a gesture recognizer to fine-tune an app’s gesture-recognition behavior.
-
-[Supporting gesture interaction in your apps](/documentation/UIKit/supporting-gesture-interaction-in-your-apps)
-
-Enrich your app’s user experience by supporting standard and custom gesture interaction.
+| API | Purpose |
+|-----|---------|
+| `Implementing a custom gesture recognizer` | Discover when and how to build your own gesture recognizers. |
+| `UIGestureRecognizer` | The base class for concrete gesture recognizers. |
+| `UIGestureRecognizerDelegate` | A set of methods implemented by the delegate of a gesture recognizer to fine-tune an app’s gesture-recognition behavior. |
+| `Supporting gesture interaction in your apps` | Enrich your app’s user experience by supporting standard and custom gesture interaction. |
 
 ### 3D Touch interactions
 
-[`UIPreviewInteraction`](/documentation/UIKit/UIPreviewInteraction)
-
-A class that registers a view to provide a custom user experience in response to 3D Touch interactions.
-
-[`UIPreviewInteractionDelegate`](/documentation/UIKit/UIPreviewInteractionDelegate)
-
-A set of methods for communicating the progress of a preview interaction.
-
-[`UIPreviewActionItem`](/documentation/UIKit/UIPreviewActionItem)
-
-A set of methods that defines the styles you can apply to peek quick actions and peek quick action groups, and defines a read-only accessor for the user-visible title of a peek quick action.
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `UIPreviewInteraction` | A class that registers a view to provide a custom user experience in response to 3D Touch interactions. |
+| `UIPreviewInteractionDelegate` | A set of methods for communicating the progress of a preview interaction. |
+| `UIPreviewActionItem` | A set of methods that defines the styles you can apply to peek quick actions and peek quick action groups, and defines a read-only accessor for the user-visible title of a peek quick action. |

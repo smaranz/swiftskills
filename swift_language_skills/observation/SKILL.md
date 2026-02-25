@@ -1,123 +1,128 @@
 ---
 name: Observation
-description: Rork-Max Quality skill for Observation. Based on official Apple Observation Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Observation. Actionable Swift language patterns and best practices.
 ---
 
 # Observation
 
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Observation Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Observation]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Observation usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
-
-# Observation
-
 Make responsive apps that update the presentation when underlying data changes.
-
-## Overview
-
 Observation provides a robust, type-safe, and performant implementation of the
 observer design pattern in Swift. This pattern allows an observable object to
 maintain a list of observers and notify them of specific or general state
 changes. This has the advantages of not directly coupling objects together and
 allowing implicit distribution of updates across potential multiple observers.
-
 The Observation frameworks provides the following capabilities:
-
 - Marking a type as observable
 - Tracking changes within an instance of an observable type
 - Observing and utilizing those changes elsewhere, such as in an app’s user
-  interface
-
-To declare a type as observable, attach the [`Observable()`](/documentation/Observation/Observable()) macro
+interface
+To declare a type as observable, attach the `Observable()` macro
 to the type declaration. This macro declares and implements conformance to the
-[`Observable`](/documentation/Observation/Observable) protocol to the type at compile time.
-
+`Observable` protocol to the type at compile time.
 ```swift
 @Observable
 class Car {
-    var name: String = ""
-    var needsRepairs: Bool = false
-    
-    init(name: String, needsRepairs: Bool = false) {
-        self.name = name
-        self.needsRepairs = needsRepairs
-    }
+var name: String = ""
+var needsRepairs: Bool = false
+init(name: String, needsRepairs: Bool = false) {
+self.name = name
+self.needsRepairs = needsRepairs
+}
 }
 ```
-
-To track changes, use the [`withObservationTracking(_:onChange:)`](/documentation/Observation/withObservationTracking(_:onChange:)) function.
+To track changes, use the `withObservationTracking(_:onChange:)` function.
 For example, in the following code, the function calls the `onChange` closure
 when a car’s name changes. However, it doesn’t call the closure when a car’s
 `needsRepair` flag changes. That’s because the function only tracks properties
 read in its `apply` closure, and the closure doesn’t read the `needsRepair`
 property.
-
 ```
 func render() {
-    withObservationTracking {
-        for car in cars {
-            print(car.name)
+withObservationTracking {
+for car in cars {
+print(car.name)
+}
+} onChange: {
+print("Schedule renderer.")
+}
+}
+```
+
+## 🚀 Rork-Max Quality Snippet
+
+```swift
+import SwiftUI
+import Observation
+
+@Observable
+class TaskStore {
+    var tasks: [TodoTask] = []
+    var filter: Filter = .all
+
+    var filteredTasks: [TodoTask] {
+        switch filter {
+        case .all: tasks
+        case .active: tasks.filter { !$0.isDone }
+        case .done: tasks.filter { $0.isDone }
         }
-    } onChange: {
-        print("Schedule renderer.")
+    }
+
+    func add(_ title: String) {
+        tasks.append(TodoTask(title: title))
+    }
+
+    enum Filter { case all, active, done }
+}
+
+struct TaskListView: View {
+    @State private var store = TaskStore()
+
+    var body: some View {
+        List(store.filteredTasks) { task in
+            Text(task.title)
+        }
+        // Only re-renders when filteredTasks actually changes
     }
 }
 ```
 
-## Topics
+## 💎 Elite Implementation Tips
+
+- `@Observable` provides fine-grained tracking — only views reading changed properties re-render
+- Computed properties on `@Observable` classes automatically participate in tracking
+- Replace `ObservableObject` + `@Published` + `@StateObject` with `@Observable` + `@State`
+
+## When to Use
+
+- Performing network requests, file I/O, or database queries off the main thread
+- Managing shared mutable state safely with actors
+- Running multiple independent tasks in parallel with `TaskGroup`
+
+## Best Practices
+
+- Use `async/await` instead of completion handlers
+- Mark UI-updating code as `@MainActor` to ensure it runs on the main thread
+- Use `Task { }` to bridge from synchronous to asynchronous contexts
+- Prefer structured concurrency (`async let`, `TaskGroup`) over unstructured `Task`
+
+## Common Pitfalls
+
+- Blocking the main actor with synchronous work disguised as async
+- Creating unbounded numbers of `Task` instances without cancellation
+- Capturing `self` strongly in long-lived tasks causing memory leaks
+
+## Key APIs
 
 ### Observable conformance
 
-[`Observable()`](/documentation/Observation/Observable())
-
-Defines and implements conformance of the Observable protocol.
-
-[`Observable`](/documentation/Observation/Observable)
-
-A type that emits notifications to observers when underlying data changes.
-
-### Fine-tuning
+| API | Purpose |
+|-----|---------|
+| `Observable()` | Defines and implements conformance of the Observable protocol. |
+| `Observable` | A type that emits notifications to observers when underlying data changes. |
 
 ### Change tracking
 
-[`withObservationTracking(_:onChange:)`](/documentation/Observation/withObservationTracking(_:onChange:))
-
-Tracks access to properties.
-
-[`ObservationRegistrar`](/documentation/Observation/ObservationRegistrar)
-
-Provides storage for tracking and access to data changes.
-
-### Observation in SwiftUI
-
-  <doc://com.apple.documentation/documentation/SwiftUI/Managing-model-data-in-your-app>
-
-  <doc://com.apple.documentation/documentation/SwiftUI/Migrating-from-the-observable-object-protocol-to-the-observable-macro>
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `withObservationTracking(_:onChange:)` | Tracks access to properties. |
+| `ObservationRegistrar` | Provides storage for tracking and access to data changes. |

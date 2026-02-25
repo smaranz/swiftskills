@@ -1,134 +1,106 @@
 ---
 name: IOS View layout
-description: Rork-Max Quality skill for IOS View layout on ios. Based on official Apple UIKit Documentation.
+description: Rork-Max Quality skill for IOS View layout. Platform-native patterns and best practices for ios development.
 ---
 
 # IOS View layout
 
+Use stack views to lay out the views of your interface automatically. Use Auto Layout when you require precise placement of your views.
+
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-// Premium IOS View layout Implementation for ios
-// Focus on platform-native excellence
+import UIKit
 
-import SwiftUI
-#if os(ios)
-// UIKit specific imports
-#endif
+class AdaptiveLayoutController: UIViewController {
+    private let contentView = UIView()
 
-struct RorkPlatformView: View {
-    var body: some View {
-        Text("Rork Quality IOS Experience")
-            .font(.system(.title, design: .rounded))
-            .padding()
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = .secondarySystemBackground
+        contentView.layer.cornerRadius = 16
+        view.addSubview(contentView)
+
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
+        ])
+    }
+
+    override func traitCollectionDidChange(_ previous: UITraitCollection?) {
+        super.traitCollectionDidChange(previous)
+        if traitCollection.horizontalSizeClass == .compact {
+            // Adjust for narrow layout
+        }
     }
 }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Master the ios native feel: Use system-standard components correctly before customizing.
-- Ensure optimal performance for ios: Handle lifecycle events efficiently.
-- Aesthetics: Keep designs clean and aligned with the platform's HIG.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Always use `safeAreaLayoutGuide` and `layoutMarginsGuide` instead of hard-coded insets
+- Use `UITraitCollection` to adapt layouts for size classes, Dynamic Type, and appearance
+- Prefer `UICollectionViewCompositionalLayout` over manual Auto Layout for complex lists
 
-## Documentation
+## When to Use
 
-# View layout
+- Building native iOS/iPadOS features using UIKit APIs
+- Implementing UIKit-specific interactions not available in SwiftUI
+- Working with view controllers, navigation controllers, and UIKit lifecycle
 
-Use stack views to lay out the views of your interface automatically. Use Auto Layout when you require precise placement of your views.
+## Best Practices
 
-## Discussion
+- Use SwiftUI for new views and bridge UIKit only when necessary
+- Adopt modern UIKit APIs: `UICollectionViewCompositionalLayout`, diffable data sources
+- Handle all size classes and trait changes for iPhone and iPad adaptivity
 
-When you design your app’s interface, you position views and other interface elements in your app’s windows and size them appropriately. However, the size and position of those views may need to change at runtime for a variety of reasons:
+## Common Pitfalls
 
-- The user can resize the window containing your views.
-- Variations in the screen sizes of iOS devices (including differences between portrait and landscape orientations) require different layouts for each device and orientation.
-- Apps on iPad must adapt to cover different amounts of screen space, ranging from a third of the screen to the entire screen.
-- Language changes might require size changes for labels and other text-based views.
-- Dynamic Type allows changes to the size of the text, which affects the size of the view.
+- Mixing UIKit autolayout and SwiftUI layout can cause constraint conflicts
+- Forgetting to test on iPad — multitasking changes your window size
+- Not adopting the UIKit scene lifecycle for multi-window support
 
-[`UIStackView`](/documentation/UIKit/UIStackView) objects adjust the position of their contained views automatically when interface dimensions change. Alternatively, Auto Layout constraints let you specify the rules that determine the size and position of the views in your interface.
-
-## Topics
+## Key APIs
 
 ### Essentials
 
-[`UIStackView`](/documentation/UIKit/UIStackView)
-
-A streamlined interface for laying out a collection of views in either a column or a row.
-
-### Localization
-
-  <doc://com.apple.documentation/documentation/Xcode/autosizing-views-for-localization-in-ios>
+| API | Purpose |
+|-----|---------|
+| `UIStackView` | A streamlined interface for laying out a collection of views in either a column or a row. |
 
 ### Constraints
 
-[Positioning content within layout margins](/documentation/UIKit/positioning-content-within-layout-margins)
-
-Position views so that they aren’t crowded by other content.
-
-[Positioning content relative to the safe area](/documentation/UIKit/positioning-content-relative-to-the-safe-area)
-
-Position views so that they aren’t obstructed by other content.
-
-[`NSLayoutConstraint`](/documentation/UIKit/NSLayoutConstraint)
-
-The relationship between two user interface objects that must be satisfied by the constraint-based layout system.
-
-[`UILayoutSupport`](/documentation/UIKit/UILayoutSupport)
-
-A set of methods that provide layout support and access to layout anchors.
-
-[`NSDictionaryOfVariableBindings`](/documentation/UIKit/NSDictionaryOfVariableBindings)
-
-Creates a dictionary wherein the keys are string representations of the corresponding values’ variable names.
+| API | Purpose |
+|-----|---------|
+| `Positioning content within layout margins` | Position views so that they aren’t crowded by other content. |
+| `Positioning content relative to the safe area` | Position views so that they aren’t obstructed by other content. |
+| `NSLayoutConstraint` | The relationship between two user interface objects that must be satisfied by the constraint-based layout system. |
+| `UILayoutSupport` | A set of methods that provide layout support and access to layout anchors. |
+| `NSDictionaryOfVariableBindings` | Creates a dictionary wherein the keys are string representations of the corresponding values’ variable names. |
 
 ### Layout guides
 
-[`UILayoutGuide`](/documentation/UIKit/UILayoutGuide)
-
-A rectangular area that can interact with Auto Layout.
-
-[`NSLayoutDimension`](/documentation/UIKit/NSLayoutDimension)
-
-A factory class for creating size-based layout constraint objects using a fluent API.
+| API | Purpose |
+|-----|---------|
+| `UILayoutGuide` | A rectangular area that can interact with Auto Layout. |
+| `NSLayoutDimension` | A factory class for creating size-based layout constraint objects using a fluent API. |
 
 ### Anchors
 
-[`NSLayoutAnchor`](/documentation/UIKit/NSLayoutAnchor)
-
-A factory class for creating layout constraint objects using a fluent API.
-
-[`NSLayoutXAxisAnchor`](/documentation/UIKit/NSLayoutXAxisAnchor)
-
-A factory class for creating horizontal layout constraint objects using a fluent API.
-
-[`NSLayoutYAxisAnchor`](/documentation/UIKit/NSLayoutYAxisAnchor)
-
-A factory class for creating vertical layout constraint objects using a fluent API.
+| API | Purpose |
+|-----|---------|
+| `NSLayoutAnchor` | A factory class for creating layout constraint objects using a fluent API. |
+| `NSLayoutXAxisAnchor` | A factory class for creating horizontal layout constraint objects using a fluent API. |
+| `NSLayoutYAxisAnchor` | A factory class for creating vertical layout constraint objects using a fluent API. |
 
 ### Anchors
 
-[`NSLayoutAnchor`](/documentation/UIKit/NSLayoutAnchor)
-
-A factory class for creating layout constraint objects using a fluent API.
-
-[`NSLayoutXAxisAnchor`](/documentation/UIKit/NSLayoutXAxisAnchor)
-
-A factory class for creating horizontal layout constraint objects using a fluent API.
-
-[`NSLayoutYAxisAnchor`](/documentation/UIKit/NSLayoutYAxisAnchor)
-
-A factory class for creating vertical layout constraint objects using a fluent API.
-
-[`NSLAYOUTANCHOR_H`](/documentation/UIKit/NSLAYOUTANCHOR_H)
-
-
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+| API | Purpose |
+|-----|---------|
+| `NSLayoutAnchor` | A factory class for creating layout constraint objects using a fluent API. |
+| `NSLayoutXAxisAnchor` | A factory class for creating horizontal layout constraint objects using a fluent API. |
+| `NSLayoutYAxisAnchor` | A factory class for creating vertical layout constraint objects using a fluent API. |
+| `NSLAYOUTANCHOR_H` | — |

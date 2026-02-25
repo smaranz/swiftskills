@@ -1,62 +1,56 @@
 ---
 name: Objective-C and C Code Customization
-description: Rork-Max Quality skill for Objective-C and C Code Customization. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Objective-C and C Code Customization. Actionable Swift language patterns and best practices.
 ---
-
-# Objective-C and C Code Customization
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Objective-C and C Code Customization Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Objective-C and C Code Customization]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Objective-C and C Code Customization usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
 
 # Objective-C and C Code Customization
 
 Apply macros to your Objective-C APIs to customize how they’re imported into Swift.
 
-## Topics
+## 🚀 Rork-Max Quality Snippet
 
-### Customizing Objective-C APIs
+```swift
+// Exposing Swift to Objective-C
+@objc class UserManager: NSObject {
+    @objc dynamic var currentUser: String = ""
 
-  <doc://com.apple.Swift/documentation/Swift/designating-nullability-in-objective-c-apis>
+    @objc func fetchUsers(completion: @escaping ([String]) -> Void) {
+        completion(["Alice", "Bob", "Charlie"])
+    }
+}
 
-  <doc://com.apple.Swift/documentation/Swift/renaming-objective-c-apis-for-swift>
+// Using Objective-C APIs from Swift
+let notification = NotificationCenter.default
+notification.addObserver(
+    forName: UIApplication.didBecomeActiveNotification,
+    object: nil, queue: .main
+) { _ in
+    print("App became active")
+}
+```
 
-  <doc://com.apple.Swift/documentation/Swift/improving-objective-c-api-declarations-for-swift>
+## 💎 Elite Implementation Tips
 
-  <doc://com.apple.Swift/documentation/Swift/grouping-related-objective-c-constants>
+- Use `@objc` to expose Swift members to Objective-C; `@objc dynamic` for KVO
+- Subclass `NSObject` for full Objective-C runtime compatibility
+- Use `NS_SWIFT_NAME` in ObjC headers to customize how APIs appear in Swift
 
-  <doc://com.apple.Swift/documentation/Swift/marking-api-availability-in-objective-c>
+## When to Use
 
-  <doc://com.apple.Swift/documentation/Swift/making-objective-c-apis-unavailable-in-swift>
+- Calling Objective-C APIs from Swift or vice versa
+- Integrating C/C++ libraries into a Swift project
+- Migrating an existing Objective-C codebase to Swift incrementally
 
-### Customizing C APIs
+## Best Practices
 
-  <doc://com.apple.Swift/documentation/Swift/customizing-your-c-code-for-swift>
+- Use a bridging header for Objective-C → Swift; `@objc` attribute for Swift → Objective-C
+- Leverage `NS_SWIFT_NAME` in Objective-C headers for clean Swift API names
+- Use `async` overloads of Objective-C completion-handler APIs
+
+## Common Pitfalls
+
+- Objective-C generics don't fully map to Swift generics — watch for `Any` erasure
+- C pointers require careful memory management — use `withUnsafe*Pointer` wrappers
+- KVO from Swift requires `@objc dynamic` properties
 
 
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)

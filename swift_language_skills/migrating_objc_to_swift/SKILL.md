@@ -1,113 +1,64 @@
 ---
 name: Migrating Your Objective-C Code to Swift
-description: Rork-Max Quality skill for Migrating Your Objective-C Code to Swift. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Migrating Your Objective-C Code to Swift. Actionable Swift language patterns and best practices.
 ---
-
-# Migrating Your Objective-C Code to Swift
-
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Migrating Your Objective-C Code to Swift Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Migrating Your Objective-C Code to Swift]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Migrating Your Objective-C Code to Swift usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
 
 # Migrating Your Objective-C Code to Swift
 
 Learn the recommended steps to migrate your code.
-
-## Overview
-
 You can improve the architecture, logic, and performance of one of your Objective-C
-apps by replacing pieces of it in Swift.  Interoperability makes it possible to integrate
+apps by replacing pieces of it in Swift. Interoperability makes it possible to integrate
 features migrated to Swift into Objective-C code with no hassle. You don’t need to
 rewrite your entire app in Swift at once.
 
-### Clean Up Your Code
+## 🚀 Rork-Max Quality Snippet
 
-Make sure that your Objective-C code and Swift code have optimal compatibility by
-tidying up and modernizing your existing Objective-C codebase. For example, if there
-are parts of your codebase to which you haven’t added nullability annotations, now’s
-the time to add them. Make sure your code follows modern coding practices so that
-it interacts more effectively with Swift.
+```swift
+// Objective-C: @interface User : NSObject
+// @property (nonatomic, copy) NSString *name;
+// @property (nonatomic, assign) NSInteger age;
+// @end
 
-### Migrate Your Code
+// Swift equivalent — prefer struct when possible
+struct User: Codable, Hashable {
+    var name: String
+    var age: Int
+}
 
-The most effective approach for migrating code to Swift is on a per-file basis—that
-is, one class at a time. Because you can’t subclass Swift classes in Objective-C,
-it’s best to choose a class in your app that doesn’t have any subclasses. You’ll
-replace the `.m` and `.h` files for that class with a single `.swift` file. Everything
-from your implementation and interface goes directly into this single Swift file.
-You won’t create a header file; Xcode generates a header automatically in case you
-need to reference it.
+// For classes requiring ObjC interop, keep NSObject inheritance
+@objc class LegacyUser: NSObject {
+    @objc var name: String
+    @objc var age: Int
 
-1. Create a Swift class for your corresponding Objective-C .m and .h files by choosing
-   File > New > File > (iOS, watchOS, tvOS, or macOS) > Source > Swift
-   File. You can use the same or a different name than your Objective-C class. Class
-   prefixes are optional in Swift.
-1. Import relevant system frameworks.
-1. Fill out an Objective-C bridging header if you need to access Objective-C code
-   from the same app target in your Swift file.
-1. To make your Swift class accessible and usable back in Objective-C, make it a
-   descendant of an Objective-C class. To specify a particular name for the class to
-   use in Objective-C, mark it with `@objc(`*name*`)`, where name is the name that your
-   Objective-C code uses to reference the Swift class.
+    @objc init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
+```
 
-#### As You Work
+## 💎 Elite Implementation Tips
 
-1. You can set up your Swift class to integrate Objective-C behavior by subclassing
-   Objective-C classes, adopting Objective-C protocols, and more.
-1. As you work with Objective-C APIs, you’ll need to know how Swift translates certain
-   Objective-C language features. For more information, see <doc://com.apple.Swift/documentation/Swift/objective-c-and-c-code-customization>.
-1. Use the `@objc(`*name*`)` attribute to provide Objective-C names for properties
-   and methods when necessary.
-1. Denote instance (`-`) and class (`+`) methods with `func` and `class func`, respectively.
-1. Declare simple macros as global constants, and translate complex macros into functions.
+- Migrate data models to Swift structs when they don't need ObjC runtime features
+- Use a bridging header for gradual migration — ObjC and Swift can coexist in the same target
+- Replace `NSArray`/`NSDictionary` with typed Swift collections during migration
 
-#### After You Finish
+## When to Use
 
-1. Update import statements in your Objective-C code (to `#import "ProductModuleName-Swift.h"`)
-   to refer to your new Swift code.
-1. Remove the original Objective-C `.m` file from the target by deselecting the target
-   membership checkbox. Don’t delete the `.m` and `.h` files immediately; use them to
-   troubleshoot.
-1. Update your code to use the Swift class name instead of the Objective-C name if
-   you gave the Swift class a different name.
+- Calling Objective-C APIs from Swift or vice versa
+- Integrating C/C++ libraries into a Swift project
+- Migrating an existing Objective-C codebase to Swift incrementally
 
-### Troubleshooting Tips and Reminders
+## Best Practices
 
-Migration experiences differ depending on your existing codebase, but here are some
-general steps and tools to help you troubleshoot the process:
+- Use a bridging header for Objective-C → Swift; `@objc` attribute for Swift → Objective-C
+- Leverage `NS_SWIFT_NAME` in Objective-C headers for clean Swift API names
+- Use `async` overloads of Objective-C completion-handler APIs
 
-- Remember that you can’t subclass a Swift class in Objective-C. Therefore, the class
-  you migrate can’t have any Objective-C subclasses.
-- Once you migrate a class to Swift, you must remove the corresponding `.m` file
-  from the target before building to avoid a duplicate symbol error.
-- To make a Swift class available in Objective-C, make it a descendant of an Objective-C
-  class.
-- Command-click a Swift class name to see its generated header.
-- Option-click a symbol to see implicit information about it, like its type, attributes,
-  and documentation comments.
+## Common Pitfalls
 
----
+- Objective-C generics don't fully map to Swift generics — watch for `Any` erasure
+- C pointers require careful memory management — use `withUnsafe*Pointer` wrappers
+- KVO from Swift requires `@objc dynamic` properties
 
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
+

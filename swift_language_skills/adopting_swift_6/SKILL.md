@@ -1,45 +1,13 @@
 ---
 name: Adopting strict concurrency in Swift 6 apps
-description: Rork-Max Quality skill for Adopting strict concurrency in Swift 6 apps. Based on official Apple Swift Documentation and enhanced for elite development.
+description: Rork-Max Quality skill for Adopting strict concurrency in Swift 6 apps. Actionable Swift language patterns and best practices.
 ---
 
 # Adopting strict concurrency in Swift 6 apps
 
-## 🚀 Rork-Max Quality Snippet
-
-```swift
-// Premium Adopting strict concurrency in Swift 6 apps Implementation
-// Focus on idiomatic, high-performance Swift
-
-import Foundation
-#if canImport(Observation)
-import Observation
-#endif
-
-// Rork-level technical excellence
-// [Example implementation logic for Adopting strict concurrency in Swift 6 apps]
-```
-
-## 💎 Elite Implementation Tips
-
-- Master the language: Use modern Swift 6 features like Concurrency and Observation.
-- Performance: Optimize Adopting strict concurrency in Swift 6 apps usage for high-performance apps.
-- Aesthetics: Write clean, idiomatic Swift that is easy to maintain.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
-
-## Documentation
-
-# Adopting strict concurrency in Swift 6 apps
-
 Enable strict concurrency checking to find data races at compile time.
-
-## Overview
-
 Strict concurrency checking in the Swift 6 language mode
 helps you find and fix data races at compile time.
-
 Overlapping access to shared mutable state
 creates the risk for data races.
 Data races can cause your app to crash, misbehave, or corrupt user data.
@@ -50,90 +18,58 @@ when you compile your app,
 that its code is free from data races.
 When you identify a data race,
 you fix it by eliminating overlapping access, shared access, or mutable state.
-
 For information about the language-level concurrency model in Swift,
-see [Concurrency](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html) in [The Swift Programming Language](https://docs.swift.org/swift-book/).
+see Concurrency in The Swift Programming Language.
 
-### Decide when to upgrade to strict checking
+## 🚀 Rork-Max Quality Snippet
 
-Xcode 16 supports the new Swift 6 language mode,
-which uses strict checking for concurrency,
-and it also still includes the Swift 5, 4.2, and 4 language modes.
-The Swift 6 language mode is opt-in:
-Your projects continue to build with their current language mode,
-and new projects default to the Swift 5 language mode.
+```swift
+// Before Swift 6: ObservableObject with @Published
+class OldModel: ObservableObject {
+    @Published var count = 0
+}
 
-Adopting the Swift 6 language mode
-can significantly improve the quality of your app
-by catching mistakes in concurrent code at compile time.
-It can be especially useful
-if you’re experiencing hard-to-reproduce crashes
-and want to methodically eliminate the risk of data races.
-If you’re actively working on integrating more concurrency
-to improve responsiveness and performance,
-adopting the Swift 6 language mode can ensure that those changes
-don’t risk introducing new data races.
+// After Swift 6: @Observable macro
+@Observable
+class NewModel {
+    var count = 0        // Automatically tracked
+    var name = ""        // Fine-grained updates — only views reading `name` re-render
+}
 
-If your app is organized into multiple modules,
-you can migrate your code one module at a time.
-It’s usually easier to migrate the app first,
-and the migrate the modules it depends on.
+// Strict concurrency: mark shared state with actors
+actor DataStore {
+    private var cache: [String: Data] = [:]
 
-If you maintain a public Swift package,
-adopting the Swift 6 language mode
-helps your users who want to migrate their codebases too.
-You can follow along on the adoption of the Swift 6 language
-in popular packages on `SwiftPackageIndex.com`.
+    func store(_ data: Data, for key: String) {
+        cache[key] = data
+    }
 
-### Upgrade a project to Swift 6
+    func fetch(_ key: String) -> Data? {
+        cache[key]
+    }
+}
+```
 
-You can start using new features from Swift 6,
-like strict concurrency checking,
-before upgrading your project to the Swift 6 language mode.
-To enable new language features,
-open your build settings, and choose Swift Compiler - Upcoming Features;
-then select Yes next to the features you want to adopt.
-As you prepare to upgrade to the Swift 6 language version,
-you can increase the level of concurrency checking
-by changing the Strict Concurrency Checking build setting
-from Minimal to Complete.
+## 💎 Elite Implementation Tips
 
-![A screenshot of Xcode showing the Swift Compiler - Upcoming Features build settings](images/com.apple.Swift/AdoptingSwift6-features~dark@2x.png)
+- Enable strict concurrency checking incrementally: set "Strict Concurrency Checking" to "Targeted" then "Complete"
+- Replace `ObservableObject` + `@Published` with `@Observable` for automatic fine-grained updates
+- Use `actor` to protect shared mutable state instead of manual locks or queues
 
-To upgrade your project to the Swift 6 language mode,
-open your build settings, and choose
-Swift Compiler - Language > Swift Language Version.
+## When to Use
 
-![A screenshot of Xcode showing the Swift Compiler - Language build settings](images/com.apple.Swift/AdoptingSwift6-language~dark@2x.png)
+- Migrating a project from Swift 5 to Swift 6 strict concurrency
+- Adopting `@Observable`, `async/await`, and structured concurrency
 
-Upgrading to the Swift 6 language mode
-enables all of the new language features that are part of Swift 6,
-including strict concurrency checking.
+## Best Practices
 
-> Note:
-> After you upgrade,
-> the list of upcoming features still includes a few features
-> that will be part of a future Swift version,
-> which are disabled by default in the Swift 6 language mode.
+- Enable strict concurrency checking incrementally — start with warnings, then errors
+- Mark shared mutable state as `@MainActor` or protect with actors
+- Replace Combine-based data flows with `@Observable` and `AsyncSequence`
+
+## Common Pitfalls
+
+- Turning on strict concurrency globally before auditing existing code
+- Assuming `@Sendable` closures can capture mutable state
 
 
-
-After you turn on strict concurrency checking,
-you might see a large number of new compiler errors and warnings.
-However,
-fixing the data race in one part of your app
-often resolves multiple reported errors.
-You don’t have to fix all of the reported data races at once.
-If you need to, you can fix some of them now,
-switch back to the Swift 5 language mode
-or switch back to minimal concurrency checking,
-and then continue fixing the remaining data races later.
-
-For information about how to migrate,
-including techniques for interoperating with code
-that hasn’t yet migrated to strict checking,
-see [Migrating to Swift 6](https://swift.org/migration).
-
----
-
-Copyright &copy; 2026 Apple Inc. All rights reserved. | [Terms of Use](https://www.apple.com/legal/internet-services/terms/site.html) | [Privacy Policy](https://www.apple.com/privacy/privacy-policy)
