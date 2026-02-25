@@ -10,19 +10,75 @@ Floating labels with fluid, bouncy feedback and focus-state brilliance.
 
 ## 🚀 Rork-Max Quality Snippet
 
-
 ```swift
-TextField("Label", text: $text)
-    .focused($isFocused)
-    .animation(.spring(response: 0.3), value: isFocused)
-```
+import SwiftUI
 
+struct ValidatedForm: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var emailError: String?
+    @State private var shake = false
+    @FocusState private var field: Field?
+
+    enum Field { case email, password }
+
+    var body: some View {
+        VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                TextField("Email", text: $email)
+                    .focused($field, equals: .email)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .submitLabel(.next)
+                    .onSubmit { field = .password }
+                    .padding(12)
+                    .background(field == .email ? .ultraThinMaterial : .regularMaterial,
+                                in: RoundedRectangle(cornerRadius: 12))
+                    .offset(x: shake ? -6 : 0)
+
+                if let error = emailError {
+                    Text(error).font(.caption).foregroundStyle(.red)
+                }
+            }
+
+            SecureField("Password", text: $password)
+                .focused($field, equals: .password)
+                .submitLabel(.done)
+                .onSubmit { validate() }
+                .padding(12)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+
+            Button("Sign In") { validate() }
+                .buttonStyle(.borderedProminent)
+                .disabled(email.isEmpty || password.isEmpty)
+        }
+        .padding()
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") { field = nil }
+            }
+        }
+    }
+
+    func validate() {
+        if !email.contains("@") {
+            emailError = "Enter a valid email address"
+            withAnimation(.spring(response: 0.1, dampingFraction: 0.2)) { shake = true }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { shake = false }
+        } else {
+            emailError = nil
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Feedback: Shake the text field on invalid input using offsets.
-- Focus: Use .ultraThinMaterial behind focused fields to highlight them.
-- Keyboard: Add 'Done' or 'Next' button to the keyboard toolbar.
+- Use `@FocusState` enum + `.submitLabel(.next)` for keyboard-driven field navigation
+- Show validation errors below the field with reserved space to avoid layout shift
+- Shake invalid fields with a short, damped spring for visceral feedback
+- Use `.ultraThinMaterial` behind the focused field to visually elevate it
 
 
 ## When to Use

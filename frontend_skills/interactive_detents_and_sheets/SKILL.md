@@ -10,20 +10,52 @@ High-end bottom sheet customization. Mastering presentationDetents and backgroun
 
 ## 🚀 Rork-Max Quality Snippet
 
-
 ```swift
-Text("Content")
-    .presentationDetents([.height(200), .medium, .large])
-    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-    .presentationCornerRadius(44)
-```
+import SwiftUI
 
+struct MiniPlayerSheet: View {
+    @State private var showSheet = false
+
+    var body: some View {
+        Button("Show Player") { showSheet = true }
+            .sheet(isPresented: $showSheet) {
+                VStack(spacing: 16) {
+                    Capsule()
+                        .fill(.secondary.opacity(0.4))
+                        .frame(width: 36, height: 5)
+                        .padding(.top, 8)
+
+                    HStack(spacing: 16) {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.blue.gradient)
+                            .frame(width: 48, height: 48)
+                        VStack(alignment: .leading) {
+                            Text("Now Playing").font(.headline)
+                            Text("Artist Name").font(.caption).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Button(action: {}) {
+                            Image(systemName: "play.fill").font(.title2)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .presentationDetents([.height(120), .medium, .large])
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                .presentationCornerRadius(32)
+                .presentationDragIndicator(.hidden)
+                .interactiveDismissDisabled()
+            }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Detents: Use custom .height() detents for context-specific mini-players.
-- Background: .enabled background interaction allows multi-tasking.
-- Aesthetics: A large corner radius (32-44pt) makes sheets feel integrated.
+- Combine `.height()`, `.medium`, `.large` detents for three-stop drawer behavior
+- Use `.presentationBackgroundInteraction(.enabled(upThrough:))` for map-style UIs
+- Hide the system drag indicator and add a custom capsule grabber for full design control
+- Set `.presentationCornerRadius(32–44)` for sheets that feel integrated with the app
 
 
 ## When to Use

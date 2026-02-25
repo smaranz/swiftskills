@@ -10,22 +10,59 @@ High-end data loading aesthetics. Using animated shimmer gradients and placehold
 
 ## 🚀 Rork-Max Quality Snippet
 
-
 ```swift
-RoundedRectangle(cornerRadius: 12)
-    .fill(.gray.opacity(0.1))
-    .overlay(
-        LinearGradient(colors: [.clear, .white.opacity(0.2), .clear], startPoint: .leading, endPoint: .trailing)
-            .offset(x: -100 + phase * 200)
-    )
-```
+import SwiftUI
 
+struct ShimmerModifier: ViewModifier {
+    @State private var phase: CGFloat = -1
+
+    func body(content: Content) -> some View {
+        content.overlay {
+            LinearGradient(
+                colors: [.clear, .white.opacity(0.25), .clear],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .offset(x: phase * 300)
+            .mask(content)
+        }
+        .onAppear {
+            withAnimation(.linear(duration: 1.5).repeatForever(autoreverses: false)) {
+                phase = 1
+            }
+        }
+    }
+}
+
+struct SkeletonRow: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(.gray.opacity(0.15))
+                .frame(width: 48, height: 48)
+
+            VStack(alignment: .leading, spacing: 6) {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(.gray.opacity(0.15))
+                    .frame(height: 14)
+                    .frame(maxWidth: 180)
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(.gray.opacity(0.12))
+                    .frame(height: 12)
+                    .frame(maxWidth: 120)
+            }
+        }
+        .modifier(ShimmerModifier())
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Animation: Linear shine animations at 1.5s duration feel 'just right'.
-- Colors: Use the system theme so skeleton matches dark/light mode.
-- Stagger: Offset row animation start times for an organic feel.
+- Build a reusable `ShimmerModifier` and apply it to any placeholder shape
+- Match skeleton shapes to actual content layout so the transition feels seamless
+- Use system fill colors (`.gray.opacity(0.15)`) for automatic dark/light mode support
+- Stagger row animations by 50–100ms offset for organic cascading reveal
 
 
 ## When to Use

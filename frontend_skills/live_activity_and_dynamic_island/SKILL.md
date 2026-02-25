@@ -10,23 +10,64 @@ Designing for real-time presence. Mastering ActivityKit and Island regions.
 
 ## 🚀 Rork-Max Quality Snippet
 
-
 ```swift
-DynamicIsland {
-    expanded {
-        DynamicIslandExpandedRegion(.leading) { Text("Status") }
+import ActivityKit
+import SwiftUI
+import WidgetKit
+
+struct DeliveryAttributes: ActivityAttributes {
+    public struct ContentState: Codable, Hashable {
+        var status: String
+        var progress: Double
+        var eta: Date
     }
-    compactLeading { Text("L") }
-    compactTrailing { Text("T") }
+    var orderNumber: String
+}
+
+struct DeliveryLiveActivity: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: DeliveryAttributes.self) { context in
+            // Lock Screen presentation
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Order #\(context.attributes.orderNumber)")
+                        .font(.caption).foregroundStyle(.secondary)
+                    Text(context.state.status).font(.headline)
+                }
+                Spacer()
+                ProgressView(value: context.state.progress)
+                    .frame(width: 60)
+            }
+            .padding()
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Label(context.state.status, systemImage: "box.truck.fill")
+                        .font(.caption)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Text(context.state.eta, style: .timer)
+                        .font(.caption.monospacedDigit())
+                }
+            } compactLeading: {
+                Image(systemName: "box.truck.fill")
+            } compactTrailing: {
+                ProgressView(value: context.state.progress)
+                    .frame(width: 24)
+            } minimal: {
+                Image(systemName: "box.truck.fill")
+            }
+        }
+    }
 }
 ```
 
-
 ## 💎 Elite Implementation Tips
 
-- Content: Avoid heavy text—use icons and progress bars.
-- Update: Only update when state changes significant (>10%).
-- Animation: Transitions are handled by system—keep layouts flexible.
+- Use `ActivityConfiguration` to define Lock Screen + Dynamic Island presentations together
+- Keep compact regions minimal — icon + progress bar or icon + short value
+- Use `.timer` text style for live countdowns that update automatically
+- Only push updates when state changes significantly (>10% progress)
 
 
 ## When to Use

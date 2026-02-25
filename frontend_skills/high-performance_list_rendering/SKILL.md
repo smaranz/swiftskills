@@ -10,22 +10,66 @@ Strategies for large-scale 'wow' lists. Using LazyVStack and drawingGroup optimi
 
 ## 🚀 Rork-Max Quality Snippet
 
-
 ```swift
-LazyVStack(spacing: 0) {
-    ForEach(items) { item in
-        RowView(item: item)
-            .drawingGroup()
+import SwiftUI
+
+struct HighPerfFeed: View {
+    let items: [FeedItem]
+    @State private var isLoadingMore = false
+
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 12) {
+                ForEach(items) { item in
+                    FeedRow(item: item)
+                        .drawingGroup()
+                }
+
+                // Infinite scroll sentinel
+                Color.clear.frame(height: 1)
+                    .onAppear { loadMore() }
+            }
+            .padding(.horizontal)
+        }
+    }
+
+    func loadMore() {
+        guard !isLoadingMore else { return }
+        isLoadingMore = true
+        // Fetch next page...
+    }
+}
+
+struct FeedRow: View {
+    let item: FeedItem
+
+    var body: some View {
+        HStack(spacing: 12) {
+            AsyncImage(url: item.thumbnailURL) { image in
+                image.resizable().scaledToFill()
+            } placeholder: {
+                RoundedRectangle(cornerRadius: 8).fill(.gray.opacity(0.15))
+            }
+            .frame(width: 60, height: 60)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(item.title).font(.headline).lineLimit(1)
+                Text(item.subtitle).font(.subheadline).foregroundStyle(.secondary).lineLimit(2)
+            }
+        }
+        .padding(12)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }
 ```
 
-
 ## 💎 Elite Implementation Tips
 
-- Optimization: Use .drawingGroup() on static rows to flatten hierarchy.
-- Lazy: Never render 50+ views in a standard VStack—always use LazyVStack.
-- Smoothness: Cache thumbnails; avoid image decoding on main thread.
+- Use `LazyVStack` inside `ScrollView` for full styling control over 100+ items
+- Apply `.drawingGroup()` on static rows to flatten into Metal-backed rendering
+- Add a sentinel `Color.clear.onAppear` at the bottom for infinite scroll pagination
+- Use `AsyncImage` with placeholder for non-blocking image loading
 
 
 ## When to Use

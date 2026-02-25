@@ -10,21 +10,48 @@ Depth-focused layout systems. Adapting visionOS principles to the iOS canvas.
 
 ## 🚀 Rork-Max Quality Snippet
 
+```swift
+import SwiftUI
 
-#if os(visionOS)
-Text("Spatial UI")
-    .glassBackgroundEffect()
-#else
-Text("Spatial Style on iOS")
-    .background(.ultraThinMaterial, in: Capsule())
-#endif
+struct SpatialCard: View {
+    @State private var isHovered = false
 
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "cube.fill")
+                .font(.system(size: 40))
+                .foregroundStyle(.blue.gradient)
+            Text("Spatial Element")
+                .font(.headline)
+        }
+        .padding(24)
+        .background {
+            #if os(visionOS)
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .glassBackgroundEffect()
+            #else
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(.ultraThinMaterial)
+                .shadow(color: .black.opacity(0.08), radius: isHovered ? 20 : 12, y: isHovered ? 8 : 4)
+            #endif
+        }
+        .scaleEffect(isHovered ? 1.03 : 1.0)
+        .rotation3DEffect(.degrees(isHovered ? 3 : 0), axis: (x: 1, y: 0, z: 0))
+        .animation(.spring(response: 0.35, dampingFraction: 0.7), value: isHovered)
+        .onHover { isHovered = $0 }
+        .onLongPressGesture(minimumDuration: 0, pressing: { pressing in
+            isHovered = pressing
+        }, perform: {})
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Z-Axis: Use .offset(z:) and .rotation3DEffect to mimic spatial depth.
-- Interaction: Implement 'hover effects' via touch-down feedback on iOS.
-- Lighting: Simulate a global light source by consistent shadow X/Y offsets.
+- Use `#if os(visionOS)` to provide true glass effects on Vision Pro, material fallback on iOS
+- Simulate hover with `.onLongPressGesture(pressing:)` on touch devices
+- Keep `.rotation3DEffect` subtle (2–5°) to avoid disorientation
+- Maintain consistent shadow offsets across all cards for a unified light source
 
 
 ## When to Use
