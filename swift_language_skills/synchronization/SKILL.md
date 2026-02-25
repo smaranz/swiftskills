@@ -10,20 +10,43 @@ Build synchronization constructs using low-level, primitive operations.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+import Synchronization
 
-// Synchronization — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Mutex for protecting shared state (Swift 6+)
+let counter = Mutex(0)
+
+func incrementSafely() {
+    counter.withLock { value in
+        value += 1
+    }
+}
+
+// Atomic values for lock-free operations
+let flag = Atomic<Bool>(false)
+
+func toggle() {
+    let oldValue = flag.exchange(true, ordering: .releasing)
+    print("Was: \(oldValue)")
+}
+
+// Actor — the preferred Swift concurrency primitive
+actor BankAccount {
+    private var balance: Decimal = 0
+
+    func deposit(_ amount: Decimal) { balance += amount }
+    func withdraw(_ amount: Decimal) -> Bool {
+        guard balance >= amount else { return false }
+        balance -= amount
+        return true
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Synchronization.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Prefer `actor` for high-level shared state protection in Swift concurrency
+- Use `Mutex` from the Synchronization module for low-level, non-async critical sections
+- Use `Atomic` for simple flag/counter operations that don't need locking
 
 ## When to Use
 

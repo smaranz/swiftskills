@@ -51,20 +51,46 @@ print("Schedule renderer.")
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+import SwiftUI
+import Observation
 
-// Observation — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+@Observable
+class TaskStore {
+    var tasks: [TodoTask] = []
+    var filter: Filter = .all
+
+    var filteredTasks: [TodoTask] {
+        switch filter {
+        case .all: tasks
+        case .active: tasks.filter { !$0.isDone }
+        case .done: tasks.filter { $0.isDone }
+        }
+    }
+
+    func add(_ title: String) {
+        tasks.append(TodoTask(title: title))
+    }
+
+    enum Filter { case all, active, done }
+}
+
+struct TaskListView: View {
+    @State private var store = TaskStore()
+
+    var body: some View {
+        List(store.filteredTasks) { task in
+            Text(task.title)
+        }
+        // Only re-renders when filteredTasks actually changes
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Observation.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- `@Observable` provides fine-grained tracking — only views reading changed properties re-render
+- Computed properties on `@Observable` classes automatically participate in tracking
+- Replace `ObservableObject` + `@Published` + `@StateObject` with `@Observable` + `@State`
 
 ## When to Use
 

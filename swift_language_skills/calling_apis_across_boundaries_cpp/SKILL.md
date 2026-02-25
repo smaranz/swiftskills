@@ -11,20 +11,29 @@ Use a variety of C++ APIs in Swift – and vice-versa – across multiple target
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Calling Swift from C++ and C++ from Swift
 
-// Calling APIs Across Language Boundaries — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Swift class exposed to C++
+@_expose(Cxx)
+public struct SwiftPoint {
+    public var x: Double
+    public var y: Double
+
+    public func magnitude() -> Double {
+        (x * x + y * y).squareRoot()
+    }
+}
+
+// C++ code can now use:
+// auto point = SwiftModule::SwiftPoint::init(3.0, 4.0);
+// auto mag = point.magnitude();
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Calling APIs Across Language Boundaries.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@_expose(Cxx)` to make Swift types available to C++ code
+- Swift value types map to C++ structs; Swift classes become reference-counted pointers
+- Test cross-language calls with unit tests on both sides to catch ABI mismatches
 
 ## When to Use
 

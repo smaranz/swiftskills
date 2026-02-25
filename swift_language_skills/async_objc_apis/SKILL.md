@@ -22,18 +22,38 @@ see Concurrency in The Swift Programming Language.
 ```swift
 import Foundation
 
-// Calling Objective-C APIs Asynchronously — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// ObjC completion handler API automatically gets an async overload:
+// ObjC: - (void)fetchDataWithCompletion:(void (^)(NSData *, NSError *))completion;
+// Swift: func fetchData() async throws -> Data
+
+// Using the async version
+func loadProfile() async throws -> UserProfile {
+    let url = URL(string: "https://api.example.com/profile")!
+    let (data, response) = try await URLSession.shared.data(from: url)
+
+    guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+        throw NetworkError.badResponse
+    }
+
+    return try JSONDecoder().decode(UserProfile.self, from: data)
+}
+
+// Wrapping a callback API manually
+func legacyFetch() async throws -> Data {
+    try await withCheckedThrowingContinuation { continuation in
+        LegacyAPI.fetch { data, error in
+            if let error { continuation.resume(throwing: error) }
+            else if let data { continuation.resume(returning: data) }
+        }
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Calling Objective-C APIs Asynchronously.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- ObjC completion-handler methods automatically get `async` overloads in Swift
+- Use `withCheckedThrowingContinuation` to wrap legacy callback APIs as async
+- Only resume a continuation EXACTLY once — resuming twice crashes
 
 ## When to Use
 

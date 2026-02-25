@@ -38,20 +38,37 @@ or write your own distributed actor system.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+import Distributed
 
-// Distributed — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+distributed actor GamePlayer {
+    typealias ActorSystem = LocalTestingDistributedActorSystem
+
+    var score: Int = 0
+
+    distributed func move(direction: String) -> Bool {
+        // Validate and apply move
+        score += 10
+        return true
+    }
+
+    distributed func getScore() -> Int {
+        score
+    }
+}
+
+// Usage
+func playGame(with player: GamePlayer) async throws {
+    let moved = try await player.move(direction: "north")
+    let score = try await player.getScore()
+    print("Score: \(score)")
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Distributed.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Distributed actors extend actors with transparent networking — calls may cross process/machine boundaries
+- All `distributed func` calls are implicitly `async throws` (network may fail)
+- Use `LocalTestingDistributedActorSystem` for unit testing distributed actors locally
 
 ## When to Use
 

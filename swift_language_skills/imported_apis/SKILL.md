@@ -16,18 +16,32 @@ functions, and patterns.
 ```swift
 import Foundation
 
-// Imported C and Objective-C APIs — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Nullability maps to Optional in Swift
+// ObjC: (nullable NSString *) → Swift: String?
+// ObjC: (nonnull NSString *) → Swift: String
+
+// Lightweight generics map to Swift generics
+// ObjC: NSArray<NSString *> * → Swift: [String]
+
+// Enums with NS_ENUM become proper Swift enums
+// ObjC: typedef NS_ENUM(NSInteger, Priority) { PriorityLow, PriorityHigh };
+enum Priority: Int {
+    case low = 0
+    case high = 1
+}
+
+// Error handling: NSError** becomes throws
+func loadData() throws -> Data {
+    let url = URL(fileURLWithPath: "/tmp/data.json")
+    return try Data(contentsOf: url)
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Imported C and Objective-C APIs.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- `NS_ENUM` becomes a Swift `enum`; `NS_OPTIONS` becomes an `OptionSet`
+- ObjC nullability annotations (`nullable`/`nonnull`) map directly to Swift optionals
+- Use `NS_SWIFT_NAME` to customize the Swift name of imported ObjC APIs
 
 ## When to Use
 

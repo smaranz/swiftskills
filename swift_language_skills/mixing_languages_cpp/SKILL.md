@@ -11,20 +11,26 @@ Use C++ APIs in Swift – and Swift APIs in C++ – in a single framework target
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Swift can directly call C++ code through Swift/C++ interop (Swift 5.9+)
+// In your target's build settings, enable "C++ Interoperability"
 
-// Mixing Languages in an Xcode project — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// C++ header (MathLib.hpp):
+// int fibonacci(int n);
+// struct Point { double x; double y; double distance() const; };
+
+// Swift usage:
+import MathLib
+
+let result = fibonacci(10)  // Call C++ function directly
+var point = Point(x: 3.0, y: 4.0)
+let distance = point.distance()  // Call C++ method
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Mixing Languages in an Xcode project.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Enable "C++ and Objective-C Interoperability" in build settings for direct C++ access
+- C++ value types with trivial move/copy map to Swift value types automatically
+- Use a bridging header for ObjC/C, and module maps for C++ framework imports
 
 ## When to Use
 

@@ -43,20 +43,36 @@ let (wholeMatch, name, domain) = match.output
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+import RegexBuilder
 
-// RegexBuilder — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Type-safe regex with RegexBuilder (Swift 5.7+)
+let dateRegex = Regex {
+    Capture { OneOrMore(.digit) }          // Year
+    "-"
+    Capture { Repeat(.digit, count: 2) }   // Month
+    "-"
+    Capture { Repeat(.digit, count: 2) }   // Day
+}
+
+let input = "Event on 2025-06-15 at venue"
+if let match = input.firstMatch(of: dateRegex) {
+    let year = match.1   // "2025"
+    let month = match.2  // "06"
+    let day = match.3    // "15"
+}
+
+// With strong typing
+let priceRegex = Regex {
+    "$"
+    Capture { .localizedDouble(locale: Locale(identifier: "en_US")) }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with RegexBuilder.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `RegexBuilder` for complex patterns — it's type-safe and readable
+- Use `Capture { }` for extracting matched groups with proper types
+- Combine with `.localizedDouble()` and `.localizedInteger()` for locale-aware parsing
 
 ## When to Use
 
