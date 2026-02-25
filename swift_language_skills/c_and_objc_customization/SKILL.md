@@ -10,20 +10,30 @@ Apply macros to your Objective-C APIs to customize how they’re imported into S
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Exposing Swift to Objective-C
+@objc class UserManager: NSObject {
+    @objc dynamic var currentUser: String = ""
 
-// Objective-C and C Code Customization — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+    @objc func fetchUsers(completion: @escaping ([String]) -> Void) {
+        completion(["Alice", "Bob", "Charlie"])
+    }
+}
+
+// Using Objective-C APIs from Swift
+let notification = NotificationCenter.default
+notification.addObserver(
+    forName: UIApplication.didBecomeActiveNotification,
+    object: nil, queue: .main
+) { _ in
+    print("App became active")
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Objective-C and C Code Customization.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@objc` to expose Swift members to Objective-C; `@objc dynamic` for KVO
+- Subclass `NSObject` for full Objective-C runtime compatibility
+- Use `NS_SWIFT_NAME` in ObjC headers to customize how APIs appear in Swift
 
 ## When to Use
 

@@ -167,20 +167,32 @@ buffer.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+var scores: [String: Int] = ["Alice": 95, "Bob": 87]
 
-// Dictionary — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Safe access with default
+let aliceScore = scores["Alice", default: 0]  // 95
+let unknownScore = scores["Charlie", default: 0]  // 0
+
+// Mutation
+scores["Charlie"] = 92
+scores["Alice"] = nil  // Remove entry
+
+// Grouping and transforming
+let words = ["apple", "avocado", "banana", "blueberry"]
+let grouped = Dictionary(grouping: words) { $0.first! }
+// ["a": ["apple", "avocado"], "b": ["banana", "blueberry"]]
+
+// Merge with conflict resolution
+let defaults = ["theme": "light", "language": "en"]
+let overrides = ["theme": "dark"]
+let merged = defaults.merging(overrides) { _, new in new }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Dictionary.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use subscript with `default:` to avoid optional unwrapping: `dict[key, default: 0] += 1`
+- Use `Dictionary(grouping:by:)` to partition collections into categories
+- Use `.merging(_:uniquingKeysWith:)` to combine dictionaries with conflict resolution
 
 ## When to Use
 

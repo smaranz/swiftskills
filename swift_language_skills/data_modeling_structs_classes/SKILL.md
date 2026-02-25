@@ -18,20 +18,41 @@ adding a new data type to your app.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Value type — use for most data models
+struct Coordinate: Equatable, Hashable, Codable {
+    var latitude: Double
+    var longitude: Double
 
-// Choosing Between Structures and Classes — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+    var isValid: Bool {
+        (-90...90).contains(latitude) && (-180...180).contains(longitude)
+    }
+}
+
+// Reference type — use when identity matters
+@Observable
+class UserSession {
+    var currentUser: User?
+    var isAuthenticated: Bool { currentUser != nil }
+
+    func login(user: User) {
+        currentUser = user
+    }
+}
+
+// Enum with associated values — perfect for state machines
+enum LoadingState<T> {
+    case idle
+    case loading
+    case loaded(T)
+    case failed(Error)
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Choosing Between Structures and Classes.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Default to structs — use classes only when identity, inheritance, or reference semantics are needed
+- Use enums with associated values for state machines and result types
+- Implement `Equatable`, `Hashable`, and `Codable` on types used in collections or SwiftUI
 
 ## When to Use
 

@@ -16,18 +16,29 @@ or property names as selectors or key paths, respectively.
 ```swift
 import Foundation
 
-// Using Objective-C Runtime Features in Swift — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+class SettingsStore: NSObject {
+    @objc dynamic var fontSize: Int = 14
+    @objc dynamic var isDarkMode: Bool = false
+
+    // KVO observation
+    func observeFontSize() -> NSKeyValueObservation {
+        observe(\.fontSize, options: [.new, .old]) { _, change in
+            print("Font changed: \(change.oldValue ?? 0) → \(change.newValue ?? 0)")
+        }
+    }
+}
+
+// Usage
+let store = SettingsStore()
+let observation = store.observeFontSize()
+store.fontSize = 18  // Triggers observer
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Using Objective-C Runtime Features in Swift.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- `@objc dynamic` is required for KVO — Swift properties aren't KVO-compatible by default
+- Store KVO observation tokens and invalidate them to avoid leaks
+- Prefer `@Observable` (Swift 6) over KVO for new SwiftUI code
 
 ## When to Use
 

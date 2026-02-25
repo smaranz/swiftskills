@@ -24,20 +24,37 @@ see Concurrency in The Swift Programming Language.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Before Swift 6: ObservableObject with @Published
+class OldModel: ObservableObject {
+    @Published var count = 0
+}
 
-// Adopting strict concurrency in Swift 6 apps — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// After Swift 6: @Observable macro
+@Observable
+class NewModel {
+    var count = 0        // Automatically tracked
+    var name = ""        // Fine-grained updates — only views reading `name` re-render
+}
+
+// Strict concurrency: mark shared state with actors
+actor DataStore {
+    private var cache: [String: Data] = [:]
+
+    func store(_ data: Data, for key: String) {
+        cache[key] = data
+    }
+
+    func fetch(_ key: String) -> Data? {
+        cache[key]
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Adopting strict concurrency in Swift 6 apps.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Enable strict concurrency checking incrementally: set "Strict Concurrency Checking" to "Targeted" then "Complete"
+- Replace `ObservableObject` + `@Published` with `@Observable` for automatic fine-grained updates
+- Use `actor` to protect shared mutable state instead of manual locks or queues
 
 ## When to Use
 

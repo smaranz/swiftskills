@@ -15,20 +15,27 @@ on 64-bit platforms, `Int` is the same size as `Int64`.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+let count: Int = 42
+let formatted = count.formatted(.number.grouping(.automatic))  // "42"
+let clamped = min(max(count, 0), 100)  // Clamp to range
 
-// Int — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Safe conversion between integer types
+let small: Int8 = 127
+if let converted = Int8(exactly: count) {
+    print("Fits in Int8: \(converted)")
+} else {
+    print("Value \(count) overflows Int8")
+}
+
+// Random number generation
+let roll = Int.random(in: 1...6)
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Int.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `Int` by default; only use sized integers (`Int8`, `UInt32`) for interop or storage
+- Use `Int(exactly:)` for safe narrowing conversions instead of truncating initializers
+- Prefer `.formatted()` over string interpolation for locale-aware number display
 
 ## When to Use
 

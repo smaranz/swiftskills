@@ -10,20 +10,40 @@ Adopt and interoperate with Cocoa design patterns in your Swift apps.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Delegation pattern in Swift
+protocol DataSourceDelegate: AnyObject {
+    func didLoadItems(_ items: [String])
+    func didEncounterError(_ error: Error)
+}
 
-// Cocoa Design Patterns — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+class DataSource {
+    weak var delegate: DataSourceDelegate?
+
+    func load() {
+        Task {
+            do {
+                let items = try await fetchItems()
+                delegate?.didLoadItems(items)
+            } catch {
+                delegate?.didEncounterError(error)
+            }
+        }
+    }
+}
+
+// Modern alternative: use async/await or closures instead of delegation
+class ModernDataSource {
+    func load() async throws -> [String] {
+        try await fetchItems()
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Cocoa Design Patterns.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `weak var delegate` to avoid retain cycles in the delegate pattern
+- Prefer `async/await` over delegation for one-shot operations (network calls, file I/O)
+- Keep the delegate pattern for continuous event streams (UIScrollViewDelegate, etc.)
 
 ## When to Use
 

@@ -14,20 +14,43 @@ state, you can use them to model the state of your app and its internal processe
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+import SwiftUI
 
-// Maintaining State in Your Apps — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+@Observable
+class CounterModel {
+    var count = 0
+    var history: [Int] = []
+
+    func increment() {
+        count += 1
+        history.append(count)
+    }
+
+    func reset() {
+        count = 0
+        history.removeAll()
+    }
+}
+
+struct CounterView: View {
+    @State private var model = CounterModel()
+
+    var body: some View {
+        VStack {
+            Text("\(model.count)")
+                .font(.largeTitle)
+            Button("Increment") { model.increment() }
+            Button("Reset") { model.reset() }
+        }
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Maintaining State in Your Apps.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@State` for view-local state, `@Environment` for shared models injected from above
+- `@Observable` classes give fine-grained updates — only views reading changed properties re-render
+- Never create `@Observable` objects inside `body` — they get recreated every render
 
 ## When to Use
 

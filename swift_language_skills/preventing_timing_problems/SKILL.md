@@ -18,20 +18,35 @@ or never.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Capture semantics in closures
+class DataLoader {
+    var items: [String] = []
 
-// Preventing Timing Problems When Using Closures — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+    func loadAsync() {
+        // Capture `self` weakly to avoid retain cycles
+        Task { [weak self] in
+            let data = await fetchFromNetwork()
+            self?.items = data  // Safe — self may be nil
+        }
+    }
+
+    // Value-type capture for safety
+    func processItems() {
+        let currentItems = items  // Capture the value, not the reference
+        DispatchQueue.global().async {
+            for item in currentItems {
+                process(item)
+            }
+        }
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Preventing Timing Problems When Using Closures.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `[weak self]` in escaping closures to prevent retain cycles
+- Capture value types before the closure to avoid race conditions on mutable state
+- Prefer `async/await` over completion handlers to eliminate callback timing issues
 
 ## When to Use
 

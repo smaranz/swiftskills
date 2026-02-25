@@ -14,20 +14,34 @@ rewrite your entire app in Swift at once.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+// Objective-C: @interface User : NSObject
+// @property (nonatomic, copy) NSString *name;
+// @property (nonatomic, assign) NSInteger age;
+// @end
 
-// Migrating Your Objective-C Code to Swift — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Swift equivalent — prefer struct when possible
+struct User: Codable, Hashable {
+    var name: String
+    var age: Int
+}
+
+// For classes requiring ObjC interop, keep NSObject inheritance
+@objc class LegacyUser: NSObject {
+    @objc var name: String
+    @objc var age: Int
+
+    @objc init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Migrating Your Objective-C Code to Swift.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Migrate data models to Swift structs when they don't need ObjC runtime features
+- Use a bridging header for gradual migration — ObjC and Swift can coexist in the same target
+- Replace `NSArray`/`NSDictionary` with typed Swift collections during migration
 
 ## When to Use
 

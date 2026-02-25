@@ -126,20 +126,36 @@ print(Array(cafe))
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+let greeting = "Hello, Swift!"
 
-// String — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// String interpolation with formatting
+let price = 42.5
+let message = "Total: \(price, format: .currency(code: "USD"))"
+
+// Multiline strings
+let json = """
+{
+    "name": "Rork",
+    "version": 6
+}
+"""
+
+// String operations
+let words = greeting.split(separator: " ")          // ["Hello,", "Swift!"]
+let upper = greeting.uppercased()                    // "HELLO, SWIFT!"
+let contains = greeting.localizedCaseInsensitiveContains("swift")  // true
+let trimmed = "  spaces  ".trimmingCharacters(in: .whitespaces)
+
+// Substring — convert back to String for storage
+let index = greeting.firstIndex(of: ",")!
+let sub = String(greeting[..<index])  // "Hello"
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with String.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Swift strings are NOT random-access — use `String.Index`, not integer subscripts
+- Convert `Substring` to `String` before storing to avoid retaining the entire original
+- Use `localizedCaseInsensitiveContains` for user-facing search comparisons
 
 ## When to Use
 

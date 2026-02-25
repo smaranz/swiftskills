@@ -29,18 +29,30 @@ that would otherwise require boilerplate code.
 ```swift
 import Foundation
 
-// Swift Standard Library — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Result type for error handling
+func fetchUser(id: Int) -> Result<User, NetworkError> {
+    guard id > 0 else { return .failure(.invalidID) }
+    return .success(User(id: id, name: "Rork"))
+}
+
+// Codable for JSON parsing
+struct User: Codable, Identifiable {
+    let id: Int
+    let name: String
+}
+
+let json = #"{"id": 1, "name": "Rork"}"#.data(using: .utf8)!
+let user = try JSONDecoder().decode(User.self, from: json)
+
+// Optional chaining and nil coalescing
+let displayName = user.name.isEmpty ? "Anonymous" : user.name
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Swift Standard Library.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Leverage `Codable` for JSON/Plist parsing — avoid manual dictionary access
+- Use `Result<Success, Failure>` for synchronous operations that can fail
+- Prefer `guard let` for early exits, `if let` for conditional binding
 
 ## When to Use
 

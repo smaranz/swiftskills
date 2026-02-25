@@ -36,20 +36,32 @@ types to conform.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+struct Song: Identifiable, Hashable, Codable, Comparable, CustomStringConvertible {
+    let id: UUID
+    let title: String
+    let artist: String
+    let durationSeconds: Int
 
-// Adopting Common Protocols — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+    // Comparable — sort by title
+    static func < (lhs: Song, rhs: Song) -> Bool {
+        lhs.title.localizedCompare(rhs.title) == .orderedAscending
+    }
+
+    // CustomStringConvertible — debug-friendly display
+    var description: String {
+        "\(title) by \(artist) (\(durationSeconds)s)"
+    }
+}
+
+// Usage in SwiftUI
+// ForEach(songs.sorted()) { song in Text(song.title) }
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Adopting Common Protocols.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Implement `Identifiable` on all types used with `ForEach` and `List`
+- Use `localizedCompare` in `Comparable` for correct alphabetical sorting across locales
+- Conform to `Hashable` for types used in `Set`, `Dictionary`, or `NavigationPath`
 
 ## When to Use
 

@@ -129,20 +129,33 @@ students[i] = "Max"
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+var numbers = [3, 1, 4, 1, 5, 9, 2, 6]
 
-// Array — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Functional operations
+let evens = numbers.filter { $0.isMultiple(of: 2) }     // [4, 2, 6]
+let doubled = numbers.map { $0 * 2 }                     // [6, 2, 8, ...]
+let sum = numbers.reduce(0, +)                            // 31
+
+// Safe access
+let first = numbers.first                                // Optional(3)
+let safeIndex = numbers.indices.contains(10) ? numbers[10] : nil
+
+// Sorting
+numbers.sort()                                            // In-place
+let sorted = numbers.sorted(by: >)                        // Descending copy
+
+// Collection operations
+let unique = Array(Set(numbers))                          // Remove duplicates
+let chunked = stride(from: 0, to: numbers.count, by: 3).map {
+    Array(numbers[$0..<min($0 + 3, numbers.count)])
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Array.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `first`, `last`, and `indices.contains()` for safe access — avoid force-indexing
+- Prefer `map`, `filter`, `reduce` over manual loops for cleaner, more readable code
+- Use `sorted(by:)` for a new array, `.sort()` for in-place mutation
 
 ## When to Use
 

@@ -26,18 +26,40 @@ x as? NSString // NSString with value "goodbye"
 ```swift
 import Foundation
 
-// Handling Dynamically Typed Methods and Objects in Swift — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Type checking and casting
+func processAny(_ value: Any) -> String {
+    switch value {
+    case let string as String:
+        return "String: \(string)"
+    case let number as Int:
+        return "Int: \(number)"
+    case let array as [Any]:
+        return "Array with \(array.count) elements"
+    default:
+        return "Unknown type: \(type(of: value))"
+    }
+}
+
+// Safe downcasting
+let items: [Any] = ["hello", 42, 3.14, true]
+let strings = items.compactMap { $0 as? String }  // ["hello"]
+
+// @dynamicMemberLookup for flexible access
+@dynamicMemberLookup
+struct JSONWrapper {
+    let data: [String: Any]
+
+    subscript(dynamicMember key: String) -> Any? {
+        data[key]
+    }
+}
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Handling Dynamically Typed Methods and Objects in Swift.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Prefer `as?` (conditional cast) over `as!` (forced cast) to avoid runtime crashes
+- Use `compactMap { $0 as? Type }` to safely filter and cast collections
+- Minimize use of `Any` and `AnyObject` — prefer generics and protocols for type safety
 
 ## When to Use
 

@@ -13,20 +13,28 @@ A double-precision (64-bit), floating-point value type.
 ## 🚀 Rork-Max Quality Snippet
 
 ```swift
-import Foundation
+let price: Double = 29.99
+let taxRate = 0.08
 
-// Double — idiomatic Swift implementation pattern
-// Use modern Swift 6 features: @Observable, async/await, structured concurrency
+// Formatted output
+let total = price * (1 + taxRate)
+let display = total.formatted(.currency(code: "USD"))  // "$32.39"
+
+// Floating-point comparison — never use ==
+let a = 0.1 + 0.2
+let b = 0.3
+let isClose = abs(a - b) < 1e-10  // true
+
+// Use Decimal for financial calculations
+let precisePrice = Decimal(string: "29.99")!
+let preciseTax = precisePrice * Decimal(string: "0.08")!
 ```
 
 ## 💎 Elite Implementation Tips
 
-- Use modern Swift 6 patterns when working with Double.
-- Prefer value types (structs/enums) unless reference semantics are needed.
-- Leverage Swift's type system to catch errors at compile time.
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Never compare `Double` with `==` — use a tolerance or `Decimal` for exact values
+- Use `Decimal` for financial calculations to avoid floating-point rounding errors
+- Use `.formatted(.currency(code:))` for locale-aware currency display
 
 ## When to Use
 
