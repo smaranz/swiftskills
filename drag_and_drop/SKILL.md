@@ -19,13 +19,39 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct DragDropList: View {
+    @State private var sourceItems = ["Apple", "Banana", "Cherry"]
+    @State private var targetItems: [String] = []
+
+    var body: some View {
+        HStack(spacing: 20) {
+            List(sourceItems, id: \.self) { item in
+                Text(item)
+                    .draggable(item)
+            }
+
+            List {
+                ForEach(targetItems, id: \.self) { item in
+                    Text(item)
+                }
+            }
+            .dropDestination(for: String.self) { items, _ in
+                targetItems.append(contentsOf: items)
+                return true
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.draggable()` and `.dropDestination()` with `Transferable` types for modern drag-and-drop
+- Return `true` from the drop handler to accept the drop, `false` to reject
+- Support both intra-app and inter-app drag-and-drop for iPad multitasking
 
 
 ## When to Use

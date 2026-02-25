@@ -22,13 +22,42 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct DraggableCard: View {
+    @State private var offset: CGSize = .zero
+    @State private var isDragging = false
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(.blue.gradient)
+            .frame(width: 200, height: 120)
+            .scaleEffect(isDragging ? 1.05 : 1.0)
+            .offset(offset)
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        offset = value.translation
+                        isDragging = true
+                    }
+                    .onEnded { _ in
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
+                            offset = .zero
+                            isDragging = false
+                        }
+                    }
+            )
+            .animation(.spring(response: 0.3), value: isDragging)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.spring()` on `.onEnded` for natural snap-back motion
+- Combine `DragGesture` with `scaleEffect` for tactile "pick up" feedback
+- Use `.simultaneousGesture()` to avoid conflicts with `ScrollView` gestures
 
 
 ## When to Use

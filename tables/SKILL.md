@@ -24,13 +24,32 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct EmployeeTable: View {
+    @State private var employees = Employee.samples
+    @State private var sortOrder = [KeyPathComparator(\Employee.name)]
+    @State private var selection = Set<Employee.ID>()
+
+    var body: some View {
+        Table(employees, selection: $selection, sortOrder: $sortOrder) {
+            TableColumn("Name", value: \.name)
+            TableColumn("Department", value: \.department)
+            TableColumn("Role", value: \.role)
+        }
+        .onChange(of: sortOrder) { _, newOrder in
+            employees.sort(using: newOrder)
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- `Table` is primarily for macOS/iPadOS — on iPhone it collapses to the first column
+- Use `TableColumn` with `value:` key paths for automatic sorting support
+- Support `selection:` binding for single or multi-row selection
 
 
 ## When to Use

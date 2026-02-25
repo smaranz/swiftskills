@@ -27,13 +27,42 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct HorizontalGallery: View {
+    let items: [GalleryItem]
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            LazyHStack(spacing: 16) {
+                ForEach(items) { item in
+                    VStack {
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(item.color.gradient)
+                            .frame(width: 280, height: 180)
+                        Text(item.title).font(.caption)
+                    }
+                    .scrollTransition { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0.5)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                    }
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.viewAligned)
+        .contentMargins(.horizontal, 20)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.scrollTargetBehavior(.viewAligned)` with `.scrollTargetLayout()` for snap-to-item scrolling
+- Apply `.scrollTransition` for per-item opacity/scale effects as items enter/exit
+- Use `LazyVStack`/`LazyHStack` inside `ScrollView` — they only render visible items
 
 
 ## When to Use

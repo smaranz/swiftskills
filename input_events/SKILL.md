@@ -16,13 +16,35 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct KeyboardShortcutView: View {
+    @State private var events: [String] = []
+
+    var body: some View {
+        VStack {
+            List(events, id: \.self) { event in
+                Text(event)
+            }
+        }
+        .onKeyPress(.return) {
+            events.append("Return pressed")
+            return .handled
+        }
+        .focusable()
+        .onHover { hovering in
+            events.append(hovering ? "Hover entered" : "Hover exited")
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.onKeyPress()` for custom keyboard shortcuts on focusable views
+- Use `.onHover` for pointer-aware UI on macOS and iPadOS
+- Provide keyboard shortcut alternatives for all gesture-driven actions
 
 
 ## When to Use

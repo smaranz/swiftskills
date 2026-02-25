@@ -24,13 +24,36 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct TaskListView: View {
+    @State private var tasks: [TaskItem] = TaskItem.samples
+
+    var body: some View {
+        List {
+            ForEach($tasks) { $task in
+                HStack {
+                    Image(systemName: task.isDone ? "checkmark.circle.fill" : "circle")
+                        .foregroundStyle(task.isDone ? .green : .secondary)
+                        .onTapGesture { task.isDone.toggle() }
+                    Text(task.title)
+                        .strikethrough(task.isDone)
+                }
+            }
+            .onDelete { tasks.remove(atOffsets: $0) }
+            .onMove { tasks.move(fromOffsets: $0, toOffset: $1) }
+        }
+        .listStyle(.insetGrouped)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.listStyle(.insetGrouped)` for modern card-style lists on iOS
+- Support `.onDelete` and `.onMove` for swipe-to-delete and drag-to-reorder
+- Use `List(selection:)` with `EditButton()` for multi-select mode
 
 
 ## When to Use

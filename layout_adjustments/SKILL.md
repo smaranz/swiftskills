@@ -18,13 +18,28 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct AdaptiveCard: View {
+    var body: some View {
+        Text("Adaptive Content")
+            .font(.headline)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .frame(minHeight: 100)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.frame(maxWidth: .infinity)` for full-width content instead of hard-coded widths
+- Apply `.fixedSize()` to prevent text truncation when the view has enough space
+- Use `@ScaledMetric` for spacing values that should scale with Dynamic Type
 
 
 ## When to Use

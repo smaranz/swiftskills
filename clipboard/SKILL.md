@@ -18,13 +18,39 @@ When possible, prefer using transferable items.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct ClipboardExample: View {
+    @State private var copiedText = ""
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Tap to copy")
+                .padding()
+                .background(.blue, in: Capsule())
+                .foregroundStyle(.white)
+                .onTapGesture {
+                    UIPasteboard.general.string = "Hello from Rork!"
+                }
+
+            PasteButton(payloadType: String.self) { strings in
+                copiedText = strings.first ?? ""
+            }
+
+            if !copiedText.isEmpty {
+                Text("Pasted: \(copiedText)")
+            }
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `PasteButton` for secure paste — it shows system UI confirming the paste action
+- Adopt `Transferable` protocol for custom types to work with copy/paste and drag-and-drop
+- Use `.copyable()` and `.pasteDestination()` modifiers for inline clipboard support
 
 
 ## When to Use

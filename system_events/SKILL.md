@@ -16,13 +16,44 @@ task event, like the completion of a background URL session.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct LifecycleAwareView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var lastSaved: Date?
+
+    var body: some View {
+        ContentView()
+            .onChange(of: scenePhase) { _, newPhase in
+                switch newPhase {
+                case .active:
+                    refreshData()
+                case .inactive:
+                    saveState()
+                case .background:
+                    scheduleBackgroundTasks()
+                @unknown default:
+                    break
+                }
+            }
+            .onOpenURL { url in
+                handleDeepLink(url)
+            }
+    }
+
+    func refreshData() { }
+    func saveState() { lastSaved = .now }
+    func scheduleBackgroundTasks() { }
+    func handleDeepLink(_ url: URL) { }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `.onChange(of: scenePhase)` to save state on `.inactive` and refresh on `.active`
+- Handle deep links with `.onOpenURL` at the top-level scene
+- Use `.onContinueUserActivity()` for Handoff and Spotlight integration
 
 
 ## When to Use

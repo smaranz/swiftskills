@@ -18,13 +18,37 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct DashboardView: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                GroupBox("Today's Summary") {
+                    LabeledContent("Steps", value: "8,432")
+                    LabeledContent("Calories", value: "1,230")
+                    LabeledContent("Distance", value: "4.2 km")
+                }
+
+                DisclosureGroup("Advanced Settings") {
+                    Toggle("Dark Mode", isOn: .constant(true))
+                    Toggle("Notifications", isOn: .constant(false))
+                }
+                .padding()
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+            }
+            .padding()
+        }
+    }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `GroupBox` for visually grouped, labeled sections
+- Use `DisclosureGroup` for collapsible detail sections
+- `LabeledContent` pairs a label with a value — great for settings and info rows
 
 
 ## When to Use

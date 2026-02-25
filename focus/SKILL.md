@@ -15,13 +15,50 @@ in the Human Interface Guidelines.
 
 ## 🚀 Rork-Max Quality Snippet
 
-```swift\n// High-end implementation coming soon\n```
+```swift
+import SwiftUI
+
+struct LoginForm: View {
+    @State private var email = ""
+    @State private var password = ""
+    @FocusState private var field: Field?
+
+    enum Field: Hashable { case email, password }
+
+    var body: some View {
+        Form {
+            TextField("Email", text: $email)
+                .focused($field, equals: .email)
+                .textContentType(.emailAddress)
+                .submitLabel(.next)
+                .onSubmit { field = .password }
+
+            SecureField("Password", text: $password)
+                .focused($field, equals: .password)
+                .textContentType(.password)
+                .submitLabel(.done)
+                .onSubmit { login() }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Button("Previous") { field = .email }
+                Button("Next") { field = .password }
+                Spacer()
+                Button("Done") { field = nil }
+            }
+        }
+        .onAppear { field = .email }
+    }
+
+    func login() { }
+}
+```
 
 ## 💎 Elite Implementation Tips
 
-- Always check for `@Observable` (Swift 6) compatibility for optimal performance.
-- Prioritize SF Symbols with hierarchical rendering for all iconography.
-- Ensure all interactive elements have sufficient touch targets (min 44x44pt).
+- Use `@FocusState` with an enum for field-to-field navigation in forms
+- Set `field = nil` to programmatically dismiss the keyboard
+- Add `.submitLabel()` to customize the Return key text (`.next`, `.done`, `.send`)
 
 
 ## When to Use
